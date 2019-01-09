@@ -3,6 +3,7 @@
 
 // init project
 const express = require('express');
+const twitter = require('twitter');
 const app = express();
 
 // we've started you off with Express, 
