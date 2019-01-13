@@ -33,13 +33,13 @@ app.set('view engine', 'pug');
 passport.use(new Strategy({
   consumerKey: process.env.KEY,
   consumerSecret: process.env.SECRET,
-  callbackURL: 'https://tokimeki-unfollow.glitch.me/oauth/twitter/callback'
+  callbackURL: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback'
 }, (authToken, authSecret, profile, done) => {
   token = authToken;
   secret = authSecret;
   console.log('token', token);
   console.log('secret', secret);
-  console.log('profile', profile);
+//  console.log('profile', profile);
   return done(null, profile);
 }));
 
@@ -65,18 +65,19 @@ app.get('/review', (req, res) => {
 });
 
 // setup login route to link to with login link on website
-app.get('/login/twitter',
+app.get('/auth/twitter',
   passport.authenticate('twitter'));
 
 // callback url, must add this to your app on twitters developer portal
-app.get('/oauth/twitter/callback',
-  passport.authenticate('twitter',{
-    successRedirect: '/review',
-    failureRedirect: '/oauth/twitter/failure'
+app.get('/auth/twitter/callback', passport.authenticate('twitter',{
+    failureRedirect: '/auth/twitter/failure'
+  },
+                                                      (req, res) => {
+    res.redirect('/review');
   })
-);
+;
         
-        app.get('/oauth/twitter/failure', function(req,res){
+        app.get('/auth/twitter/failure', function(req,res){
   console.log('failed dbx');
 console.log(req.user);
   res.redirect('/');
