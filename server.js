@@ -11,7 +11,7 @@ const session = require('cookie-session');
 const twitter = require('twit');
 
 // Temp holder vars we need to store in session
-let token, secret;
+let token, secret, profile;
 
 const app = express();
 
@@ -33,7 +33,7 @@ app.set('view engine', 'pug');
 passport.use(new Strategy({
   consumerKey: process.env.KEY,
   consumerSecret: process.env.SECRET,
-  callbackURL: '/oauth/callback/twitter'
+  callbackURL: 'https://tokimeki-unfollow.glitch.me/oauth/twitter/callback'
 }, (authToken, authSecret, profile, done) => {
   token = authToken;
   secret = authSecret;
@@ -57,8 +57,10 @@ app.get('/', function(request, response) {
 });
 
 app.get('/review', (req, res) => {
+  console.log(req);
+  console.log(res);
   res.render('review', {
-    following: [],
+    user: profile
   });
 });
 
@@ -67,11 +69,18 @@ app.get('/login/twitter',
   passport.authenticate('twitter'));
 
 // callback url, must add this to your app on twitters developer portal
-app.get('/oauth/callback/twitter',
-  passport.authenticate('twitter', { failureRedirect: '/' }),
-  function(req, res) {
-    res.redirect('/review');
-  });
+app.get('/oauth/twitter/callback',
+  passport.authenticate('twitter',{
+    successRedirect: '/review',
+    failureRedirect: '/oauth/twitter/failure'
+  })
+);
+        
+        app.get('/oauth/twitter/failure', function(req,res){
+  console.log('failed dbx');
+console.log(req.user);
+  res.redirect('/');
+});
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, function() {
