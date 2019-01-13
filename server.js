@@ -14,7 +14,8 @@ const twitter = require('twit');
 let token, secret, profile;
 
 const app = express();
-
+// http://expressjs.com/en/starter/static-files.html
+app.use(express.static('public'));
 // setup passport and session manager
 app.use(session({
   name: 'session',
@@ -45,11 +46,10 @@ passport.use(new Strategy({
 
 // required methods for encoding the user 'profile' object
              // i dont know why this isn't just done for you in passport
-passport.serializeUser((user, done) => done(null, user));
-passport.deserializeUser((obj, done) => done(null, obj));
+passport.serializeUser((user, done) => {done(null, user)});
+passport.deserializeUser((obj, done) => {done(null, obj)});
 
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
+
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
@@ -71,11 +71,9 @@ app.get('/auth/twitter',
 // callback url, must add this to your app on twitters developer portal
 app.get('/auth/twitter/callback', passport.authenticate('twitter',{
     failureRedirect: '/auth/twitter/failure'
-  },
-                                                      (req, res) => {
+  }),                                                             (req, res) => {
     res.redirect('/review');
-  })
-;
+});
         
         app.get('/auth/twitter/failure', function(req,res){
   console.log('failed dbx');
