@@ -10,7 +10,10 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.4",
+    "passport": "^0.4.0",
+    "passport-twitter": "^1.0.4",
     "twit": "^2.2.11",
     "twitter": "^1.7.1"
   },
