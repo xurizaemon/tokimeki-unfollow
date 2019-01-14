@@ -83,7 +83,7 @@ app.get('/', function(request, response) {
 app.get('/review', (req, res) => {
   restoreSession(req);
   if (twit === undefined) return res.redirect('/')
-  res.sendFile(path.join(__dirname+'/index.html'));
+  res.sendFile(__dirname + '/views/review.html');
 });
 
 app.get('/data/friends', (req, res) => {
