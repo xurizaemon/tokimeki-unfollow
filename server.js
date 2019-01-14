@@ -1,3 +1,11 @@
+// TODO:
+// Replace cookiesession with localstorage
+// restore session needs to be cleaned up so we aren't storing local vars, cookies, and localstorage 3x places
+// then we need to aggressively cache twitter results due to rate limiting
+// localstore current user id/token and friends
+// if current user id/token doesnt match what we have in local vars, fetch
+// also need to cache on the client side? or just cache on server
+
 // server.js
 // where your node app starts
 
