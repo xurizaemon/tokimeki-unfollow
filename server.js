@@ -11,7 +11,7 @@ const session = require('cookie-session');
 const twitter = require('twit');
 
 // Temp holder vars we need to store in session
-let token, secret, profile;
+let token, secret, profile, twit;
 
 const app = express();
 // http://expressjs.com/en/starter/static-files.html
@@ -50,7 +50,26 @@ passport.use(new Strategy({
 passport.serializeUser((user, done) => {done(null, user)});
 passport.deserializeUser((obj, done) => {done(null, obj)});
 
-
+function restoreSession(req) {
+  console.log(req.session ? 'session exists' : 'session missing');
+  console.log('twit', twit ? 'present' : 'missing')
+  if (req.session.auth === undefined &&
+     token !== undefined &&
+     secret !== undefined) {
+    req.session.token = token;
+    req.session.secret = secret;
+  }
+  if (req.session.auth &&
+      twit === undefined) {
+    twit = new twitter({
+      consumer_key: process.env.KEY,
+      consumer_secret: process.env.SECRET,
+      access_token: token,
+      access_token_secret: secret
+    });
+    console.log(twit ? 'twit restored' : 'twit restore failed');
+  }
+}
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
@@ -58,6 +77,10 @@ app.get('/', function(request, response) {
 });
 
 app.get('/review', (req, res) => {
+  restoreSession(req);
+  if (twit === undefined) res.redirect('/')
+  twit.get('friends/list',
+  console.log(
   res.render('review', {
     user: profile
   });
@@ -73,9 +96,8 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter',{
   failureRedirect: '/auth/twitter/failure'
 }));
         
-        app.get('/auth/twitter/failure', function(req,res){
-  console.log('failed dbx');
-console.log(req.user);
+app.get('/auth/twitter/failure', function(req,res){
+  console.log('failed twitter login');
   res.redirect('/');
 });
 
