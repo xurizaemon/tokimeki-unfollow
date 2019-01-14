@@ -53,13 +53,15 @@ passport.deserializeUser((obj, done) => {done(null, obj)});
 function restoreSession(req) {
   console.log(req.session ? 'session exists' : 'session missing');
   console.log('twit', twit ? 'present' : 'missing')
-  if (req.session.auth === undefined &&
+  if ((req.session.token === undefined || 
+      req.session.secret === undefined) &&
      token !== undefined &&
      secret !== undefined) {
     req.session.token = token;
     req.session.secret = secret;
   }
-  if (req.session.auth &&
+  if (req.session.token &&
+      req.session.secret &&
       twit === undefined) {
     twit = new twitter({
       consumer_key: process.env.KEY,
@@ -78,11 +80,13 @@ app.get('/', function(request, response) {
 
 app.get('/review', (req, res) => {
   restoreSession(req);
-  if (twit === undefined) res.redirect('/')
-  twit.get('friends/list',
-  console.log(
-  res.render('review', {
-    user: profile
+  if (twit === undefined) return res.redirect('/')
+  twit.get('friends/', null, (err, data, r) => {
+    console.log(profile);
+    res.render('review', {
+      user: profile,
+      
+    });
   });
 });
 
