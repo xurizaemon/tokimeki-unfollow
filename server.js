@@ -87,6 +87,8 @@ app.get('/review', (req, res) => {
 });
 
 app.get('/data/friends', (req, res) => {
+  restoreSession(req);
+  res.setHeader('Content-Type', 'application/json');
   
   twit.get('users/show', {
    id: req.session.profileId
@@ -95,11 +97,12 @@ app.get('/data/friends', (req, res) => {
     profile = data;
       
     twit.get('friends/ids', null, (e, data, r) => {
-      console.log(data.ids.length);
-      res.send({
+      console.log(data);
+      res.send(JSON.stringify({
+        test: 'hello',
         user: profile,
         friends: data.ids
-      });
+      }));
     });
   });
 });
