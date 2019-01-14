@@ -11,7 +11,7 @@ const session = require('cookie-session');
 const twitter = require('twit');
 
 // Temp holder vars we need to store in session
-let token, secret, profile, twit;
+let token, secret, profile, profileId, twit;
 
 const app = express();
 // http://expressjs.com/en/starter/static-files.html
@@ -38,9 +38,8 @@ passport.use(new Strategy({
 }, (authToken, authSecret, resprofile, done) => {
   token = authToken;
   secret = authSecret;
-  profile = resprofile._json
-  console.log('token', token);
-  console.log('secret', secret);
+  profile = resprofile._json;
+  profileId = profile.id;
 //  console.log('profile', profile);
   return done(null, profile);
 }));
@@ -60,16 +59,22 @@ function restoreSession(req) {
     req.session.token = token;
     req.session.secret = secret;
   }
+  req.session.profileId = profileId ?
+    profileId : 
+    req.session.profileId;
   if (req.session.token &&
       req.session.secret &&
       twit === undefined) {
     twit = new twitter({
       consumer_key: process.env.KEY,
       consumer_secret: process.env.SECRET,
-      access_token: token,
-      access_token_secret: secret
+      access_token: req.session.token,
+      access_token_secret: req.session.secret
     });
     console.log(twit ? 'twit restored' : 'twit restore failed');
+  }
+  if (twit && profile === undefined) {
+    p
   }
 }
 
@@ -81,11 +86,11 @@ app.get('/', function(request, response) {
 app.get('/review', (req, res) => {
   restoreSession(req);
   if (twit === undefined) return res.redirect('/')
-  twit.get('friends/', null, (err, data, r) => {
-    console.log(profile);
+  twit.get('friends/ids', null, (err, data, r) => {
+    console.log(data.count);
     res.render('review', {
       user: profile,
-      
+      friends: data
     });
   });
 });
