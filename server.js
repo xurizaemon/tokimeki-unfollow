@@ -9,9 +9,11 @@ const passport = require('passport');
 let {Strategy} = require('passport-twitter');
 const session = require('cookie-session');
 const twitter = require('twit');
+const {LocalStorage} = require('npm-localstorage');
+const store = new LocalStorage('./tokimekiunfollow');
 
 // Temp holder vars we need to store in session
-let token, secret, profile, profileId, twit;
+let token, secret, profile, profileId, twit, friends;
 
 const app = express();
 // http://expressjs.com/en/starter/static-files.html
@@ -93,11 +95,12 @@ app.get('/data/friends', (req, res) => {
   twit.get('users/show', {
    id: req.session.profileId
   }, (e, data, r) => {
+    console.log(e)
     console.log(data ? 'profile restored' : 'profile restore failed');
     profile = data;
       
     twit.get('friends/ids', null, (e, data, r) => {
-      console.log(data);
+      console.log(e);
       res.send(JSON.stringify({
         test: 'hello',
         user: profile,
