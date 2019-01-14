@@ -3,10 +3,7 @@ block content
   h2 Hello, #{user.screen_name}! You follow #{user.friends_count} accounts.
   p Let's take a look through them~ and get your feed to a place that works for you.
   p Note: this application uses browser cookies to stores your login session and IDs of accounts you've taken action on. It's the bare minimum of data needed to make this tool useful, but it also means if you clear your cookies or use another device, this app won't carry anything over.
-  div(id='app')
-    ol
-      li(v-for='f in friends')
-        ='{{ f }}'
+  include list.html
   
 block scriptshead
   script(src='https://cdn.jsdelivr.net/npm/vue')

@@ -83,6 +83,10 @@ app.get('/', function(request, response) {
 app.get('/review', (req, res) => {
   restoreSession(req);
   if (twit === undefined) return res.redirect('/')
+  res.sendFile(path.join(__dirname+'/index.html'));
+});
+
+app.get('/data/friends', (req, res) => {
   
   twit.get('users/show', {
    id: req.session.profileId
@@ -92,7 +96,7 @@ app.get('/review', (req, res) => {
       
     twit.get('friends/ids', null, (e, data, r) => {
       console.log(data.ids.length);
-      res.render('review', {
+      res.send({
         user: profile,
         friends: data.ids
       });
