@@ -5,5 +5,9 @@ block content
   p Note: this application uses browser cookies to stores your login session and IDs of accounts you've taken action on. It's the bare minimum of data needed to make this tool useful, but it also means if you clear your cookies or use another device, this app won't carry anything over.
   
   
-  
-  
+block scripts
+  script(src='https://cdn.jsdelivr.net/npm/vue')
+  script
+    let user = #{user}
+    let friends = #{friends}
+  script(src='/client.js' defer='')
