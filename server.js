@@ -73,9 +73,6 @@ function restoreSession(req) {
     });
     console.log(twit ? 'twit restored' : 'twit restore failed');
   }
-  if (twit && profile === undefined) {
-    p
-  }
 }
 
 // http://expressjs.com/en/starter/basic-routing.html
@@ -86,11 +83,19 @@ app.get('/', function(request, response) {
 app.get('/review', (req, res) => {
   restoreSession(req);
   if (twit === undefined) return res.redirect('/')
-  twit.get('friends/ids', null, (err, data, r) => {
-    console.log(data.count);
-    res.render('review', {
-      user: profile,
-      friends: data
+  
+  twit.get('users/show', {
+   id: req.session.profileId
+  }, (e, data, r) => {
+    console.log(data ? 'profile restored' : 'profile restore failed');
+    profile = data;
+      
+    twit.get('friends/ids', null, (e, data, r) => {
+      console.log(data.ids.length);
+      res.render('review', {
+        user: profile,
+        friends: data.ids
+      });
     });
   });
 });
