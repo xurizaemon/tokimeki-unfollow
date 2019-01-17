@@ -17,8 +17,6 @@ const passport = require('passport');
 let {Strategy} = require('passport-twitter');
 const session = require('cookie-session');
 const twitter = require('twit');
-const {LocalStorage} = require('npm-localstorage');
-const store = new LocalStorage('./tokimekiunfollow');
 
 // Temp holder vars we need to store in session
 let token, secret, profile, profileId, twit, friends;
