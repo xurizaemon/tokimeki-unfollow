@@ -52,10 +52,12 @@ function render(res) {
       },
       prev: function(e) {
         this.sel = Math.max(this.sel - 1, 0);
-      },
-      iframeURL: function(e) {
-        return friends[this.sel]
       }
     },
+    computed: {
+      iframeURL: function(e) {
+        return 'https://twitter.com/intent/user?user_id='+this.friends[this.sel];
+      }
+    }
   });
 }

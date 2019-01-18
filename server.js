@@ -113,6 +113,17 @@ app.get('/data/user', (req, res) => {
   }
 });
 
+app.get('/data/user/:id', (req, res) => {
+  twit.get('users/show', {
+   id: req.params.id
+  }).catch((e) => console.log('error', e.stack))
+    .then((result) => {
+     res.send({
+       user: result.data
+     });
+  });
+});
+
 app.get('/data/friends', (req, res) => {
     twit.get('friends/ids')
       .catch((e) => console.log('error', e.stack))
