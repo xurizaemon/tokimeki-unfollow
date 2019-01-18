@@ -138,7 +138,9 @@ app.get('/data/tweets/:userId', (req, res) => {
 });
 
 app.get('/data/friends', (req, res) => {
-    twit.get('friends/ids')
+    twit.get('friends/ids', {
+      stringify_ids: true
+    })
       .catch((e) => console.log('error', e.stack))
       .then((result) => {
        res.send({

@@ -15,6 +15,11 @@
         <a href='#' v-on:click='next'>Next</a>
         <a href='#' v-on:click='prev'>Prev</a>
       </div>
+      <div id='debug'>
+        <ol>
+          <li v-for='id in friends'>{{ id }}</li>
+        </ol>
+      </div>
     </div>
   <script type='module' src='/client.js' defer=''></script>
   </body>

@@ -29,8 +29,14 @@ let friendComp = Vue.component('friend-card', {
       this.getData(newValue);
     }
   },
+  computed: {
+    href: function() {
+      return 'https://twitter.com/'+ this.user.screen_name + '?ref_src=twsrc%5Etfw'
+    }
+  },
   template: `
-    <div id='friend' v-cloak v-pre>
+    <a class="twitter-timeline" data-width="400" data-height="400" data-dnt="true" data-theme="light" v-bind:href="href">Tweets by ire_alva</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <div id='friend' v-cloak>
       <h2>
         {{ user.screen_name }}
       </h2>
