@@ -42,8 +42,17 @@ function render(res) {
   var app = new Vue({
     el: '#app',
     data: {
+      sel: 0,
       friends: res.friends,
       user: res.user
+    },
+    methods: {
+      next: function(e) {
+        this.sel = Math.min(this.sel + 1, this.friends.length - 1);
+      },
+      prev: function(e) {
+        this.sel = Math.max(this.sel - 1, 0);
+      }
     }
   });
 }

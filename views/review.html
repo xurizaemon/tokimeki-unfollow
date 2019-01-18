@@ -6,11 +6,14 @@
   </head>
   <body>
     <div id='app'>
-      <ol>
-        <li v-for='friend in friends'>
-          {{ friend }}
-        </li>
-      </ol>  
+      <h1>
+        You're following {{ friends.length }}
+      </h1>
+        {{ friends[sel] }}
+      <div id='ctrl'>
+        <a href='#' v-on:click='next'>Next</a>
+        <a href='#' v-on:click='prev'>Prev</a>
+      </div>
     </div>
   <script src='/client.js' defer=''></script>
   </body>
