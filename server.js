@@ -105,21 +105,21 @@ app.get('/data/user', (req, res) => {
     twit.get('users/show', {
      id: req.session.profileId
     }).catch((e) => console.log('error', e.stack))
-      .then((data) => {
+      .then((result) => {
        res.send({
-         user: data
+         user: result.data
        });
     });
   }
 });
 
 app.get('/data/friends', (req, res) => {
-  
-    twit.get('friends/ids', null, (e, data, r) => {
-      console.log(e);
-      res.send(JSON.stringify({
-        friends: data.ids
-      }));
+    twit.get('friends/ids')
+      .catch((e) => console.log('error', e.stack))
+      .then((result) => {
+       res.send({
+         friends: result.data.ids
+       });
     });
 });
 

@@ -9,8 +9,8 @@ if (invalidateStore(store)) {
     .then(res => {
     console.log(res);
     store.setItem('updated', new Date().toString());
-    store.setItem('user',res[0].user);
-    store.setItem('friends',res[1].friends);
+    store.setItem('user', JSON.stringify(res[0].user));
+    store.setItem('friends', JSON.stringify(res[1].friends));
     render({
       user: res[0].user,
       friends: res[1].friends
@@ -19,8 +19,8 @@ if (invalidateStore(store)) {
 } else {
   console.log('Valid data in store');
   render({
-    user: store.getItem('user'),
-    friends: store.getItem('friends')
+    user: JSON.parse(store.getItem('user')),
+    friends: JSON.parse(store.getItem('friends'))
   });
 }
 
