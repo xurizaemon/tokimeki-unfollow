@@ -57,6 +57,9 @@ function render(res) {
       }
     },
     computed: {
+      selFriendId: function(e) {
+        return this.friends[this.sel];
+      },
       iframeURL: function(e) {
         return 'https://twitter.com/intent/user?user_id='+this.friends[this.sel];
       }

@@ -24,12 +24,35 @@ function render(res) {
 }
 
 let friendComp = Vue.component('friend-card', {
-  data: {
-    user: null,
-    tweets: null
+  data: function() {
+    return {
+      user: null,
+      tweets: null
+    }
   },
   props: ['id'],
   methods: {
+    getData: function(userId) {
+      Promise.all([
+        window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId),
+        window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + userId)
+      ]).then(res => Promise.all(res.map(r => r.json())))
+        .then(res => {
+        console.log(res);
+        this.user = res[0].user;
+        this.tweets = res[1].tweets;
+      });
+    }
+  },
+  created: function() {
+    console.log('component hello', this.id);
+    getData(this.id);
+  },
+  watch: {
+    id: function(newValue) {
+      console.log('id changed');
+      this.getData(newValue);
+    }
   },
   template: `
     <div id='friend' v-cloak v-pre>
@@ -46,8 +69,4 @@ let friendComp = Vue.component('friend-card', {
 
     </div>
   `
-});
-
-friendComp.$watch('id', function() {
-  
 });

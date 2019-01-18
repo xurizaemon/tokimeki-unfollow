@@ -3,14 +3,14 @@
     <title>Tokimeki Unfollow</title>
     <!-- production version, optimized for size and speed -->
     <link rel='stylesheet' href='style.css'>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
     <div id='app' v-cloak>
       <h1>
         Hello, {{ user.screen_name }}! You're following {{ friends.length }} tweeters.
       </h1>
-        <friend-card v-bind:id='friends[0]'></friend-card>
+      <friend-card v-bind:id='selFriendId'></friend-card>
       <div id='ctrl'>
         <a href='#' v-on:click='next'>Next</a>
         <a href='#' v-on:click='prev'>Prev</a>

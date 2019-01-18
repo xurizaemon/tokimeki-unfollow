@@ -114,9 +114,10 @@ app.get('/data/user', (req, res) => {
 });
 
 app.get('/data/user/:userId', (req, res) => {
+  console.log('getting user', req.params.userId);
   twit.get('users/show', {
    id: req.params.userId
-  }).catch((e) => console.log('error', e.stack))
+  }).catch((e) => console.log('get user error', e.stack))
     .then((result) => {
      res.send({
        user: result.data
@@ -125,6 +126,7 @@ app.get('/data/user/:userId', (req, res) => {
 });
 
 app.get('/data/tweets/:userId', (req, res) => {
+  console.log('getting tweets', req.params.userId);
   twit.get('statuses/user_timeline', {
     user_id: req.params.userId,
     count: 5,
