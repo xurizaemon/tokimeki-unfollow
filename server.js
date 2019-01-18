@@ -97,6 +97,10 @@ app.use('/data', (req, res, next) => {
 });
 
 app.get('/data/user', (req, res) => {
+  res.send({
+    user: 'test'
+  });
+  return;
   if (profile !== undefined) {
     res.send({
       user: profile
@@ -114,6 +118,10 @@ app.get('/data/user', (req, res) => {
 });
 
 app.get('/data/friends', (req, res) => {
+  res.send({
+    friends: 'test'
+  });
+  return;
     twit.get('friends/ids', null, (e, data, r) => {
       console.log(e);
       res.send(JSON.stringify({
