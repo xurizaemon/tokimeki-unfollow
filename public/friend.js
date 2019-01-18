@@ -20,7 +20,7 @@ let friendComp = Vue.component('friend-card', {
     }
   },
   created: function() {
-    console.log('component hello', this.id);
+    console.log('friend component loaded', this.id);
     this.getData(this.id);
   },
   watch: {
@@ -35,14 +35,17 @@ let friendComp = Vue.component('friend-card', {
     }
   },
   template: `
-    <a class="twitter-timeline" data-width="400" data-height="400" data-dnt="true" data-theme="light" v-bind:href="href">Tweets by ire_alva</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    
     <div id='friend' v-cloak>
+<a class="twitter-timeline" data-width="400" data-height="400" data-dnt="true" data-theme="light" v-bind:href="href">Tweets by ire_alva</a>
       <h2>
         {{ user.screen_name }}
       </h2>
       <ol>
         <li v-for='t in tweets'>
           {{ t.text }}
+          <br>
+          <img v-if='t.entities && t.entities.media && t.entities.media[0]' v-bind:src='t.entities.media[0].media_url_https'>
           <br>
           <i>{{ t.created_at }}</i>
         </li>
