@@ -92,13 +92,6 @@ app.get('/review', (req, res) => {
 app.get('/data/friends', (req, res) => {
   restoreSession(req);
   res.setHeader('Content-Type', 'application/json');
-
-    res.send({
-        test: 'hello',
-        friends: [1,2,3]
-      });
-  
-  return;
   
   twit.get('users/show', {
    id: req.session.profileId
@@ -110,7 +103,6 @@ app.get('/data/friends', (req, res) => {
     twit.get('friends/ids', null, (e, data, r) => {
       console.log(e);
       res.send(JSON.stringify({
-        test: 'hello',
         user: profile,
         friends: data.ids
       }));
