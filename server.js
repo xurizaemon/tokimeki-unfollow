@@ -89,13 +89,35 @@ app.get('/review', (req, res) => {
   res.sendFile(__dirname + '/views/review.html');
 });
 
+app.get('/data/profile', (req, res) => {
+  if (profile !== undefined) {
+    res.send({
+      user: profile
+    });
+  } else {
+  twit.get('users/show', {
+   id: req.session.profileId
+  }).catch((e) => console.log('error', e.stack))
+    .then((data, res) => {
+     res.send({
+       user: data
+     });
+  });
+  }
+});
+
 app.get('/data/friends', (req, res) => {
   restoreSession(req);
   res.setHeader('Content-Type', 'application/json');
   
-  let getUserProfile = async () => {
-    
+  async function getUserProfile() {
+    return await twit.get('users/show', {
+     id: req.session.profileId
+    });
   }
+  console.log(getUserProfile());
+  
+  return;
   twit.get('users/show', {
    id: req.session.profileId
   }).catch((e) => console.log('error', e.stack))
