@@ -1,33 +1,8 @@
-function getData(userId) {
-  Promise.all([
-    window.fetch('https://tokimeki-unfollow.glitch.me/data/user/:' + userId),
-    window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/:' + userId)
-  ]).then(res => Promise.all(res.map(r => r.json())))
-    .then(res => {
-    console.log(res);
-    render({
-      user: res[0].user,
-      tweets: res[1].tweets
-    });
-  });
-}
-
-function render(res) {
-  console.log('rendering friend', res)
-  let app = new Vue({
-    el: '#friend',
-    data: {
-      user: res.user,
-      tweets: res.tweets
-    }
-  });
-}
-
 let friendComp = Vue.component('friend-card', {
   data: function() {
     return {
-      user: null,
-      tweets: null
+      user: {screen_name:'test'},
+      tweets: [{text:'1'},{text:'2'},{text:'3'}]
     }
   },
   props: ['id'],
@@ -46,11 +21,11 @@ let friendComp = Vue.component('friend-card', {
   },
   created: function() {
     console.log('component hello', this.id);
-    getData(this.id);
+    this.getData(this.id);
   },
   watch: {
     id: function(newValue) {
-      console.log('id changed');
+      console.log('id changed', newValue);
       this.getData(newValue);
     }
   },
