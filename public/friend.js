@@ -1,4 +1,4 @@
-export function init(userId) {
+function getData(userId) {
   Promise.all([
     window.fetch('https://tokimeki-unfollow.glitch.me/data/user/:' + userId),
     window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/:' + userId)
@@ -23,8 +23,14 @@ function render(res) {
   });
 }
 
-Vue.component('friend-card', {
+let friendComp = Vue.component('friend-card', {
+  data: {
+    user: null,
+    tweets: null
+  },
   props: ['id'],
+  methods: {
+  },
   template: `
     <div id='friend' v-cloak v-pre>
       <h2>
@@ -42,3 +48,6 @@ Vue.component('friend-card', {
   `
 });
 
+friendComp.$watch('id', function() {
+  
+});
