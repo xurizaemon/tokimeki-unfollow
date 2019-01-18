@@ -52,7 +52,7 @@ passport.use(new Strategy({
 passport.serializeUser((user, done) => {done(null, user)});
 passport.deserializeUser((obj, done) => {done(null, obj)});
 
-function restoreSession(req) {
+function restoreSession(req, res, next) {
   console.log(req.session ? 'session exists' : 'session missing');
   console.log('twit', twit ? 'present' : 'missing')
   if ((req.session.token === undefined || 
@@ -76,6 +76,7 @@ function restoreSession(req) {
     });
     console.log(twit ? 'twit restored' : 'twit restore failed');
   }
+  next();
 }
 
 // http://expressjs.com/en/starter/basic-routing.html
@@ -83,10 +84,16 @@ app.get('/', function(request, response) {
   response.render('index');
 });
 
-app.get('/review', (req, res) => {
-  restoreSession(req);
+app.get('/review', restoreSession, (req, res) => {
   if (twit === undefined) return res.redirect('/')
   res.sendFile(__dirname + '/views/review.html');
+});
+
+// Middleware restore session for all /data calls
+app.use('/data', restoreSession);
+app.use('/data', (req, res, next) => {
+  res.setHeader('Content-Type', 'application/json');
+  next();
 });
 
 app.get('/data/profile', (req, res) => {
@@ -95,52 +102,25 @@ app.get('/data/profile', (req, res) => {
       user: profile
     });
   } else {
-  twit.get('users/show', {
-   id: req.session.profileId
-  }).catch((e) => console.log('error', e.stack))
-    .then((data, res) => {
-     res.send({
-       user: data
-     });
-  });
+    twit.get('users/show', {
+     id: req.session.profileId
+    }).catch((e) => console.log('error', e.stack))
+      .then((data, res) => {
+       res.send({
+         user: data
+       });
+    });
   }
 });
 
 app.get('/data/friends', (req, res) => {
-  restoreSession(req);
-  res.setHeader('Content-Type', 'application/json');
-  
-  async function getUserProfile() {
-    return await twit.get('users/show', {
-     id: req.session.profileId
+    twit.get('friends/ids', null, (e, data, r) => {
+      console.log(e);
+      res.send(JSON.stringify({
+        user: profile,
+        friends: data.ids
+      }));
     });
-  }
-  console.log(getUserProfile());
-  
-  return;
-  twit.get('users/show', {
-   id: req.session.profileId
-  }).catch((e) => console.log('error', e.stack))
-    .then((data, res) => {
-    
-  });
-  
-  
-  twit.get('users/show', {
-   id: req.session.profileId
-  }, (e, data, r) => {
-    console.log(e)
-    console.log(data ? 'profile restored' : 'profile restore failed');
-    profile = data;
-      
-    // twit.get('friends/ids', null, (e, data, r) => {
-    //   console.log(e);
-    //   res.send(JSON.stringify({
-    //     user: profile,
-    //     friends: data.ids
-    //   }));
-    // });
-  });
 });
 
 // setup login route to link to with login link on website
