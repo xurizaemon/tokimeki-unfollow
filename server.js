@@ -113,13 +113,26 @@ app.get('/data/user', (req, res) => {
   }
 });
 
-app.get('/data/user/:id', (req, res) => {
+app.get('/data/user/:userId', (req, res) => {
   twit.get('users/show', {
-   id: req.params.id
+   id: req.params.userId
   }).catch((e) => console.log('error', e.stack))
     .then((result) => {
      res.send({
        user: result.data
+     });
+  });
+});
+
+app.get('/data/tweets/:userId', (req, res) => {
+  twit.get('statuses/user_timeline', {
+    user_id: req.params.userId,
+    count: 5,
+    include_rts: true
+  }).catch((e) => console.log('error', e.stack))
+    .then((result) => {
+     res.send({
+       tweets: result.data
      });
   });
 });
