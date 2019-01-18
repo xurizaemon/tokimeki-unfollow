@@ -40,7 +40,6 @@ function invalidateStore(store) {
 
 function render(res) {
   console.log('Rendering ', res);
-  Friend.init();
 
   var app = new Vue({
     el: '#app',

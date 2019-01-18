@@ -22,3 +22,23 @@ function render(res) {
     }
   });
 }
+
+Vue.component('friend-card', {
+  props: ['id'],
+  template: `
+    <div id='friend' v-cloak v-pre>
+      <h2>
+        {{ user.screen_name }}
+      </h2>
+      <ol>
+        <li v-for='t in tweets'>
+          {{ t.text }}
+          <br>
+          <i>{{ t.created_at }}</i>
+        </li>
+      </ol>
+
+    </div>
+  `
+});
+
