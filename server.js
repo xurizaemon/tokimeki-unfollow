@@ -93,6 +93,17 @@ app.get('/data/friends', (req, res) => {
   restoreSession(req);
   res.setHeader('Content-Type', 'application/json');
   
+  let getUserProfile = async () => {
+    
+  }
+  twit.get('users/show', {
+   id: req.session.profileId
+  }).catch((e) => console.log('error', e.stack))
+    .then((data, res) => {
+    
+  });
+  
+  
   twit.get('users/show', {
    id: req.session.profileId
   }, (e, data, r) => {
@@ -100,13 +111,13 @@ app.get('/data/friends', (req, res) => {
     console.log(data ? 'profile restored' : 'profile restore failed');
     profile = data;
       
-    twit.get('friends/ids', null, (e, data, r) => {
-      console.log(e);
-      res.send(JSON.stringify({
-        user: profile,
-        friends: data.ids
-      }));
-    });
+    // twit.get('friends/ids', null, (e, data, r) => {
+    //   console.log(e);
+    //   res.send(JSON.stringify({
+    //     user: profile,
+    //     friends: data.ids
+    //   }));
+    // });
   });
 });
 
