@@ -1,8 +1,4 @@
-export default function() {
+export function init() {
   
-  this.init = () => {
-    console.log("hi")
-  }
-  
-  return this;
 }
+

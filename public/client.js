@@ -1,4 +1,4 @@
-import friend from './friend.js';
+import * as Friend from './friend.js';
 let store = window.localStorage;
 
 if (invalidateStore(store)) {
@@ -40,7 +40,7 @@ function invalidateStore(store) {
 
 function render(res) {
   console.log('Rendering ', res);
-  friend.init();
+  Friend.init();
 
   var app = new Vue({
     el: '#app',
