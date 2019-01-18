@@ -52,7 +52,10 @@ function render(res) {
       },
       prev: function(e) {
         this.sel = Math.max(this.sel - 1, 0);
+      },
+      iframeURL: function(e) {
+        return friends[this.sel]
       }
-    }
+    },
   });
 }
