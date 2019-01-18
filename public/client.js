@@ -1,5 +1,5 @@
-let store = window.localStorage,
-    Vue = Vue; // Get rid of annoying Glitch error
+import('./scripts/vue.js');
+let store = window.localStorage;
 
 if (store.getItem('res') === null) {
   console.log('No friends in store, fetching from Twitter');
