@@ -1,6 +1,6 @@
 let store = window.localStorage;
 
-if (invalidateRes(store.getItem('res'))) {
+if (invalidateStore(store)) {
   console.log('No valid data in store, fetching from Twitter');
   Promise.all([
     window.fetch('https://tokimeki-unfollow.glitch.me/data/user'),
@@ -8,6 +8,7 @@ if (invalidateRes(store.getItem('res'))) {
   ]).then(res => Promise.all(res.map(r => r.json())))
     .then(res => {
     console.log(res);
+    store.setItem('updated', new Date().toString());
     store.setItem('user',res[0].user);
     store.setItem('friends',res[1].friends);
     render({
@@ -16,15 +17,24 @@ if (invalidateRes(store.getItem('res'))) {
     });
   });
 } else {
-  console.log('Fetched from store ', store.getItem('res'));
-  render(JSON.parse(store.getItem('res')));
+  console.log('Valid data in store');
+  render({
+    user: store.getItem('user'),
+    friends: store.getItem('friends')
+  });
 }
 
-function invalidateRes(res) {
-  console.log('Validating store ', res);
-  return res === null ||
-    res.friends === undefined ||
-    res.user === undefined;
+function invalidateStore(store) {
+  console.log('Validating store');
+  let updated = store.getItem('updated');
+  if (updated === null) { return true }
+  if (new Date() - new Date(updated) >
+      5 * 60 * 1000) { 
+    console.log('More than 5 minutes since last update');
+    return true; // More than 5 minutes
+  }
+  return store.getItem('user') === null ||
+    store.getItem('friends') === null
 }
 
 function render(res) {
