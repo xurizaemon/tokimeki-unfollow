@@ -96,7 +96,7 @@ app.use('/data', (req, res, next) => {
   next();
 });
 
-app.get('/data/profile', (req, res) => {
+app.get('/data/user', (req, res) => {
   if (profile !== undefined) {
     res.send({
       user: profile
@@ -105,7 +105,7 @@ app.get('/data/profile', (req, res) => {
     twit.get('users/show', {
      id: req.session.profileId
     }).catch((e) => console.log('error', e.stack))
-      .then((data, res) => {
+      .then((data) => {
        res.send({
          user: data
        });
@@ -117,7 +117,6 @@ app.get('/data/friends', (req, res) => {
     twit.get('friends/ids', null, (e, data, r) => {
       console.log(e);
       res.send(JSON.stringify({
-        user: profile,
         friends: data.ids
       }));
     });
