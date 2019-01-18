@@ -10,8 +10,19 @@
       <h1>
         Hello, {{ user.screen_name }}! You're following {{ friends.length }} tweeters.
       </h1>
-        {{ friends[sel] }}
-        <iframe :src='iframeURL'></iframe>
+        <div id='friend' v-cloak v-pre>
+          <h2>
+            {{ user.screen_name }}
+          </h2>
+          <ol>
+            <li v-for='t in tweets'>
+              {{ t.text }}
+              <br>
+              <i>{{ t.created_at }}</i>
+            </li>
+          </ol>
+          
+        </div>
       <div id='ctrl'>
         <a href='#' v-on:click='next'>Next</a>
         <a href='#' v-on:click='prev'>Prev</a>

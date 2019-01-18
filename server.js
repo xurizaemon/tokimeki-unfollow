@@ -114,6 +114,7 @@ app.get('/data/user', (req, res) => {
 });
 
 app.get('/data/user/:userId', (req, res) => {
+  console.log('fetching user object', req.params.userId);
   twit.get('users/show', {
    id: req.params.userId
   }).catch((e) => console.log('error', e.stack))
