@@ -1,12 +1,9 @@
 // TODO:
-// Cache twitter results (clientside using localstorage)
+// TODO IMPLEMENT LOGOUT
 
 // server.js
 // where your node app starts
 
-// init project
-// install modules 'npm install'
-// also, install pug for templating
 const express = require('express');
 const passport = require('passport');
 let {Strategy} = require('passport-twitter');
@@ -28,10 +25,6 @@ app.use(session({
   maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
 }));
 app.use(passport.initialize());
-app.use(function(req, res, next) {
-  console.log('hello middleware', req);
-  next();
-})
 // app.use(passport.session()); // DO I EVEN NEED THIS 
 app.set('view engine', 'pug');
 
@@ -45,10 +38,10 @@ passport.use(new Strategy({
   consumerSecret: process.env.SECRET,
   callbackURL: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback'
 }, (authToken, authSecret, resprofile, done) => {
-  token = authToken;
-  secret = authSecret;
-  profile = resprofile._json;
-  profileId = profile.id;
+  // token = authToken;
+  // secret = authSecret;
+  // profile = resprofile._json;
+  // profileId = profile.id;
   tempSession = {
     token: authToken,
     secret: authSecret,
@@ -66,40 +59,45 @@ passport.use(new Strategy({
 
 function validateSession(sess) {
   return ( typeof sess === 'object' &&
-    sess.token != undefined &&
-    sess.secret != undefined &&
-    sess.profile != undefined &&
-    sess.profileId != undefined
+    sess.token !== undefined &&
+    sess.secret !== undefined &&
+    sess.profile !== undefined &&
+    sess.profileId !== undefined
   );
 }
 
+// Middleware to restore twitter auth session
 function restoreSession(req, res, next) {
   console.log(req.session);
-  // Server temp session should take precedence because it *should* be more recent
+  
   let serverHasData = validateSession(tempSession);
   console.log(serverHasData ? 'server temp session var has data' : 'server temp var empty');
-  if (serverHasData
-  // TODO IMPLEMENT LOGOUT
-  
+  if (serverHasData) {
+    // Server temp session should take precedence because it *should* be more recent
+    req.session.token = tempSession.token;
+    req.session.secret = tempSession.secret;
+    req.session.profile = tempSession.profile;
+    req.session.profileId = tempSession.profileId;
+    console.log('copied temp session var to cookie session');
+  }
+    
   let sessionHasData = validateSession(req.session);
   console.log(sessionHasData ? 'cookie session has data' : 'cookie session empty');
-  
-  
-  if (sessionHasData || serverHasData
+  if (!sessionHasData) { return res.redirect('/') }
   
   console.log('twit library', twit ? 'present' : 'missing')
 
-  if ((req.session.token === undefined || 
-      req.session.secret === undefined) &&
-     token !== undefined &&
-     secret !== undefined) {
-    req.session.token = token;
-    req.session.secret = secret;
-    console.log('token and secret restored');
-  }
-  req.session.profileId = profileId ?
-    profileId : 
-    req.session.profileId;
+//   if ((req.session.token === undefined || 
+//       req.session.secret === undefined) &&
+//      token !== undefined &&
+//      secret !== undefined) {
+//     req.session.token = token;
+//     req.session.secret = secret;
+//     console.log('token and secret restored');
+//   }
+  // req.session.profileId = profileId ?
+  //   profileId : 
+  //   req.session.profileId;
   if (req.session.token &&
       req.session.secret &&
       twit === undefined) {
