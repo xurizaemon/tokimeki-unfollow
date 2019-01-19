@@ -28,7 +28,11 @@ app.use(session({
   maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
 }));
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(function(req, res, next) {
+  console.log('hello middleware', req);
+  next();
+})
+// app.use(passport.session()); // DO I EVEN NEED THIS 
 app.set('view engine', 'pug');
 
 
@@ -52,14 +56,13 @@ passport.use(new Strategy({
     profileId: profile.id
   }
   console.log('Oauth complete', tempSession);
-//  console.log('profile', profile);
   return done(null, profile);
 }));
 
-// required methods for encoding the user 'profile' object
+// required methods for encoding the user 'profile' object for passport.session()
 // i dont know why this isn't just done for you in passport
-passport.serializeUser((user, done) => {done(null, user)});
-passport.deserializeUser((obj, done) => {done(null, obj)});
+// passport.serializeUser((user, done) => {done(null, user)});
+// passport.deserializeUser((obj, done) => {done(null, obj)});
 
 function validateSession(sess) {
   return ( typeof sess === 'object' &&
@@ -73,11 +76,14 @@ function validateSession(sess) {
 function restoreSession(req, res, next) {
   console.log(req.session);
   // Server temp session should take precedence because it *should* be more recent
-  // TODO IMPLEMENT LOGOUT
-  let sessionHasData = validateSession(req.session);
-  console.log(sessionHasData ? 'cookie session has data' : 'cookie session empty');
   let serverHasData = validateSession(tempSession);
   console.log(serverHasData ? 'server temp session var has data' : 'server temp var empty');
+  if (serverHasData
+  // TODO IMPLEMENT LOGOUT
+  
+  let sessionHasData = validateSession(req.session);
+  console.log(sessionHasData ? 'cookie session has data' : 'cookie session empty');
+  
   
   if (sessionHasData || serverHasData
   
