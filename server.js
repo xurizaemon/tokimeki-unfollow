@@ -15,6 +15,7 @@ const twitter = require('twit');
 
 // Temp holder vars we need to store in session
 let token, secret, profile, profileId, twit, friends;
+let tempSession = {};
 
 const app = express();
 // http://expressjs.com/en/starter/static-files.html
@@ -23,7 +24,7 @@ app.use(express.static('public'));
 app.use(session({
   name: 'session',
   secret: 'keyboard cat',
-  maxAge: 24 * 60 * 60 * 1000
+  maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -53,14 +54,24 @@ passport.serializeUser((user, done) => {done(null, user)});
 passport.deserializeUser((obj, done) => {done(null, obj)});
 
 function restoreSession(req, res, next) {
-  console.log(req.session ? 'session exists' : 'session missing');
-  console.log('twit', twit ? 'present' : 'missing')
+  console.log(req.session);
+  let sessionHasData = (Object.keys(req.session).length > 0);
+  let serverHasData = (
+    token !== undefined &&
+    secret !== undefined &&
+    
+    );
+  
+  console.log(Object.keys(req.session).length > 0 ? 'session has data' : 'session empty');
+  console.log('twit library', twit ? 'present' : 'missing')
+
   if ((req.session.token === undefined || 
       req.session.secret === undefined) &&
      token !== undefined &&
      secret !== undefined) {
     req.session.token = token;
     req.session.secret = secret;
+    console.log('token and secret restored');
   }
   req.session.profileId = profileId ?
     profileId : 
@@ -68,14 +79,15 @@ function restoreSession(req, res, next) {
   if (req.session.token &&
       req.session.secret &&
       twit === undefined) {
+    console.log('restoring twit object');
     twit = new twitter({
       consumer_key: process.env.KEY,
       consumer_secret: process.env.SECRET,
       access_token: req.session.token,
       access_token_secret: req.session.secret
     });
-    console.log(twit ? 'twit restored' : 'twit restore failed');
   }
+  console.log(twit ? 'twit restored' : 'twit restore failed');
   next();
 }
 
