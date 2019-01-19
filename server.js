@@ -4,6 +4,7 @@
 // server.js
 // where your node app starts
 
+const fetch = require('node-fetch');
 const express = require('express');
 const passport = require('passport');
 let {Strategy} = require('passport-twitter');
