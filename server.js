@@ -1,5 +1,7 @@
 // TODO:
 // TODO IMPLEMENT LOGOUT
+// REPLACE PASSPORT WITH STRAIGHT OAUTH LIBRARY
+// http://moonlitscript.com/post.cfm/how-to-use-oauth-and-twitter-in-your-node-js-expressjs-app/
 
 // server.js
 // where your node app starts
