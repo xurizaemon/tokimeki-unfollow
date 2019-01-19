@@ -22,7 +22,6 @@ app.use(express.static('public'));
 app.use(session({
   name: 'session',
   secret: 'keyboard cat',
-  secure: true,
   maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
 }));
 app.use(passport.initialize());
@@ -48,10 +47,10 @@ passport.use(new Strategy({
     token: authToken,
     secret: authSecret,
     profile: resprofile._json,
-    profileId: resprofile._json.profile.id
+    profileId: resprofile._json.id
   }
   console.log('Oauth complete', tempSession);
-  return done(null, profile);
+  return done(null, resprofile._json);
   // return;
 }));
 
