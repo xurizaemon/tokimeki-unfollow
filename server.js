@@ -22,15 +22,17 @@ app.use(express.static('public'));
 app.use(session({
   name: 'session',
   secret: 'keyboard cat',
+  secure: true,
   maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
 }));
 app.use(passport.initialize());
-// app.use(passport.session()); // DO I EVEN NEED THIS 
+app.use(passport.session()); // DO I EVEN NEED THIS 
 app.set('view engine', 'pug');
 
-
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
+// Main page
+app.get('/', function(request, response) {
+  response.render('index');
+});
 
 // Set up oauth
 passport.use(new Strategy({
@@ -46,16 +48,17 @@ passport.use(new Strategy({
     token: authToken,
     secret: authSecret,
     profile: resprofile._json,
-    profileId: profile.id
+    profileId: resprofile._json.profile.id
   }
   console.log('Oauth complete', tempSession);
   return done(null, profile);
+  // return;
 }));
 
 // required methods for encoding the user 'profile' object for passport.session()
 // i dont know why this isn't just done for you in passport
-// passport.serializeUser((user, done) => {done(null, user)});
-// passport.deserializeUser((obj, done) => {done(null, obj)});
+passport.serializeUser((user, done) => {done(null, user)});
+passport.deserializeUser((obj, done) => {done(null, obj)});
 
 function validateSession(sess) {
   return ( typeof sess === 'object' &&
@@ -113,13 +116,7 @@ function restoreSession(req, res, next) {
   next();
 }
 
-// http://expressjs.com/en/starter/basic-routing.html
-app.get('/', function(request, response) {
-  response.render('index');
-});
-
 app.get('/review', restoreSession, (req, res) => {
-  if (twit === undefined) return res.redirect('/')
   res.sendFile(__dirname + '/views/review.html');
 });
 
