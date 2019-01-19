@@ -12,9 +12,10 @@ const passport = require('passport');
 let {Strategy} = require('passport-twitter');
 const session = require('cookie-session');
 const twitter = require('twit');
+let twit;
 
 // Temp holder vars we need to store in session
-let token, secret, profile, profileId, twit, friends;
+let token, secret, profile, profileId;
 let tempSession = {};
 
 const app = express();
@@ -44,25 +45,42 @@ passport.use(new Strategy({
   secret = authSecret;
   profile = resprofile._json;
   profileId = profile.id;
+  tempSession = {
+    token: authToken,
+    secret: authSecret,
+    profile: resprofile._json,
+    profileId: profile.id
+  }
+  console.log('Oauth complete', tempSession);
 //  console.log('profile', profile);
   return done(null, profile);
 }));
 
 // required methods for encoding the user 'profile' object
-             // i dont know why this isn't just done for you in passport
+// i dont know why this isn't just done for you in passport
 passport.serializeUser((user, done) => {done(null, user)});
 passport.deserializeUser((obj, done) => {done(null, obj)});
 
+function validateSession(sess) {
+  return ( typeof sess === 'object' &&
+    sess.token != undefined &&
+    sess.secret != undefined &&
+    sess.profile != undefined &&
+    sess.profileId != undefined
+  );
+}
+
 function restoreSession(req, res, next) {
   console.log(req.session);
-  let sessionHasData = (Object.keys(req.session).length > 0);
-  let serverHasData = (
-    token !== undefined &&
-    secret !== undefined &&
-    
-    );
+  // Server temp session should take precedence because it *should* be more recent
+  // TODO IMPLEMENT LOGOUT
+  let sessionHasData = validateSession(req.session);
+  console.log(sessionHasData ? 'cookie session has data' : 'cookie session empty');
+  let serverHasData = validateSession(tempSession);
+  console.log(serverHasData ? 'server temp session var has data' : 'server temp var empty');
   
-  console.log(Object.keys(req.session).length > 0 ? 'session has data' : 'session empty');
+  if (sessionHasData || serverHasData
+  
   console.log('twit library', twit ? 'present' : 'missing')
 
   if ((req.session.token === undefined || 
