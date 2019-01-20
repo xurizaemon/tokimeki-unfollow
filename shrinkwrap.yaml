@@ -2,6 +2,7 @@ dependencies:
   cookie-session: 2.0.0-beta.3
   express: 4.16.4
   fetch: 1.1.0
+  login-with-twitter: 1.2.0
   node-fetch: 2.3.0
   node-localstorage: 1.3.1
   passport: 0.4.0
@@ -296,6 +297,14 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
+  /decompress-response/3.3.0:
+    dependencies:
+      mimic-response: 1.0.1
+    dev: false
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha1-gKTdMjdIOEv6JICDYirt7Jgq3/M=
   /deep-extend/0.5.1:
     dev: false
     engines:
@@ -654,6 +663,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
+  /login-with-twitter/1.2.0:
+    dependencies:
+      oauth-1.0a: 2.2.5
+      simple-get: 2.8.1
+    dev: false
+    resolution:
+      integrity: sha512-CTi8Q6ZLCUfrjEIieRn5nOovdS16Dj9/GbxQ2Z54S0XyOFoPA60KMb+KxYmmHKiRSu0sYhGY2G2Y/8+5bjS1Ow==
   /longest/1.0.1:
     dev: false
     engines:
@@ -702,6 +718,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==
+  /mimic-response/1.0.1:
+    dev: false
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha512-j5EctnkH7amfV/q5Hgmoal1g2QHFJRraOtmx0JpIqkxhBhI/lJSl1nMpQ45hVarwNETOoWEimndZ4QK0RHxuxQ==
   /ms/2.0.0:
     dev: false
     resolution:
@@ -726,6 +748,10 @@ packages:
       node: '>=0.12'
     resolution:
       integrity: sha512-NMWCSWWc6JbHT5PyWlNT2i8r7PgGYXVntmKawY83k/M0UJScZ5jirb61TLnqKwd815DfBQu+lR3sRw08SPzIaQ==
+  /oauth-1.0a/2.2.5:
+    dev: false
+    resolution:
+      integrity: sha512-7Y4Gs+2dPOjrlJDzEPdpuH46gzgYeVF7CKOOQNpWKz1nlbWn2rqKSt3oF0By6KxudbOQATEUY74SphuTN0grPg==
   /oauth-sign/0.9.0:
     dev: false
     resolution:
@@ -754,6 +780,12 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-ko9dD0cNSTQmUepnlLCFfBAGk/c=
+  /once/1.4.0:
+    dependencies:
+      wrappy: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=
   /parseurl/1.3.2:
     dev: false
     engines:
@@ -1053,6 +1085,18 @@ packages:
     dev: false
     resolution:
       integrity: sha512-BvE/TwpZX4FXExxOxZyRGQQv651MSwmWKZGqvmPcRIjDqWub67kTKuIMx43cZZrS/cBBzwBcNDWoFxt2XEFIpQ==
+  /simple-concat/1.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-c0TLuLbib7J9ZrL8hvn21Zl1IcY=
+  /simple-get/2.8.1:
+    dependencies:
+      decompress-response: 3.3.0
+      once: 1.4.0
+      simple-concat: 1.0.0
+    dev: false
+    resolution:
+      integrity: sha512-lSSHRSw3mQNUGPAYRqo7xy9dhKmxFXIjLjp4KHpf99GEH2VH7C3AM+Qfx6du6jhfUi6Vm7XnbEVEf7Wb6N8jRw==
   /slide/1.1.6:
     dev: false
     resolution:
@@ -1234,6 +1278,10 @@ packages:
       node: '>=0.4.0'
     resolution:
       integrity: sha1-t5Zpu0LstAn4PVg8rVLKF+qhZD8=
+  /wrappy/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
   /write-file-atomic/1.3.4:
     dependencies:
       graceful-fs: 4.1.15
@@ -1272,6 +1320,7 @@ specifiers:
   cookie-session: ^2.0.0-beta.3
   express: ^4.16.4
   fetch: ^1.1.0
+  login-with-twitter: ^1.2.0
   node-fetch: ^2.3.0
   node-localstorage: ^1.3.1
   passport: ^0.4.0

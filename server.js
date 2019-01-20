@@ -12,6 +12,7 @@ const passport = require('passport');
 let {Strategy} = require('passport-twitter');
 const session = require('cookie-session');
 const twitter = require('twit');
+const LoginWithTwitter = require('login-with-twitter');
 let twit;
 
 // Temp holder vars we need to store in session
@@ -27,8 +28,8 @@ app.use(session({
   secret: 'keyboard cat',
   maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
 }));
-app.use(passport.initialize());
-app.use(passport.session()); // DO I EVEN NEED THIS 
+// app.use(passport.initialize());
+// app.use(passport.session()); // DO I EVEN NEED THIS 
 app.set('view engine', 'pug');
 
 // Main page
@@ -37,30 +38,30 @@ app.get('/', function(request, response) {
 });
 
 // Set up oauth
-passport.use(new Strategy({
-  consumerKey: process.env.KEY,
-  consumerSecret: process.env.SECRET,
-  callbackURL: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback'
-}, (authToken, authSecret, resprofile, done) => {
-  // token = authToken;
-  // secret = authSecret;
-  // profile = resprofile._json;
+// passport.use(new Strategy({
+  // consumerKey: process.env.KEY,
+  // consumerSecret: process.env.SECRET,
+  // callbackURL: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback'
+// }, (authToken, authSecret, resprofile, done) => {
+//   // token = authToken;
+//   // secret = authSecret;
+//   // profile = resprofile._json;
   // profileId = profile.id;
-  tempSession = {
-    token: authToken,
-    secret: authSecret,
-    profile: resprofile._json,
-    profileId: resprofile._json.id
-  }
-  console.log('Oauth complete', tempSession);
-  return done(null, resprofile._json);
-  // return;
-}));
+//   tempSession = {
+//     token: authToken,
+//     secret: authSecret,
+//     profile: resprofile._json,
+//     profileId: resprofile._json.id
+//   }
+//   console.log('Oauth complete', tempSession);
+//   return done(null, resprofile._json);
+//   // return;
+// }));
 
 // required methods for encoding the user 'profile' object for passport.session()
 // i dont know why this isn't just done for you in passport
-passport.serializeUser((user, done) => {done(null, user)});
-passport.deserializeUser((obj, done) => {done(null, obj)});
+// passport.serializeUser((user, done) => {done(null, user)});
+// passport.deserializeUser((obj, done) => {done(null, obj)});
 
 function validateSession(sess) {
   return ( typeof sess === 'object' &&
@@ -184,14 +185,26 @@ app.get('/data/friends', (req, res) => {
 });
 
 // setup login route to link to with login link on website
-app.get('/auth/twitter',
-  passport.authenticate('twitter'));
+app.get('/auth/twitter', (req, res) => {
+  const login = LoginWithTwitter({
+    consumerKey: process.env.KEY,
+    consumerSecret: process.env.SECRET,
+    callbackURL: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback' 
+  });
+  // passport.authenticate('twitter')
+
+});
 
 // callback url, must add this to your app on twitters developer portal
-app.get('/auth/twitter/callback', passport.authenticate('twitter',{
-  successRedirect: '/review',
-  failureRedirect: '/auth/twitter/failure'
-}));
+app.get('/auth/twitter/callback', (req, res) => {
+  console.log('callback', req.query);
+  console.log('callback', req.params);
+  //       passport.authenticate('twitter',{
+  // successRedirect: '/review',
+  // failureRedirect: '/auth/twitter/failure'
+// })
+       
+});
         
 app.get('/auth/twitter/failure', function(req,res){
   console.log('failed twitter login');
