@@ -28,6 +28,7 @@ let friendComp = Vue.component('friend-card', {
     id: function(newValue) {
       console.log('id changed', newValue);
       this.getData(newValue);
+      //this.$forceUpdate();
       twttr.widgets.load();
     }
   },
@@ -39,6 +40,7 @@ let friendComp = Vue.component('friend-card', {
   template: `
     
     <div id='friend' v-cloak>
+      <div id='twttr-widget'>
       <a class="twitter-timeline"
         data-width="400"
         data-height="400"
