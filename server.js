@@ -1,5 +1,4 @@
 // TODO:
-// TODO IMPLEMENT LOGOUT
 // http://moonlitscript.com/post.cfm/how-to-use-oauth-and-twitter-in-your-node-js-expressjs-app/
 
 // server.js
@@ -18,21 +17,13 @@ const LoginWithTwitter = new (require('login-with-twitter'))({
 });
 let twit;
 
-// Temp holder vars we need to store in session
-let token, secret, profile, profileId;
-let tempSession = {};
-
 const app = express();
-// http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
-// setup passport and session manager
 app.use(session({
   name: 'session',
   secret: 'keyboard cat',
   maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
 }));
-// app.use(passport.initialize());
-// app.use(passport.session()); // DO I EVEN NEED THIS 
 app.set('view engine', 'pug');
 
 // Main page
@@ -40,77 +31,24 @@ app.get('/', function(request, response) {
   response.render('index');
 });
 
-// Set up oauth
-// passport.use(new Strategy({
-  // consumerKey: process.env.KEY,
-  // consumerSecret: process.env.SECRET,
-  // callbackURL: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback'
-// }, (authToken, authSecret, resprofile, done) => {
-//   // token = authToken;
-//   // secret = authSecret;
-//   // profile = resprofile._json;
-  // profileId = profile.id;
-//   tempSession = {
-//     token: authToken,
-//     secret: authSecret,
-//     profile: resprofile._json,
-//     profileId: resprofile._json.id
-//   }
-//   console.log('Oauth complete', tempSession);
-//   return done(null, resprofile._json);
-//   // return;
-// }));
+// Review page
+// TODO: SHOULD PROB BE THE SAME AS THE MAIN PAGE
+app.get('/review', restoreSession, (req, res) => {
+  res.sendFile(__dirname + '/views/review.html');
+});
 
-// required methods for encoding the user 'profile' object for passport.session()
-// i dont know why this isn't just done for you in passport
-// passport.serializeUser((user, done) => {done(null, user)});
-// passport.deserializeUser((obj, done) => {done(null, obj)});
-
-function validateSession(sess) {
-  return ( typeof sess === 'object' &&
-    sess.token !== undefined &&
-    sess.secret !== undefined &&
-    sess.username !== undefined &&
-    sess.profileId !== undefined
-  );
-}
-
-// Middleware to restore twitter auth session
+// Middleware to restore Twitter auth session using cookies
 function restoreSession(req, res, next) {
   console.log(req.session);
-  
-  // let serverHasData = validateSession(tempSession);
-  // console.log(serverHasData ? 'server temp session var has data' : 'server temp var empty');
-  // if (serverHasData) {
-  //   // Server temp session should take precedence because it *should* be more recent
-  //   req.session.token = tempSession.token;
-  //   req.session.secret = tempSession.secret;
-  //   req.session.username = tempSession.username;
-  //   req.session.profileId = tempSession.profileId;
-  //   console.log('copied temp session var to cookie session');
-  // }
     
   let sessionHasData = validateSession(req.session);
   console.log(sessionHasData ? 'cookie session has data' : 'cookie session empty');
-  if (!sessionHasData) { return res.redirect('/') }
+  if (!sessionHasData) { return res.redirect('/logout') }
   
   console.log('twit library', twit ? 'present' : 'missing')
-
-//   if ((req.session.token === undefined || 
-//       req.session.secret === undefined) &&
-//      token !== undefined &&
-//      secret !== undefined) {
-//     req.session.token = token;
-//     req.session.secret = secret;
-//     console.log('token and secret restored');
-//   }
-  // req.session.profileId = profileId ?
-  //   profileId : 
-  //   req.session.profileId;
   if (req.session.token &&
       req.session.secret &&
       twit === undefined) {
-    console.log('restoring twit object');
     twit = new twitter({
       consumer_key: process.env.KEY,
       consumer_secret: process.env.SECRET,
@@ -122,9 +60,14 @@ function restoreSession(req, res, next) {
   next();
 }
 
-app.get('/review', restoreSession, (req, res) => {
-  res.sendFile(__dirname + '/views/review.html');
-});
+function validateSession(sess) {
+  return ( typeof sess === 'object' &&
+    sess.token !== undefined &&
+    sess.secret !== undefined &&
+    sess.username !== undefined &&
+    sess.userId !== undefined
+  );
+}
 
 // Middleware restore session for all /data calls
 app.use('/data', restoreSession);
@@ -134,20 +77,14 @@ app.use('/data', (req, res, next) => {
 });
 
 app.get('/data/user', (req, res) => {
-  if (profile !== undefined) {
-    res.send({
-      user: profile
-    });
-  } else {
-    twit.get('users/show', {
-     id: req.session.profileId
-    }).catch((e) => console.log('error', e.stack))
-      .then((result) => {
-       res.send({
-         user: result.data
-       });
-    });
-  }
+  twit.get('users/show', {
+   id: req.session.userId
+  }).catch((e) => console.log('error', e.stack))
+    .then((result) => {
+     res.send({
+       user: result.data
+     });
+  });
 });
 
 app.get('/data/user/:userId', (req, res) => {
@@ -194,13 +131,10 @@ app.get('/auth/twitter', (req, res, next) => {
       console.log(err);
       return next(err);
     }
-    
-    req.session.oauthTokenSecret = tokenSecret; // NOT THE SAME AS USER TOKEN AND USER SECRET
-    console.log('tokenSecret', tokenSecret);
+    req.session.oauthTokenSecret = tokenSecret;
     // Redirect to callback URL with query params
     res.redirect(url);
   });
-  // passport.authenticate('twitter')
 
 });
 
@@ -208,30 +142,29 @@ app.get('/auth/twitter', (req, res, next) => {
 app.get('/auth/twitter/callback', (req, res) => {
   console.log('callback', req.query);
   LoginWithTwitter.callback({
-    req.query.oauth_token,
-    req.query.oauth_verifier
+    oauth_token: req.query.oauth_token,
+    oauth_verifier: req.query.oauth_verifier
   }, req.session.oauthTokenSecret, (err, user) => {
     if (err) {
-      console.log(err);
-      res.redirect('/auth/twitter/failure');
+      console.log('failed twitter login', err);
+      res.redirect('/');
     }
     delete req.session.oauthTokenSecret;
     console.log('user callback', user);
-    req.session.profileId = user.userId;
+    req.session.userId = user.userId;
     req.session.username = user.userName;
     req.session.token = user.userToken;
     req.session.secret = user.userTokenSecret;
     res.redirect('/review');
   });  
 });
-        
-app.get('/auth/twitter/failure', function(req,res){
-  console.log('failed twitter login');
-  res.redirect('/');
-});
 
 app.get('/logout', (req, res) => {
-  
+  delete req.session.userId;
+  delete req.session.username;
+  delete req.session.token;
+  delete req.session.secret;
+  res.r
 });
 
 // listen for requests :)

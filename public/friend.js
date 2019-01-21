@@ -37,7 +37,6 @@ let friendComp = Vue.component('friend-card', {
   template: `
     
     <div id='friend' v-cloak>
-<a class="twitter-timeline" data-width="400" data-height="400" data-dnt="true" data-theme="light" v-bind:href="href">Tweets by ire_alva</a>
       <h2>
         {{ user.screen_name }}
       </h2>

@@ -1,27 +1,29 @@
 <html>
   <head>
     <title>Tokimeki Unfollow</title>
-    <!-- production version, optimized for size and speed -->
-    <link rel='stylesheet' href='style.css'>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </head>
   <body>
-    <div id='app' v-cloak>
+    <div id="app" v-cloak>
       <h1>
         Hello, {{ user.screen_name }}! You're following {{ friends.length }} tweeters.
       </h1>
-      <friend-card v-bind:id='selFriendId'></friend-card>
-      <div id='ctrl'>
-        <a href='#' v-on:click='next'>Next</a>
-        <a href='#' v-on:click='prev'>Prev</a>
+      <friend-card v-bind:id="selFriendId"></friend-card>
+      <div id="ctrl">
+        <a href="#" v-on:click="next">Next</a>
+        <a href="#" v-on:click="prev">Prev</a>
       </div>
-      <div id='debug'>
+      <div id="logout">
+        <a href="/logout">Log Out</a>
+      </div>
+      <div id="debug">
         <ol>
-          <li v-for='id in friends'>{{ id }}</li>
+          <li v-for="id in friends">{{ id }}</li>
         </ol>
       </div>
     </div>
-  <script type='module' src='/client.js' defer=''></script>
+  <script type="module" src="/client.js" defer=""></script>
   </body>
 </html>
