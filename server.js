@@ -71,7 +71,7 @@ function validateSession(sess) {
   return ( typeof sess === 'object' &&
     sess.token !== undefined &&
     sess.secret !== undefined &&
-    sess.profile !== undefined &&
+    sess.username !== undefined &&
     sess.profileId !== undefined
   );
 }
@@ -80,16 +80,16 @@ function validateSession(sess) {
 function restoreSession(req, res, next) {
   console.log(req.session);
   
-  let serverHasData = validateSession(tempSession);
-  console.log(serverHasData ? 'server temp session var has data' : 'server temp var empty');
-  if (serverHasData) {
-    // Server temp session should take precedence because it *should* be more recent
-    req.session.token = tempSession.token;
-    req.session.secret = tempSession.secret;
-    req.session.profile = tempSession.profile;
-    req.session.profileId = tempSession.profileId;
-    console.log('copied temp session var to cookie session');
-  }
+  // let serverHasData = validateSession(tempSession);
+  // console.log(serverHasData ? 'server temp session var has data' : 'server temp var empty');
+  // if (serverHasData) {
+  //   // Server temp session should take precedence because it *should* be more recent
+  //   req.session.token = tempSession.token;
+  //   req.session.secret = tempSession.secret;
+  //   req.session.username = tempSession.username;
+  //   req.session.profileId = tempSession.profileId;
+  //   console.log('copied temp session var to cookie session');
+  // }
     
   let sessionHasData = validateSession(req.session);
   console.log(sessionHasData ? 'cookie session has data' : 'cookie session empty');
@@ -196,7 +196,7 @@ app.get('/auth/twitter', (req, res, next) => {
       return next(err);
     }
     
-    req.session.secret = tokenSecret;
+    req.session.oauthTokenSecret = tokenSecret; // NOT THE SAME AS USER TOKEN AND USER SECRET
     // Redirect to callback URL with query params
     res.redirect(url);
   });
@@ -215,13 +215,18 @@ app.get('/auth/twitter/callback', (req, res, next) => {
   LoginWithTwitter.callback({
     oauth_token,
     oauth_verifier
-  }, req.session.secret, (err, user) => {
+  }, req.session.oauthTokenSecret, (err, user) => {
     if (err) {
       console.log(err);
-      return next(err);
+      res.redirect('/auth/twitter/failure');
     }
-    req.session.profile = user;
-    conso
+    delete req.session.oauthTokenSecret;
+    console.log('user callback', user);
+    req.session.profileId = user.userId;
+    req.session.username = user.userName;
+    req.session.token = user.userToken;
+    req.session.secret = user.userTokenSecret;
+    res.redirect('/review');
   });
   //       passport.authenticate('twitter',{
   // successRedirect: '/review',
