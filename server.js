@@ -1,8 +1,4 @@
 // TODO:
-// http://moonlitscript.com/post.cfm/how-to-use-oauth-and-twitter-in-your-node-js-expressjs-app/
-
-// server.js
-// where your node app starts
 
 const fetch = require('node-fetch');
 const express = require('express');
@@ -27,8 +23,10 @@ app.use(session({
 app.set('view engine', 'pug');
 
 // Main page
-app.get('/', function(request, response) {
-  response.render('index');
+app.get('/', function(req, res) {
+  if (validateSession(req.session)) {
+    res.redirect('/review');
+  } else { res.render('index') }
 });
 
 // Review page
@@ -45,18 +43,13 @@ function restoreSession(req, res, next) {
   console.log(sessionHasData ? 'cookie session has data' : 'cookie session empty');
   if (!sessionHasData) { return res.redirect('/logout') }
   
-  console.log('twit library', twit ? 'present' : 'missing')
-  if (req.session.token &&
-      req.session.secret &&
-      twit === undefined) {
-    twit = new twitter({
-      consumer_key: process.env.KEY,
-      consumer_secret: process.env.SECRET,
-      access_token: req.session.token,
-      access_token_secret: req.session.secret
-    });
-  }
-  console.log(twit ? 'twit restored' : 'twit restore failed');
+  twit = new twitter({
+    consumer_key: process.env.KEY,
+    consumer_secret: process.env.SECRET,
+    access_token: req.session.token,
+    access_token_secret: req.session.secret
+  });
+  if (twit === undefined) { return res.redirect('/logout') }
   next();
 }
 
@@ -164,7 +157,7 @@ app.get('/logout', (req, res) => {
   delete req.session.username;
   delete req.session.token;
   delete req.session.secret;
-  res.r
+  res.redirect('/');
 });
 
 // listen for requests :)
