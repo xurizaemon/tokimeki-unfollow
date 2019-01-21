@@ -1,6 +1,5 @@
 // TODO:
 // TODO IMPLEMENT LOGOUT
-// REPLACE PASSPORT WITH STRAIGHT OAUTH LIBRARY
 // http://moonlitscript.com/post.cfm/how-to-use-oauth-and-twitter-in-your-node-js-expressjs-app/
 
 // server.js
@@ -206,15 +205,11 @@ app.get('/auth/twitter', (req, res, next) => {
 });
 
 // callback url, must add this to your app on twitters developer portal
-app.get('/auth/twitter/callback', (req, res, next) => {
+app.get('/auth/twitter/callback', (req, res) => {
   console.log('callback', req.query);
-  const {
-    oauth_token,
-    oauth_verifier
-  } = req.query;
   LoginWithTwitter.callback({
-    oauth_token,
-    oauth_verifier
+    req.query.oauth_token,
+    req.query.oauth_verifier
   }, req.session.oauthTokenSecret, (err, user) => {
     if (err) {
       console.log(err);
@@ -227,17 +222,16 @@ app.get('/auth/twitter/callback', (req, res, next) => {
     req.session.token = user.userToken;
     req.session.secret = user.userTokenSecret;
     res.redirect('/review');
-  });
-  //       passport.authenticate('twitter',{
-  // successRedirect: '/review',
-  // failureRedirect: '/auth/twitter/failure'
-// })
-       
+  });  
 });
         
 app.get('/auth/twitter/failure', function(req,res){
   console.log('failed twitter login');
   res.redirect('/');
+});
+
+app.get('/logout', (req, res) => {
+  
 });
 
 // listen for requests :)
