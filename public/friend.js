@@ -22,14 +22,11 @@ let friendComp = Vue.component('friend-card', {
   created: function() {
     console.log('friend component loaded', this.id);
     this.getData(this.id);
-    twttr.widgets.load();
   },
   watch: {
     id: function(newValue) {
       console.log('id changed', newValue);
       this.getData(newValue);
-      //this.$forceUpdate();
-      twttr.widgets.load();
     }
   },
   computed: {
@@ -37,31 +34,35 @@ let friendComp = Vue.component('friend-card', {
       return 'https://twitter.com/'+ this.user.screen_name + '?ref_src=twsrc%5Etfw'
     }
   },
-  template: `
-    
+  updated: function() {
+    twttr.widgets.load();
+  },
+  template: ` 
     <div id='friend' v-cloak>
-      <div id='twttr-widget'>
-      <a class="twitter-timeline"
-        data-width="400"
-        data-height="400"
-        data-dnt="true"
-        data-theme="light"
-        data-chrome="nofooter"
-        v-bind:href="href">Tweets by {{ user.screen_name }}</a>
    
       <h2>
         {{ user.screen_name }}
       </h2>
-      <ol>
-        <li v-for='t in tweets'>
-          {{ t.text }}
-          <br>
-          <img v-if='t.entities && t.entities.media && t.entities.media[0]' v-bind:src='t.entities.media[0].media_url_https'>
-          <br>
-          <i>{{ t.created_at }}</i>
-        </li>
-      </ol>
-
+      <div id='twttr-widget' :key='user.screen_name'>
+        <a class="twitter-timeline"
+          data-width="400"
+          data-height="800"
+          data-dnt="true"
+          data-theme="light"
+          data-chrome="nofooter noheader"
+          v-bind:href="href">Tweets by {{ user.screen_name }}</a>
+      </div>
     </div>
   `
 });
+
+// <ol>
+//         <li v-for='t in tweets'>
+//           {{ t.text }}
+//           <br>
+//           <img v-if='t.entities && t.entities.media && t.entities.media[0]' v-bind:src='t.entities.media[0].media_url_https'>
+//           <br>
+//           <i>{{ t.created_at }}</i>
+//         </li>
+//       </ol>
+
