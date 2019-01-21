@@ -197,6 +197,7 @@ app.get('/auth/twitter', (req, res, next) => {
     }
     
     req.session.oauthTokenSecret = tokenSecret; // NOT THE SAME AS USER TOKEN AND USER SECRET
+    console.log('tokenSecret', tokenSecret);
     // Redirect to callback URL with query params
     res.redirect(url);
   });
@@ -207,7 +208,6 @@ app.get('/auth/twitter', (req, res, next) => {
 // callback url, must add this to your app on twitters developer portal
 app.get('/auth/twitter/callback', (req, res, next) => {
   console.log('callback', req.query);
-  console.log('callback', req.params);
   const {
     oauth_token,
     oauth_verifier
