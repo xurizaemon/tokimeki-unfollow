@@ -12,7 +12,11 @@ const passport = require('passport');
 let {Strategy} = require('passport-twitter');
 const session = require('cookie-session');
 const twitter = require('twit');
-const LoginWithTwitter = require('login-with-twitter');
+const LoginWithTwitter = new (require('login-with-twitter'))({
+  consumerKey: process.env.KEY,
+  consumerSecret: process.env.SECRET,
+  callbackUrl: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback' 
+});
 let twit;
 
 // Temp holder vars we need to store in session
@@ -185,20 +189,40 @@ app.get('/data/friends', (req, res) => {
 });
 
 // setup login route to link to with login link on website
-app.get('/auth/twitter', (req, res) => {
-  const login = LoginWithTwitter({
-    consumerKey: process.env.KEY,
-    consumerSecret: process.env.SECRET,
-    callbackURL: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback' 
+app.get('/auth/twitter', (req, res, next) => {
+  LoginWithTwitter.login((err, tokenSecret, url) => {
+    if (err) {
+      console.log(err);
+      return next(err);
+    }
+    
+    req.session.secret = tokenSecret;
+    // Redirect to callback URL with query params
+    res.redirect(url);
   });
   // passport.authenticate('twitter')
 
 });
 
 // callback url, must add this to your app on twitters developer portal
-app.get('/auth/twitter/callback', (req, res) => {
+app.get('/auth/twitter/callback', (req, res, next) => {
   console.log('callback', req.query);
   console.log('callback', req.params);
+  const {
+    oauth_token,
+    oauth_verifier
+  } = req.query;
+  LoginWithTwitter.callback({
+    oauth_token,
+    oauth_verifier
+  }, req.session.secret, (err, user) => {
+    if (err) {
+      console.log(err);
+      return next(err);
+    }
+    req.session.profile = user;
+    conso
+  });
   //       passport.authenticate('twitter',{
   // successRedirect: '/review',
   // failureRedirect: '/auth/twitter/failure'
