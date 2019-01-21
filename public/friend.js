@@ -22,11 +22,13 @@ let friendComp = Vue.component('friend-card', {
   created: function() {
     console.log('friend component loaded', this.id);
     this.getData(this.id);
+    twttr.widgets.load();
   },
   watch: {
     id: function(newValue) {
       console.log('id changed', newValue);
       this.getData(newValue);
+      twttr.widgets.load();
     }
   },
   computed: {
@@ -37,6 +39,14 @@ let friendComp = Vue.component('friend-card', {
   template: `
     
     <div id='friend' v-cloak>
+      <a class="twitter-timeline"
+        data-width="400"
+        data-height="400"
+        data-dnt="true"
+        data-theme="light"
+        data-chrome="nofooter"
+        v-bind:href="href">Tweets by {{ user.screen_name }}</a>
+   
       <h2>
         {{ user.screen_name }}
       </h2>
