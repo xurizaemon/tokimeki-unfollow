@@ -46,7 +46,7 @@ let friendComp = Vue.component('friend-card', {
       <div id='twttr-widget' :key='user.screen_name'>
         <a class="twitter-timeline"
           data-width="400"
-          data-height="800"
+          data-height="100vh"
           data-dnt="true"
           data-theme="light"
           data-chrome="nofooter noheader"
