@@ -74,6 +74,11 @@ footer {
   display: none;
 }
 
+input[type="checkbox"] {
+  display: inline-block;
+  width: auto;
+}
+
 #twttr-widget {
   height: 100vh;
   margin: 0 auto;

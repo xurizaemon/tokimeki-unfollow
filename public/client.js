@@ -49,7 +49,8 @@ function render(res) {
       friends: res.friends,
       user: res.user,
       friend: { screen_name: "Loading..." },
-      tweets: []
+      tweets: [],
+      introFinished: false
     },
     methods: {
       next: function(e) {

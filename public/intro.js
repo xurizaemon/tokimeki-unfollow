@@ -6,7 +6,7 @@ let wdgt = Vue.component('intro', {
   },
   props: [
     'username',
-    'followingCount'
+    'following-count'
   ],
   methods: {
     start: function(e) {
@@ -35,9 +35,12 @@ let wdgt = Vue.component('intro', {
           <input type="checkbox" id="showBio" value="showBio">
           <label for="showBio">Show account bios</label>
         </div>
-      1. Show bio info
-      2. Save KonMari progress as a private Twitter ilst
-      <a href='#' v-on:click="$emit('intro-finished')">
+        <div>
+          <input type="checkbox" id="saveList" value="saveList">
+          <label for="saveList">Save KonMari progress as a private Twitter ilst</label>
+        </div>
+      </form>
+      <a href='#' v-on:click="$emit('intro-finished')">Start</a>
   </div>
   `
 });

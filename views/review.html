@@ -6,12 +6,11 @@
   </head>
   <body>
     <div id="app" v-cloak>
-      <div id="intro">
-        <h1>
-          Hello, {{ user.screen_name }}! You're following {{ friends.length }} tweeters.
-        </h1>  
-      </div>
-      <intro></intro>
+      <intro
+        v-bind:username="user.screen_name"
+        v-bind:following-count="friends.length"
+        v-bind:shown="introFinished"
+        v-on:intro-finished="introFinished = true"></intro>
       <div id="ctrl">
         <a href="#" v-on:click="prev">Prev</a>
         <a href="#" v-on:click="next">Next</a>
