@@ -37,9 +37,9 @@ let wdgt = Vue.component('intro', {
         Take a deep breath! Let's walk through our follows, one by one, and think about if each one still sparks joy, intrigue, inspiration,
         or is in any way still important to you. <b>If not, hit that Unfollow button!</b>
       </p>
-      <h2>
-        Options:
-      </h2>
+      <h3>
+        Options
+      </h3>
       <form>
         <p>
           <input type="checkbox" id="showBio" value="showBio">
@@ -64,7 +64,8 @@ let wdgt = Vue.component('intro', {
           <label for="newest">Newest follow, reverse chronological</label><br>
         </p>
       </form>
-      <a href='#' v-on:click="$emit('intro-finished')">Start</a>
+      <br>
+      <a href='#' class='button' v-on:click="$emit('intro-finished')">Start</a>
   </div>
   `
 });
