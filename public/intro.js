@@ -6,7 +6,7 @@ let wdgt = Vue.component('intro', {
   },
   props: [
     'username',
-    'following-count'
+    'followingcount'
   ],
   methods: {
     start: function(e) {
@@ -21,20 +21,21 @@ let wdgt = Vue.component('intro', {
   template: ` 
     <div id='intro' v-cloak>
       <h1>
-        Hello, @{{ username }}! Let's KonMari those {{following-count}} accounts you're following ~_~
+        Hello, @{{ username }}! Let's konmari those {{followingcount}} accounts you're following ~_~
       </h1>
       <p>
-        If you're not happy with the mix of content you're seeing in your feed
-        and you think it's because of the ginormous list of accounts you follow,
+        If you hate looking at your feed and you think it's because you follow too many accounts,
         you're in the right place!
       </p>
       <p>
         If you're like me, you've followed a bajillion accounts over your years on Twitter dot com.
         Some of them date back to your first days on Twitter, when you were probably an entirely different human being.
-        You have some socially-obliged follows sprinkled among some thought leaders you've outgrown.
+        You have some socially-obliged follows sprinkled among some thought leaders you've outgrown,
+        but you've never found the energy to go through and clean up your follows.
       </p>
       <p>
-        Let's walk through our follows, one by one
+        Take a deep breath! Let's walk through our follows, one by one, and think about if each one still sparks joy, intrigue, inspiration,
+        or is in any way still important to you. <b>If not, hit that Unfollow button!</b>
       </p>
       <h2>
         Options:
@@ -42,11 +43,12 @@ let wdgt = Vue.component('intro', {
       <form>
         <div>
           <input type="checkbox" id="showBio" value="showBio">
-          <label for="showBio">Show account bios</label>
+          <label for="showBio"><b>Show account bios</b> (Recommended: off)
+            I've followed a lot of accounts based on their profile, and not their actual content.</label>
         </div>
         <div>
           <input type="checkbox" id="saveList" value="saveList">
-          <label for="saveList">Save KonMari progress as a private Twitter ilst</label>
+          <label for="saveList"><b>Save progress as a private Twitter list</b> so you can resume</label>
         </div>
       </form>
       <a href='#' v-on:click="$emit('intro-finished')">Start</a>
