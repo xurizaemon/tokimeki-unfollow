@@ -103,10 +103,14 @@ input[type="checkbox"] {
 #ctrl {
   position: absolute;
   bottom: 0;
-  height: 60px;
+  height: 100px;
   left: 50%;
   width: 400px;
   margin-left: -200px;
+  background: black;
+  border:2px solid white;
+  color: white;
+  text-align:center;
 }
 
 .button {
@@ -120,17 +124,26 @@ input[type="checkbox"] {
 }
 
 .button:hover {
-  transform: rotate(10deg);
+
+  background:#E15C5C;
 }
 
 .abs { position: absolute }
 .right {
-  right: -1em;
+/*   right: -1em; */
+  left: 90%;
   transform: rotate(-10deg);
 }
+.button.right:hover{
+  transform: rotate(-5deg);
+}
 .left {
-  left: -1em;
+/*   left: -1em; */
+  right:90%;
   transform: rotate(10deg);
+}
+.button.left:hover{
+  transform: rotate(5deg);
 }
 
 #logout {
