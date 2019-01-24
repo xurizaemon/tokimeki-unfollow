@@ -5,8 +5,12 @@
   box-sizing: border-box;
 }
 
+.flex { display: flex }
+.flex-col { flex-direction: column }
+
 body {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  background: #7370EC;
 /*   margin: 2em; */
 }
 
@@ -80,10 +84,20 @@ input[type="checkbox"] {
 }
 
 #twttr-widget {
-  margin: 0 auto;
+  position: absolute;
+  bottom: 60px;
+  top: 0;
+  left: 50%;
+  margin-left: -200px;
 }
 
 #ctrl {
+  position: absolute;
+  bottom: 0;
+  height: 60px;
+  background:white;
+  left: 0;
+  right: 0;
 }
 
 #logout {

@@ -15,7 +15,7 @@ let wdgt = Vue.component('twttr-widget', {
     <div id='twttr-widget' :key='username' v-cloak>
       <a class="twitter-timeline"
         data-width="400"
-        data-height="100vh"
+        data-height="100%"
         data-dnt="true"
         data-theme="light"
         data-chrome="nofooter noheader"

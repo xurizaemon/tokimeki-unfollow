@@ -12,11 +12,11 @@
         v-if="introFinished==false"
         v-on:intro-finished="introFinished = true"></intro>
       <div v-else>
+        <twttr-widget v-bind:username="selFriendUsername"></twttr-widget>
         <div id="ctrl">
           <a href="#" v-on:click="prev">Prev</a>
           <a href="#" v-on:click="next">Next</a>
         </div>
-        <twttr-widget v-bind:username="selFriendUsername"></twttr-widget>
       </div>
       <div id="logout">
         <a href="/logout">Log Out</a>
