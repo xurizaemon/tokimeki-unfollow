@@ -46,7 +46,9 @@ function render(res) {
     data: {
       sel: 0,
       friends: res.friends,
-      user: res.user
+      user: res.user,
+      friend: { screen_name: "Loading..." },
+      tweets: []
     },
     methods: {
       next: function(e) {
@@ -54,7 +56,24 @@ function render(res) {
       },
       prev: function(e) {
         this.sel = Math.max(this.sel - 1, 0);
+      },
+      getData: function(userId) {
+        Promise.all([
+          window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId),
+          window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + userId)
+        ]).then(res => Promise.all(res.map(r => r.json())))
+          .then(res => {
+          console.log(res);
+          this.friend = res[0].user;
+          this.tweets = res[1].tweets;
+        });
       }
+    },
+    created: function() {
+      this.getData(this.selFriendId);
+    },
+    watch: {
+      
     },
     computed: {
       selFriendId: function(e) {

@@ -75,10 +75,8 @@ footer {
 }
 
 #twttr-widget {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  height: 100vh;
+  margin: 0 auto;
 }
 
 #debug {

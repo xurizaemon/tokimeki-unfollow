@@ -1,8 +1,8 @@
 let friendComp = Vue.component('friend-card', {
   data: function() {
     return {
-      user: {screen_name:'test'},
-      tweets: [{text:'1'},{text:'2'},{text:'3'}]
+      user: {screen_name:'Loading...'},
+      tweets: [{text:'Loading tweets...'},{text:'...'},{text:'...'}]
     }
   },
   props: ['id'],
@@ -20,7 +20,6 @@ let friendComp = Vue.component('friend-card', {
     }
   },
   created: function() {
-    console.log('friend component loaded', this.id);
     this.getData(this.id);
   },
   watch: {
@@ -39,7 +38,6 @@ let friendComp = Vue.component('friend-card', {
   },
   template: ` 
     <div id='friend' v-cloak>
-   
       <h2>
         {{ user.screen_name }}
       </h2>
