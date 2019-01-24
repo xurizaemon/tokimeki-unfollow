@@ -6,16 +6,17 @@
   </head>
   <body>
     <div id="app" v-cloak>
-      <div id="context">
+      <div id="intro">
         <h1>
           Hello, {{ user.screen_name }}! You're following {{ friends.length }} tweeters.
         </h1>  
       </div>
+      <intro></intro>
       <div id="ctrl">
         <a href="#" v-on:click="prev">Prev</a>
         <a href="#" v-on:click="next">Next</a>
       </div>
-      <friend-card v-bind:id="selFriendId"></friend-card>
+      <twttr-widget v-bind:username="selFriendUsername"></twttr-widget>
       <div id="logout">
         <a href="/logout">Log Out</a>
       </div>

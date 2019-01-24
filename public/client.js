@@ -1,4 +1,5 @@
-import * as Friend from './friend.js';
+import * as Intro from './intro.js';
+import * as Tweets from './tweets.js';
 let store = window.localStorage;
 
 if (invalidateStore(store)) {
@@ -73,11 +74,16 @@ function render(res) {
       this.getData(this.selFriendId);
     },
     watch: {
-      
+      sel: function(newId) {
+        this.getData(this.selFriendId);
+      }
     },
     computed: {
       selFriendId: function(e) {
         return this.friends[this.sel];
+      },
+      selFriendUsername: function(e) {
+        return this.friend.screen_name;
       },
       iframeURL: function(e) {
         return 'https://twitter.com/intent/user?user_id='+this.friends[this.sel];
