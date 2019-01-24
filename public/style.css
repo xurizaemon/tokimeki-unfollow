@@ -17,6 +17,7 @@ body {
 h1 {
   font-style: italic;
   color: #373fff;
+  margin-top: 0;
 }
 
 .bold {
@@ -28,12 +29,11 @@ p {
 }
 
 form {
-/*   margin-bottom: 25px;
-  padding: 15px;
-  background-color: cyan;
+/*   margin-bottom: 1em;
+  padding: 1em;
+  background-color: #DBFFEA;
   display: inline-block;
   width: 100%;
-  max-width: 340px;
   border-radius: 3px; */
 }
 
@@ -83,21 +83,54 @@ input[type="checkbox"] {
   width: auto;
 }
 
+#intro {
+  background: white;
+  padding: 2em;
+}
+
 #twttr-widget {
+  background: white;
   position: absolute;
-  bottom: 60px;
+  bottom: 0;
   top: 0;
   left: 50%;
+  width: 400px;
+  text-align:center;
   margin-left: -200px;
+  overflow: hidden;
 }
 
 #ctrl {
   position: absolute;
   bottom: 0;
   height: 60px;
-  background:white;
-  left: 0;
-  right: 0;
+  left: 50%;
+  width: 400px;
+  margin-left: -200px;
+}
+
+.button {
+  background: #F16A6A;
+  color: white;
+  font-weight: bold;
+  border: 2px solid black;
+  padding: .5em 1em;
+  border-radius:4px;
+  text-decoration:none;
+}
+
+.button:hover {
+  transform: rotate(10deg);
+}
+
+.abs { position: absolute }
+.right {
+  right: -1em;
+  transform: rotate(-10deg);
+}
+.left {
+  left: -1em;
+  transform: rotate(10deg);
 }
 
 #logout {
