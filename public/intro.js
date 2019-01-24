@@ -21,11 +21,20 @@ let wdgt = Vue.component('intro', {
   template: ` 
     <div id='intro' v-cloak>
       <h1>
-        Hello, {{ username }}! Let's KonMari that Twitter feed~
+        Hello, @{{ username }}! Let's KonMari those {{following-count}} accounts you're following ~_~
       </h1>
       <p>
-        A couple of things: this is a slightly opinionated unfollowing tool.
-        I've carried some of my own biases about what "sparks joy" for me, and this may not be for everyone.
+        If you're not happy with the mix of content you're seeing in your feed
+        and you think it's because of the ginormous list of accounts you follow,
+        you're in the right place!
+      </p>
+      <p>
+        If you're like me, you've followed a bajillion accounts over your years on Twitter dot com.
+        Some of them date back to your first days on Twitter, when you were probably an entirely different human being.
+        You have some socially-obliged follows sprinkled among some thought leaders you've outgrown.
+      </p>
+      <p>
+        Let's walk through our follows, one by one
       </p>
       <h2>
         Options:

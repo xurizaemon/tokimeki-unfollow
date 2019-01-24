@@ -9,7 +9,7 @@
       <intro
         v-bind:username="user.screen_name"
         v-bind:following-count="friends.length"
-        v-bind:shown="introFinished"
+        v-if="introFinished==false"
         v-on:intro-finished="introFinished = true"></intro>
       <div id="ctrl">
         <a href="#" v-on:click="prev">Prev</a>
