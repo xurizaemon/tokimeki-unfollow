@@ -24,13 +24,13 @@ let wdgt = Vue.component('intro', {
         Hello, @{{ username }}! Let's konmari those {{followingcount}} accounts you're following ~_~
       </h1>
       <p>
-        If you hate looking at your feed and you think it's because you follow too many accounts,
-        you're in the right place!
+        Do you think your feed sucks because you follow too many accounts?
+        You're in the right place!
       </p>
       <p>
         If you're like me, you've followed a bajillion accounts over your years on Twitter dot com.
-        Some of them date back to your first days on Twitter, when you were probably an entirely different human being.
-        You have some socially-obliged follows sprinkled among some thought leaders you've outgrown,
+        Some of them date back to your first days as an egg — when you were probably an entirely different human being.
+        You have some socially-obliged follow-backs sprinkled among some thought leaders you've outgrown,
         but you've never found the energy to go through and clean up your follows.
       </p>
       <p>
@@ -48,7 +48,10 @@ let wdgt = Vue.component('intro', {
         </div>
         <div>
           <input type="checkbox" id="saveList" value="saveList">
-          <label for="saveList"><b>Save progress as a private Twitter list</b> so you can resume</label>
+          <label for="saveList"><b>Save progress as a private Twitter list</b> (Recommended: on)
+            Turn this on so you can resume this process from any device.
+            If this is disabled, I'll save your progress to your web browser's local storage.
+            It's going to be hard to do this all in one go</label>
         </div>
       </form>
       <a href='#' v-on:click="$emit('intro-finished')">Start</a>
