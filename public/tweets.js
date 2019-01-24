@@ -5,6 +5,9 @@ let wdgt = Vue.component('twttr-widget', {
       return 'https://twitter.com/'+ this.username + '?ref_src=twsrc%5Etfw'
     }
   },
+  mounted: function() {
+    twttr.widgets.load();
+  },
   updated: function() {
     twttr.widgets.load();
   },
@@ -16,7 +19,7 @@ let wdgt = Vue.component('twttr-widget', {
         data-dnt="true"
         data-theme="light"
         data-chrome="nofooter noheader"
-        v-bind:href="href">Tweets by {{ username }}</a>
+        v-bind:href="href">Loading tweets by {{ username }}...</a>
     </div>
   `
 });

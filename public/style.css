@@ -7,7 +7,7 @@
 
 body {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
-  margin: 2em;
+/*   margin: 2em; */
 }
 
 h1 {
@@ -80,8 +80,16 @@ input[type="checkbox"] {
 }
 
 #twttr-widget {
-  height: 100vh;
   margin: 0 auto;
+}
+
+#ctrl {
+}
+
+#logout {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 #debug {
