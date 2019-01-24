@@ -9,7 +9,7 @@
       <intro
         v-bind:username="user.screen_name"
         v-bind:followingcount="friends.length"
-        v-if="introFinished"
+        v-if="introFinished==false"
         v-on:intro-finished="introFinished = true"></intro>
       <div v-else>
         <twttr-widget v-bind:username="selFriendUsername"></twttr-widget>

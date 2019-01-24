@@ -41,18 +41,28 @@ let wdgt = Vue.component('intro', {
         Options:
       </h2>
       <form>
-        <div>
+        <p>
           <input type="checkbox" id="showBio" value="showBio">
-          <label for="showBio"><b>Show account bios</b> (Recommended: off)
+          <label for="showBio"><b>Show account bio's</b> (Recommended: off)<br>
             I've followed a lot of accounts based on their profile, and not their actual content.</label>
-        </div>
-        <div>
-          <input type="checkbox" id="saveList" value="saveList">
-          <label for="saveList"><b>Save progress as a private Twitter list</b> (Recommended: on)
+        </p>
+        <p>
+          <input type="checkbox" id="saveList" value="saveList" checked>
+          <label for="saveList"><b>Save progress as a private Twitter list</b> (Recommended: on)<br>
             Turn this on so you can resume this process from any device.
             If this is disabled, I'll save your progress to your web browser's local storage.
             It's going to be hard to do this all in one go</label>
-        </div>
+        </p>
+        <p>
+          <b>Select an order to use:</b> (Recommended: Oldest first)
+          <br>
+          <input type="radio" name="order" id="oldest" value="oldest" checked>
+          <label for="oldest">Oldest follow, chronological</label><br>
+          <input type="radio" name="order" id="random" value="random">
+          <label for="random">Random follow, random order</label><br>
+          <input type="radio" name="order" id="newest" value="newest">
+          <label for="newest">Newest follow, reverse chronological</label><br>
+        </p>
       </form>
       <a href='#' v-on:click="$emit('intro-finished')">Start</a>
   </div>

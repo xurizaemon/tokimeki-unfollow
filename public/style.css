@@ -86,6 +86,8 @@ input[type="checkbox"] {
 #intro {
   background: white;
   padding: 2em;
+  margin: 0 auto;
+  max-width: 600px;
 }
 
 #twttr-widget {
