@@ -6,7 +6,6 @@
   </head>
   <body>
     <div id="app" v-cloak>
-      <div v-if="introFinished==false" id="avvy"></div>
       <intro
         v-bind:username="user.screen_name"
         v-bind:followingcount="friends.length"
@@ -22,22 +21,22 @@
           </div>
           <div id="info">
             <h3>
-              {{friend.name}}
+              {{friend.name}} <span class="notbold gray">@{{ friend.screen_name }}</span>
             </h3>
-            <h4>
-              @{{ friend.screen_name }}
-            </h4>
             <div v-if="showBio==false">
               <a href="#" v-on:click="showBio = true">View bio</a>
             </div>
             <div v-else id="bio">
               {{ friend.description }}
+              <br>
+              <a href="#" v-on:click="showBio = false">Hide bio</a>
             </div>
           </div>
         </div>
       </div>
       <div id="logout">
         <a href="/logout">Log Out</a>
+        <a href="#" v-if="introFinished" v-on:click="introFinished=false">Intro</a>
       </div>
       <div id="debug">
         <ol>

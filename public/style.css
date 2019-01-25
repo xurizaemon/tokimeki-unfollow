@@ -5,9 +5,6 @@
   box-sizing: border-box;
 }
 
-.flex { display: flex }
-.flex-col { flex-direction: column }
-.fixed { position: fixed }
 
 body {
   font-family: monospace;
@@ -25,6 +22,14 @@ h1 {
 
 .bold {
   font-weight: bold;
+}
+
+.notbold {
+  font-weight: normal;
+}
+
+.gray {
+  color:#888;
 }
 
 p {
@@ -116,8 +121,8 @@ input[type="checkbox"] {
   bottom: 1em;
   height: 8em;
   left: 50%;
-  width: 480px;
-  margin-left: -240px;
+  width: 600px;
+  margin-left: -300px;
   background: white;
 }
 
@@ -127,8 +132,6 @@ input[type="checkbox"] {
 
 #ctrl h4 {
   margin-bottom: .5em;
-  color: #888;
-  font-weight: normal;
 }
 
 #btns {
@@ -171,7 +174,7 @@ input[type="checkbox"] {
 }
 
 #logout {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
 }
@@ -190,3 +193,17 @@ input[type="checkbox"] {
   right: -80px;
 /*   margin-right: -80px; */
 }
+
+#avvy-intro {
+  background: url('https://cdn.glitch.com/74263575-5bd6-41c7-8958-90c644fd4514%2Favvy.png?1548396809219');
+  background-size: 100%;
+  width: 160px;
+  height: 160px;
+  bottom: 0;
+  left: 50%;
+  margin-left: 220px;
+}
+
+.flex { display: flex }
+.flex-col { flex-direction: column }
+.fixed { position: fixed }

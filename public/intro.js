@@ -20,7 +20,7 @@ let wdgt = Vue.component('intro', {
   },
   template: ` 
     <div id='intro' v-cloak>
-      <div id="avvy" class="fixed"></div>
+      <div id="avvy-intro" class="fixed"></div>
       <h1>
         Hello, @{{ username }}! Let's konmari those {{followingcount}} accounts you're following ~_~
       </h1>
