@@ -109,9 +109,9 @@ input[type="checkbox"] {
   text-align:center;
   margin-left: -200px;
   overflow: hidden;
-  border: .5em solid black;
-  border-radius: 2em;
-  box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1);
+/*   border: .5em solid black; */
+/*   border-radius: 2em; */
+/*   box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1); */
 }
 
 #ctrl {
