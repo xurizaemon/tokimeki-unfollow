@@ -50,14 +50,22 @@ function render(res) {
       user: res.user,
       friend: { screen_name: "Loading..." },
       tweets: [],
-      introFinished: false
+      introFinished: false,
+      showBio: false,
+      prefs: {
+        showBio: false,
+        order: 'newest',
+        
+      }
     },
     methods: {
       next: function(e) {
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
+        this.showBio = false;
       },
       prev: function(e) {
         this.sel = Math.max(this.sel - 1, 0);
+        this.showBio = false;
       },
       getData: function(userId) {
         Promise.all([
