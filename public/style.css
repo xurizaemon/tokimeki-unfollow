@@ -14,10 +14,11 @@ body {
 /*   margin: 2em; */
 }
 
+h1, h2, h3, h4, h5 { margin-top: 0 }
+
 h1 {
   font-style: italic;
   color: #373fff;
-  margin-top: 0;
 }
 
 .bold {
@@ -104,6 +105,7 @@ input[type="checkbox"] {
 }
 
 #ctrl {
+  padding: 1em;
   position: absolute;
   bottom: 0;
   height: 100px;
@@ -111,9 +113,25 @@ input[type="checkbox"] {
   width: 400px;
   margin-left: -200px;
   background: black;
-  border:2px solid white;
+/*   border:2px solid white; */
   color: white;
   text-align:center;
+}
+
+#ctrl h3 {
+  margin-bottom: .25em;
+}
+
+#ctrl h4 {
+  color: rgba(255,255,255,.5);
+}
+
+.button-pill {
+  background: rgba(255,255,255,.5);
+  color: white;
+  padding: .5em 1em;
+  border-radius: 99px;
+  text-decoration: none;
 }
 
 .button {
@@ -127,7 +145,6 @@ input[type="checkbox"] {
 }
 
 .button:hover {
-
   background:#E15C5C;
 }
 
