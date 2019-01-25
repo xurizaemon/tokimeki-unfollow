@@ -12,14 +12,17 @@
         v-if="introFinished==false"
         v-on:intro-finished="introFinished = true"></intro>
       <div v-else>
-        <twttr-widget v-bind:username="selFriendUsername"></twttr-widget>
+        <twttr-widget v-bind:username="friend.screen_name"></twttr-widget>
         <div id="ctrl">
           <a href="#" v-on:click="prev" class="button abs left">Unfollow</a>
           <a href="#" v-on:click="next" class="button abs right">Keep</a>
           <div id="info">
             <h2>
-              @{{ selFriendUsername }}
+              {{friend.name}}
             </h2>
+            <h3>
+              @{{ friend.screen_name }}
+            </h3>
           </div>
         </div>
       </div>
