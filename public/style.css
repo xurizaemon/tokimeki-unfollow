@@ -10,7 +10,7 @@
 
 body {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
-  background: #7370EC;
+  background: #eee;
 /*   margin: 2em; */
 }
 
@@ -110,8 +110,8 @@ input[type="checkbox"] {
   bottom: 0;
   height: 100px;
   left: 50%;
-  width: 400px;
-  margin-left: -200px;
+  width: 480px;
+  margin-left: -240px;
   background: black;
 /*   border:2px solid white; */
   color: white;
@@ -135,13 +135,13 @@ input[type="checkbox"] {
 }
 
 .button {
-  background: #F16A6A;
-  color: white;
+  background: white;
+  color: blue;
   font-weight: bold;
   border: 2px solid black;
   padding: .5em 1em;
   border-radius:4px;
-  text-decoration:none;
+/*   text-decoration:none; */
 }
 
 .button:hover {
