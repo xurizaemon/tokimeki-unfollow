@@ -179,3 +179,10 @@ input[type="checkbox"] {
 #debug {
   display: none;
 }
+
+#avvy {
+  background: url('https://cdn.glitch.com/74263575-5bd6-41c7-8958-90c644fd4514%2Favvy.png?1548396809219');
+  background-size: 50% 50%;
+  width: 160px;
+  height: 160px;
+}
