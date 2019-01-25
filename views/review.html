@@ -15,8 +15,10 @@
         <twttr-widget v-bind:username="friend.screen_name"></twttr-widget>
         <div id="ctrl">
           <div id="avvy"></div>
-          <a href="#" v-on:click="prev" class="button abs left">Unfollow</a>
-          <a href="#" v-on:click="next" class="button abs right">Keep</a>
+          <div id="btns">
+            <a href="#" v-on:click="prev" class="button">Unfollow</a>
+            <a href="#" v-on:click="next" class="button">Keep</a>
+          </div>
           <div id="info">
             <h3>
               {{friend.name}}
