@@ -27,7 +27,8 @@ function unfollow(userId, callback) {
 }
 
 function addToList(userId, listId) {
-
+  post('/lists/create', {
+  })
 }
 
 function keep(userId) {
