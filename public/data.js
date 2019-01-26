@@ -9,7 +9,8 @@ function unfollow(userId, callback) {
     body: JSON.stringify({
       userId: userId
     })
-  }).then(res => res.json())
+  }).catch(e => console.log('error', e.stack))
+    .then(res => res.json())
     .then(res => {
     console.log('unfollow response', res);
     if (res.status == 200) {

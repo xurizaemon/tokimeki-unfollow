@@ -83,6 +83,8 @@ function render(res) {
       },
       unfollow: function() {
         Data.unfollow(this.selFriendId, function(userId) {
+          console.log(this);
+          console.log(this.unfollowed);
           this.unfollowed.push(userId);
           console.log('unfollowed', userId);
           console.log(this.unfollowed);
@@ -109,8 +111,7 @@ function render(res) {
         return this.friend.screen_name;
       },
       selFriendIsUnfollowed: function(e) {
-        console.log(this.unfollowed.filter(id => id == this.selFriendId));
-        return this.unfollowed.filter(id => id == this.selFriendId);
+        return this.unfollowed.includes(this.selFriendId);
       },
       iframeURL: function(e) {
         return 'https://twitter.com/intent/user?user_id='+this.friends[this.sel];
