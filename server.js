@@ -107,18 +107,32 @@ app.get('/data/tweets/:userId', (req, res) => {
 });
 
 app.get('/data/friends', (req, res) => {
-    twit.get('friends/ids', {
-      stringify_ids: true
-    })
-      .catch((e) => console.log('error', e.stack))
-      .then((result) => {
-       res.send({
-         friends: result.data.ids
-       });
-    });
+  twit.get('friends/ids', {
+    stringify_ids: true
+  })
+    .catch((e) => console.log('error', e.stack))
+    .then((result) => {
+     res.send({
+       friends: result.data.ids
+     });
+  });
 });
 
 app.post('/data/unfollow', (req, res) => {
+  console.log(req.body);
+  twit.post('friendships/destroy', {
+    user_id: req.body.userId
+  }).catch(e => {
+    console.log('error unfollowing', e.stack);
+    res.send({
+      status: 500,
+      error: e.stack
+    });
+  }).then(result => {
+      res.send({
+        status: 200
+      });
+    });
 });
 
 // setup login route to link to with login link on website

@@ -78,7 +78,12 @@ function render(res) {
           this.friend = res[0].user;
           this.tweets = res[1].tweets;
         });
-      }
+      },
+      unfollow: function() {
+        Data.unfollow(this.selFriendId);
+      },
+      addToList: Data.addToList,
+      keep: Data.keep
     },
     created: function() {
       this.getData(this.selFriendId);
