@@ -129,7 +129,7 @@ app.post('/data/unfollow', (req, res) => {
       error: e.stack
     });
   }).then(result => {
-    console.log(result);
+    console.log(result.resp.toJSON());
     res.send({
       status: 200
     });
