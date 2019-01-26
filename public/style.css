@@ -9,6 +9,7 @@
 body {
   font-family: monospace;
   font-size: 16px;
+  line-height: 1.2em;
   background: #eee;
 /*   margin: 2em; */
 }
@@ -109,20 +110,21 @@ input[type="checkbox"] {
   text-align:center;
   margin-left: -200px;
   overflow: hidden;
-/*   border: 4px solid black; */
-  /*   border-radius: 2em; */
-/*   box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1); */
+/*   border: 2px solid black; */
+/*     border-radius: 2em; */
+  box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1);
 }
 
 #ctrl {
-  padding: 1em;
+  padding: 1.2em;
   position: absolute;
   bottom: 2em;
-  height: 7em;
+  height: 6.8em;
   left: 50%;
   width: 600px;
   margin-left: -300px;
   background: white;
+/*   border: 2px solid black; */
 }
 
 #ctrl h3 {
@@ -154,7 +156,7 @@ input[type="checkbox"] {
 .button {
   background: white;
   color: blue;
-  box-shadow: 2px 2px 4px 0 rgba(0,0,0,.1);
+  box-shadow: .25em .5em .5em 0 rgba(0,0,0,.1);
   font-weight: bold;
   padding: .5em 1em;
   margin-bottom: .5em;
