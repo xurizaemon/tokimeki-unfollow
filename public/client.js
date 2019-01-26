@@ -1,5 +1,6 @@
 import * as Intro from './intro.js';
 import * as Tweets from './tweets.js';
+import * as Data from './data.js';
 let store = window.localStorage;
 
 if (invalidateStore(store)) {

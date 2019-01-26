@@ -15,6 +15,7 @@ let twit;
 
 const app = express();
 app.use(express.static('public'));
+app.use(express.json()); // handle parsing json data from requests
 app.use(session({
   name: 'session',
   secret: 'keyboard cat',
@@ -115,6 +116,9 @@ app.get('/data/friends', (req, res) => {
          friends: result.data.ids
        });
     });
+});
+
+app.post('/data/unfollow', (req, res) => {
 });
 
 // setup login route to link to with login link on website
