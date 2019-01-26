@@ -9,18 +9,26 @@
       <intro
         v-bind:username="user.screen_name"
         v-bind:followingcount="friends.length"
-        v-if="introFinished==false"
+        v-if="introFinished"
         v-on:intro-finished="introFinished = true"></intro>
       <div v-else>
         <twttr-widget v-bind:username="friend.screen_name"></twttr-widget>
         <div id="ctrl">
           <div id="avvy"></div>
-          <div id="btns">
-            <a href="#" v-on:click="prev" class="button">Unfollow</a>
+<!--           <div id="btns">
+             <a href="#" v-on:click="prev" class="button">Unfollow</a>
             <a href="#" v-on:click="next" class="button">Keep</a>
-          </div>
+          </div> -->
           <div id="info">
-            <h3>
+            <p>
+            First up, <strong>{{ friend.name }}</strong>
+            <span class="gray">@{{ friend.screen_name }}</span>!
+            </p>
+            What would you like to do?
+            <a href="#" v-on:click="prev" class="button dib">Unfollow</a>
+            <a href="#" v-on:click="next" class="button dib">Keep</a>
+            
+<!--             <h3>
               {{friend.name}} <span class="notbold gray">@{{ friend.screen_name }}</span>
             </h3>
             <div v-if="showBio==false">
@@ -30,7 +38,7 @@
               {{ friend.description }}
               <br>
               <a href="#" v-on:click="showBio = false">Hide bio</a>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

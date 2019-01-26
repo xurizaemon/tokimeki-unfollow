@@ -66,7 +66,7 @@ let wdgt = Vue.component('intro', {
         </p>
       </form>
       <br>
-      <a href='#' class='button' v-on:click="$emit('intro-finished')">Start</a>
+      <a href='#' class='button block' v-on:click="$emit('intro-finished')">Start</a>
   </div>
   `
 });
