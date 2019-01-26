@@ -44,6 +44,10 @@ function invalidateStore(store) {
     store.getItem('friends') === null
 }
 
+function defaultAppData() {
+  return 
+}
+
 function render(res) {
   console.log('Rendering ', res);
 
@@ -100,6 +104,8 @@ function render(res) {
       },
       resetApp: function() {
         getLoggedInUserData();
+        // proper reset should not call render() again
+        // should only change this.$data
       }
     },
     created: function() {

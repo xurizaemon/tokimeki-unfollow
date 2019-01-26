@@ -22,7 +22,9 @@
           <div id="info">
             <div v-if="selFriendIsUnfollowed">
               <p>
-                Great, unfollowed! Let's thank {{ friend.name }} for all the tweets you've enjoyed before.
+                Great, unfollowed! Let's thank
+                <strong>{{ friend.name }}</strong>
+                for all the tweets you've enjoyed before.
               </p>
               <div id="btns">
                 <a href="#" v-on:click="follow" class="button dib">Undo</a>
@@ -66,6 +68,7 @@
       <div id="logout">
         <a href="/logout">Log Out</a>
         <a href="#" v-if="introFinished" v-on:click="introFinished=false">Intro</a>
+        <a href="#" v-on:click="resetApp">Refetch Data</a>
       </div>
       <div id="debug">
         <ol>
