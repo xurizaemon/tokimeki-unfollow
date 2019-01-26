@@ -134,6 +134,10 @@ input[type="checkbox"] {
   margin-bottom: .5em;
 }
 
+#info {
+  font-size: 18px;
+}
+
 #btns {
   float: right;
   text-align: right;

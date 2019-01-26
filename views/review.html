@@ -21,7 +21,10 @@
           </div> -->
           <div id="info">
             <p>
-            First up, <strong>{{ friend.name }}</strong>
+            <span v-if="sel == 0">First up,</span>
+            <span v-else-if="sel < (friends.length - 1)">#{{sel + 1}}:</span>
+            <span v-else>Last but not least,</span>
+            <strong>{{ friend.name }}</strong>, a.k.a.
             <span class="gray">@{{ friend.screen_name }}</span>!
             </p>
             What would you like to do?
