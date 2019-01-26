@@ -129,10 +129,11 @@ app.post('/data/unfollow', (req, res) => {
       error: e.stack
     });
   }).then(result => {
-      res.send({
-        status: 200
-      });
+    console.log(result);
+    res.send({
+      status: 200
     });
+  });
 });
 
 // setup login route to link to with login link on website
