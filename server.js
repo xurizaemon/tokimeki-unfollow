@@ -86,6 +86,7 @@ app.get('/data/user/:userId', (req, res) => {
    id: req.params.userId
   }).catch((e) => console.log('get user error', e.stack))
     .then((result) => {
+    console.log(result.resp.toJSON());
      res.send({
        user: result.data
      });
@@ -119,11 +120,28 @@ app.get('/data/friends', (req, res) => {
 });
 
 app.post('/data/unfollow', (req, res) => {
-  console.log(req.body);
   twit.post('friendships/destroy', {
     user_id: req.body.userId
   }).catch(e => {
     console.log('error unfollowing', e.stack);
+    res.send({
+      status: 500,
+      error: e.stack
+    });
+  }).then(result => {
+    console.log(result.data);
+    console.log(result.resp.toJSON());
+    res.send({
+      status: 200
+    });
+  });
+});
+
+app.post('/data/follow', (req, res) => {
+  twit.post('friendships/create', {
+    user_id: req.body.userId
+  }).catch(e => {
+    console.log('error following', e.stack);
     res.send({
       status: 500,
       error: e.stack
