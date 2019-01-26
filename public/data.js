@@ -1,4 +1,4 @@
-function unfollow(userId) {
+function unfollow(userId, callback) {
   console.log('unfollowing');
   fetch('https://tokimeki-unfollow.glitch.me/data/unfollow', {
     method: 'POST',
@@ -10,7 +10,12 @@ function unfollow(userId) {
       userId: userId
     })
   }).then(res => res.json())
-    .then(res => console.log('unfollow response', res));
+    .then(res => {
+    console.log('unfollow response', res);
+    if (res.status == 200) {
+      callback(userId);
+    }
+  });
 }
 
 function addToList(userId, listId) {

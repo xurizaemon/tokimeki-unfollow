@@ -20,22 +20,34 @@
             <a href="#" v-on:click="next" class="button">Keep</a>
           </div> -->
           <div id="info">
-            <p>
-              <span v-if="sel == 0">First up,</span>
-              <span v-else-if="sel < (friends.length - 1)">#{{sel + 1}}:</span>
-              <span v-else>Last but not least,</span>
-              <strong>{{ friend.name }}</strong>, a.k.a.
-              <span class="gray">@{{ friend.screen_name }}</span>!
-            </p>
-            <p>
-              Do the tweets still spark joy?
-            </p>
-            <div id="btns">
-              <a href="#" v-on:click="prev" class="button dib"><-</a>
-              <a href="#" v-on:click="unfollow" class="button dib">Unfollow</a>
-              <a href="#" v-on:click="keep" class="button dib">Keep</a>
-              <a href="#" v-on:click="next" class="button dib">-></a>
+            <div v-if="selFriendIsUnfollowed">
+              <p>
+                Great, unfollowed! Let's thank {{ friend.name }} for all the tweets you've enjoyed before.
+              </p>
+              <div id="btns">
+                <a href="#" v-on:click="follow" class="button dib">Undo</a>
+                <a href="#" v-on:click="next" class="button dib">Continue</a>
+              </div>
             </div>
+            <div v-else>
+              <p>
+                <span v-if="sel == 0">First up,</span>
+                <span v-else-if="sel < (friends.length - 1)">#{{sel + 1}}:</span>
+                <span v-else>Last but not least,</span>
+                <strong>{{ friend.name }}</strong>, a.k.a.
+                <span class="gray">@{{ friend.screen_name }}</span>!
+              </p>
+              <p>
+                Do the tweets still spark joy?
+              </p>
+              <div id="btns">
+                <a href="#" v-on:click="prev" class="button dib"><-</a>
+                <a href="#" v-on:click="unfollow" class="button dib">Unfollow</a>
+                <a href="#" v-on:click="keep" class="button dib">Keep</a>
+                <a href="#" v-on:click="next" class="button dib">-></a>
+              </div>
+            </div>
+                
             
 <!--             <h3>
               {{friend.name}} <span class="notbold gray">@{{ friend.screen_name }}</span>
