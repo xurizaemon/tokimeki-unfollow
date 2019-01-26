@@ -3,8 +3,7 @@ import * as Tweets from './tweets.js';
 import * as Data from './data.js';
 let store = window.localStorage;
 
-if (invalidateStore(store)) {
-  console.log('No valid data in store, fetching from Twitter');
+function getLoggedInUserData() {
   Promise.all([
     window.fetch('https://tokimeki-unfollow.glitch.me/data/user'),
     window.fetch('https://tokimeki-unfollow.glitch.me/data/friends')
@@ -19,6 +18,11 @@ if (invalidateStore(store)) {
       friends: res[1].friends
     });
   });
+}
+
+if (invalidateStore(store)) {
+  console.log('No valid data in store, fetching from Twitter');
+  getLoggedInUserData();
 } else {
   console.log('Valid data in store');
   render({
@@ -82,7 +86,7 @@ function render(res) {
         });
       },
       unfollow: function() {
-        Data.unfollow(this.selFriendId, function(userId) {
+        Data.unfollow(this.selFriendId, (userId) => {
           console.log(this);
           console.log(this.unfollowed);
           this.unfollowed.push(userId);
@@ -93,6 +97,9 @@ function render(res) {
       addToList: Data.addToList,
       keep: Data.keep,
       follow: function() {
+      },
+      resetApp: function() {
+        getLoggedInUserData();
       }
     },
     created: function() {
