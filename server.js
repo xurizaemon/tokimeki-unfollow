@@ -38,10 +38,10 @@ app.get('/review', restoreSession, (req, res) => {
 
 // Middleware to restore Twitter auth session using cookies
 function restoreSession(req, res, next) {
-  console.log(req.session);
+  // console.log(req.session);
     
   let sessionHasData = validateSession(req.session);
-  console.log(sessionHasData ? 'cookie session has data' : 'cookie session empty');
+  // console.log(sessionHasData ? 'cookie session has data' : 'cookie session empty');
   if (!sessionHasData) { return res.redirect('/logout') }
   
   twit = new twitter({
@@ -86,7 +86,7 @@ app.get('/data/user/:userId', (req, res) => {
    id: req.params.userId
   }).catch((e) => console.log('get user error', e.stack))
     .then((result) => {
-    console.log(result.resp.toJSON());
+    // console.log(result.resp.toJSON());
      res.send({
        user: result.data
      });
@@ -132,7 +132,8 @@ app.post('/data/unfollow', (req, res) => {
     console.log(result.data);
     console.log(result.resp.toJSON());
     res.send({
-      status: 200
+      status: result.resp.toJSON().statusCode,
+      data: result.data
     });
   });
 });

@@ -23,7 +23,7 @@ function unfollow(userId, callback) {
   console.log('unfollowing');
   post('/data/unfollow', {
     userId: userId
-  }, () => callback(userId));
+  }, (res) => callback(userId));
 }
 
 function addToList(userId, listId) {
@@ -35,8 +35,8 @@ function keep(userId) {
 }
 
 function follow(userId, callback) {
-  console.log('unfollowing');
-  post('/data/unfollow', {
+  console.log('following');
+  post('/data/follow', {
     userId: userId
   }, () => callback(userId));
 }
