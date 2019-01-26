@@ -84,7 +84,7 @@ function render(res) {
           window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + userId)
         ]).then(res => Promise.all(res.map(r => r.json())))
           .then(res => {
-          console.log(res);
+          console.log('got data for user', res);
           this.friend = res[0].user;
           this.tweets = res[1].tweets;
         });
