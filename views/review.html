@@ -21,15 +21,19 @@
           </div> -->
           <div id="info">
             <p>
-            <span v-if="sel == 0">First up,</span>
-            <span v-else-if="sel < (friends.length - 1)">#{{sel + 1}}:</span>
-            <span v-else>Last but not least,</span>
-            <strong>{{ friend.name }}</strong>, a.k.a.
-            <span class="gray">@{{ friend.screen_name }}</span>!
+              <span v-if="sel == 0">First up,</span>
+              <span v-else-if="sel < (friends.length - 1)">#{{sel + 1}}:</span>
+              <span v-else>Last but not least,</span>
+              <strong>{{ friend.name }}</strong>, a.k.a.
+              <span class="gray">@{{ friend.screen_name }}</span>!
             </p>
-            What would you like to do?
-            <a href="#" v-on:click="prev" class="button dib">Unfollow</a>
-            <a href="#" v-on:click="next" class="button dib">Keep</a>
+            <p>
+              Do the tweets still spark joy?
+            </p>
+            <div id="btns">
+              <a href="#" v-on:click="prev" class="button dib">Unfollow</a>
+              <a href="#" v-on:click="next" class="button dib">Keep</a>
+            </div>
             
 <!--             <h3>
               {{friend.name}} <span class="notbold gray">@{{ friend.screen_name }}</span>
