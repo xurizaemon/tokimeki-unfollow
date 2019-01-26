@@ -129,11 +129,22 @@ app.post('/data/unfollow', (req, res) => {
       error: e.stack
     });
   }).then(result => {
+    console.log(result.data);
     console.log(result.resp.toJSON());
     res.send({
       status: 200
     });
   });
+});
+
+app.get('/data/ratelimit', (req, res) => {
+  twit.get('application/rate_limit_status', {
+    resources: "friendships, user, statuses"
+  }).catch(e =>  console.log('error',e.stack))
+    .then(result => {
+    console.log(result);
+    res.send(result);
+  })
 });
 
 // setup login route to link to with login link on website
