@@ -34,8 +34,11 @@ function keep(userId) {
   
 }
 
-function follow(userId) {
-  
+function follow(userId, callback) {
+  console.log('unfollowing');
+  post('/data/unfollow', {
+    userId: userId
+  }, () => callback(userId));
 }
 
-export { unfollow, addToList, keep };
+export { unfollow, addToList, keep, follow };

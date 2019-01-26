@@ -79,6 +79,7 @@ function render(res) {
         this.showBio = false;
       },
       getData: function(userId) {
+        // TODO: cache data so when going back and forth (debug only problem) it doesnt trigger so many calls
         Promise.all([
           window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId),
           window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + userId)
@@ -91,8 +92,6 @@ function render(res) {
       },
       unfollow: function() {
         Data.unfollow(this.selFriendId, (userId) => {
-          console.log(this);
-          console.log(this.unfollowed);
           this.unfollowed.push(userId);
           console.log('unfollowed', userId);
           console.log(this.unfollowed);
@@ -101,6 +100,11 @@ function render(res) {
       addToList: Data.addToList,
       keep: Data.keep,
       follow: function() {
+        Data.follow(this.selFriendId, (userId) => {
+          this.unfollowed.pop(); // this seems risky since we are not verifiying if it's there or not
+          console.log('followed', userId);
+          console.log(this.unfollowed);
+        });
       },
       resetApp: function() {
         getLoggedInUserData();
