@@ -116,10 +116,16 @@ input[type="checkbox"] {
 /*   border: 2px solid black; */
 /*     border-radius: 2em; */
   box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1);
+  transform: scale(1);
+  transition: transform .25s ease;
 }
 
 #twttr-widget.showBio {
   bottom: 13.6em;
+}
+
+#twttr-widget.loading {
+  transform: scale(0);
 }
 
 #ctrl {

@@ -13,7 +13,12 @@
         v-if="introFinished"
         v-on:intro-finished="introFinished = true"></intro>
       <div v-else>
-        <twttr-widget v-bind:username="friend.screen_name" v-bind:class="{showBio:showBio}"></twttr-widget>
+        <twttr-widget
+          v-bind:username="friend.screen_name"
+          v-bind:class="{
+            showBio: showBio,
+            loading: loadingSelFriend
+          }"></twttr-widget>
         <div id="ctrl" v-bind:class="{showBio:showBio}">
           <div id="avvy"></div>
           <div id="info">
@@ -51,6 +56,8 @@
               </div>
             </div>
             <div v-else>
+              <span v-if="loadingSelFriend">Loading next follow...</span>
+              <span v-else>
               <p>
                 <span v-if="sel == 0">First up,</span>
                 <span v-else-if="sel < (friends.length - 1)">#{{sel + 1}}:</span>
@@ -61,8 +68,8 @@
                   <a href="#" v-on:click="showBio = true" class="keepblue">Show bio.</a>
                 </span>
                 <span v-else id="bio">
-                  <span class="gray">&lsquo;{{ friend.description }}&rsquo;</span>
-                  &nbsp;<a href="#" v-on:click="showBio = false" class="keepblue">Hide bio.</a>
+                  <span class="">&ldquo;{{ friend.description }}&rdquo;</span>
+                  <a href="#" v-on:click="showBio = false" class="keepblue">Hide bio.</a>
                 </span>
               </p>
               <p>
@@ -74,6 +81,7 @@
                 <a href="#" v-on:click="keep" class="button dib">Keep</a>
                 <a href="#" v-on:click="next" class="button dib">-></a>
               </div>
+              </span>
             </div>
                 
             
