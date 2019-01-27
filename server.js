@@ -87,9 +87,8 @@ app.get('/data/user/:userId', (req, res) => {
    id: req.params.userId
   }).catch((e) => console.log('get user error', e.stack))
     .then((result) => {
-    console.log(result);
      res.send({
-       user: result.data ? result.data : null
+       user: result && result.data ? result.data : null
      });
   });
 });
@@ -190,7 +189,7 @@ app.post('/data/save_progress', (req, res) => {
   let prevMemberCount = 0;
   
   twit.get('lists/show', {
-    slug: PROGRESS_LIST_NAME,
+    slug: PROGRESS_LIST_SLUG,
     owner_id: req.session.userId
   }).catch((e) => {
     console.log('error', e);
@@ -233,7 +232,8 @@ app.post('/data/save_progress', (req, res) => {
 });
 
 
-app.post('/data/load_progress', (req, res) => {
+app.get('/data/load_progress', (req, res) => {
+  console.log('hello')
   twit.get('lists/members', {
     slug: PROGRESS_LIST_SLUG,
     owner_id: req.session.userId,
@@ -246,10 +246,12 @@ app.post('/data/load_progress', (req, res) => {
       error: e.stack
     });
   }).then(result => {
-    console.log('loaded progress list', result.data.users);
-    res.send({
-      user_ids: result.data.users.map(user => user.id_str)
-    })
+    if (result && result.data) { 
+      console.log('loaded progress list', result.data.users);
+      res.send({
+        user_ids: result.data.users.map(user => user.id_str)
+      })
+    }
   });
 });
 

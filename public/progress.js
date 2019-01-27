@@ -26,6 +26,7 @@ function save(ids, store, useList) {
 }
 
 function load(store, useList) {
+  console.log('loading')
   let storeIds = JSON.parse(store.getItem('kept_ids'));
   
   if (!useList) {
@@ -37,7 +38,10 @@ function load(store, useList) {
   } else {
     return fetch('https://tokimeki-unfollow.glitch.me/data/load_progress')
       .catch(e => console.log('error', e))
-      .then(res => res.json());
+      .then(res => {
+      console.log(res)
+      return res.json()
+    });
   }
 }
 
