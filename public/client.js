@@ -119,13 +119,18 @@ function render(res) {
           });
       },
       loadProgress: function() {
-        this.kept = Progress.load(store);
-        this.friends = this.friends.filter(id => !this.kept.includes(id));
-        console.log('loaded', this.kept);
-        console.log(this.kept.length);
-        console.log(this.friends.length);
-        console.log('filtered', this.friends.length - this.kept.length);
-        this.loadedProgress = (this.kept.length > 0);
+        Progress.load(store)
+          .then(function(res) {
+            if (res.user_ids && typeof res.user_ids == 'object') { 
+              this.kept = res.user_ids;
+              this.friends = this.friends.filter(id => !this.kept.includes(id));
+              console.log('loaded', this.kept);
+              console.log(this.kept.length);
+              console.log(this.friends.length);
+              console.log('filtered', this.friends.length - this.kept.length);
+              this.loadedProgress = (this.kept.length > 0);
+            }
+        });
       },
       follow: function() {
         Data.follow(this.selFriendId, (userId) => {
