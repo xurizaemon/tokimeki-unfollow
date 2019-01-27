@@ -116,7 +116,7 @@ function render(res) {
       this.getData(this.selFriendId);
     },
     watch: {
-      sel: function(newId) {
+      sel: function() {
         this.getData(this.selFriendId);
       }
     },

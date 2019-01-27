@@ -185,6 +185,7 @@ app.post('/data/follow', (req, res) => {
 
 app.get('/data/saveProgress/:userIds', (req, res) => {
   if (!req.params.userIds) res.send({ status: 500, error: 'No user ids provided.' });
+  console.log(req.params.userIds)
   // let PROGRESS_LIST_NAME = 'tokimeki_unfollow_keeps';
   let PROGRESS_LIST_NAME = 'test1';
   twit.get('lists/show', {
