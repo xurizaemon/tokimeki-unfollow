@@ -16,7 +16,17 @@
         <div id="ctrl">
           <div id="avvy"></div>
           <div id="info">
-            <div v-if="selFriendIsUnfollowed">
+            <div v-if="loadedProgress">
+              Welcome back! I've loaded your progress from last time, when you 
+              kept {{ kept.length }} accounts that were important to you.
+              <br>
+              Let's get started on the {{ friends.length }} accounts left!
+              
+              <div id="btns">
+                <a href="#" v-on:click="loadedProgress = false" class="button dib">Start</a>
+              </div>
+            </div>
+            <div v-else-if="selFriendIsUnfollowed">
               <p>
                 Great, unfollowed! Let's thank
                 <strong>{{ friend.name }}</strong>

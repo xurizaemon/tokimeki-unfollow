@@ -2,7 +2,7 @@
 // maybe two diff methods?
 function save(ids, store, useList) {
   if (!useList) {
-    store.setItem('kept_ids', ids);
+    store.setItem('kept_ids', JSON.stringify(ids));
     return new Promise((resolve, reject) => {
       resolve({
         status: 200
@@ -24,7 +24,8 @@ function save(ids, store, useList) {
 }
 
 function load(store, useList) {
-  let storeIds = store.getItem('kept_ids');
+  let storeIds = JSON.parse(store.getItem('kept_ids'));
+  console.log(storeIds);
   
   if (!useList) {
     return storeIds || [];

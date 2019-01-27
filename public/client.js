@@ -69,6 +69,7 @@ function render(res) {
       },
       unfollowed: [],
       kept: [],
+      loadedProgress: false,
     },
     methods: {
       next: function(e) {
@@ -106,18 +107,6 @@ function render(res) {
       },
       unkeep: function() {
       },
-      follow: function() {
-        Data.follow(this.selFriendId, (userId) => {
-          this.unfollowed.pop(); // this seems risky since we are not verifiying if it's there or not
-          console.log('followed', userId);
-          console.log(this.unfollowed);
-        });
-      },
-      resetApp: function() {
-        getLoggedInUserData();
-        // proper reset should not call render() again
-        // should only change this.$data
-      },
       saveProgress: function(ids) {
         console.log('saving', ids);
         // Progress.save(ids, store, this.prefs.saveProgressAsList)
@@ -131,11 +120,24 @@ function render(res) {
       },
       loadProgress: function() {
         this.kept = Progress.load(store);
-        this.friends.filter(id => !this.kept.includes(id));
+        this.friends = this.friends.filter(id => !this.kept.includes(id));
         console.log('loaded', this.kept);
         console.log(this.kept.length);
         console.log(this.friends.length);
         console.log('filtered', this.friends.length - this.kept.length);
+        this.loadedProgress = (this.kept.length > 0);
+      },
+      follow: function() {
+        Data.follow(this.selFriendId, (userId) => {
+          this.unfollowed.pop(); // this seems risky since we are not verifiying if it's there or not
+          console.log('followed', userId);
+          console.log(this.unfollowed);
+        });
+      },
+      resetApp: function() {
+        getLoggedInUserData();
+        // proper reset should not call render() again
+        // should only change this.$data
       }
     },
     created: function() {
