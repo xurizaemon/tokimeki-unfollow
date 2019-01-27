@@ -103,7 +103,7 @@ input[type="checkbox"] {
 #twttr-widget {
   background: white;
   position: absolute;
-  bottom: 10em;
+  bottom: 11.2em;
   top: 1em;
   left: 50%;
   width: 400px;
@@ -132,7 +132,7 @@ input[type="checkbox"] {
 }
 
 #ctrl.showBio {
-  height: 11.6em;
+  height: 10.4em;
 }
 
 #ctrl h3 {
@@ -145,10 +145,6 @@ input[type="checkbox"] {
 
 #ctrl p {
   padding-right: 60px;
-}
-
-#info {
-/*   font-size: 18px; */
 }
 
 #btns {
