@@ -86,7 +86,6 @@ app.get('/data/user/:userId', (req, res) => {
    id: req.params.userId
   }).catch((e) => console.log('get user error', e.stack))
     .then((result) => {
-    // console.log(result.resp.toJSON());
      res.send({
        user: result.data
      });
@@ -121,7 +120,7 @@ app.get('/data/friends', (req, res) => {
 
 app.post('/data/unfollow', (req, res) => {
   twit.post('friendships/destroy', {
-    user_id: req.body.userId
+    user_id: String(req.body.userId)
   }).catch(e => {
     console.log('error unfollowing', e.stack);
     res.send({
@@ -129,8 +128,8 @@ app.post('/data/unfollow', (req, res) => {
       error: e.stack
     });
   }).then(result => {
-    console.log(result.data);
-    console.log(result.resp.toJSON());
+    // console.log(result.data);
+    // console.log(result.resp.toJSON());
     res.send({
       status: result.resp.toJSON().statusCode,
       data: result.data
@@ -140,7 +139,7 @@ app.post('/data/unfollow', (req, res) => {
 
 app.post('/data/follow', (req, res) => {
   twit.post('friendships/create', {
-    user_id: req.body.userId
+    user_id: String(req.body.userId)
   }).catch(e => {
     console.log('error following', e.stack);
     res.send({
@@ -148,10 +147,26 @@ app.post('/data/follow', (req, res) => {
       error: e.stack
     });
   }).then(result => {
-    console.log(result.data);
-    console.log(result.resp.toJSON());
     res.send({
-      status: 200
+      status: result.resp.toJSON().statusCode
+    });
+  });
+});
+
+app.post('/data/lists/create', (req, res) => {
+  twit.post('lists/create', {
+    name: 'tokimeki_unfollow_keeps',
+    mode: 'private',
+    description: 'This list tracks progress in KonMari-ing follows on Tokimeki Unfollow. These are the accounts marked as still sparking joy and to be kept. Feel free to delete this if you are done using Tokimeki Unfollow.'
+  }).catch(e => {
+    console.log('error creating list', e.stack);
+    res.send({
+      status: 500,
+      error: e.stack
+    });
+  }).then(result => {
+    res.send({
+      status: result.resp.toJSON().statusCode
     });
   });
 });
