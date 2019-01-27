@@ -70,6 +70,8 @@ function render(res) {
       unfollowed: [],
       kept: [],
       loadedProgress: false,
+      selFriendIsKept: false,
+      selFriendId: null
     },
     methods: {
       next: function(e) {
@@ -109,8 +111,8 @@ function render(res) {
       },
       saveProgress: function(ids) {
         console.log('saving', ids);
-        // Progress.save(ids, store, this.prefs.saveProgressAsList)
-        Progress.save(ids, store)
+        // Progress.save(ids, store)
+        Progress.save(ids, store, this.prefs.saveProgressAsList)
           .then(function(res) {
             console.log('response', res);
             if (res.status == 200) {
@@ -119,14 +121,12 @@ function render(res) {
           });
       },
       loadProgress: function() {
-        Progress.load(store)
+        return Progress.load(store, this.prefs.saveProgressAsList)
           .then(res => {
             if (res.user_ids && typeof res.user_ids == 'object') { 
               this.kept = res.user_ids;
               this.friends = this.friends.filter(id => !this.kept.includes(id));
               console.log('loaded', this.kept);
-              console.log(this.kept.length);
-              console.log(this.friends.length);
               console.log('filtered', this.friends.length - this.kept.length);
               this.loadedProgress = (this.kept.length > 0);
             }
@@ -146,27 +146,27 @@ function render(res) {
       }
     },
     created: function() {
-      this.loadProgress();
-      this.getData(this.selFriendId);
+      this.loadProgress().then(res => {
+        this.getData(this.selFriendId);
+      });
     },
     watch: {
       sel: function() {
         this.getData(this.selFriendId);
+      },
+      kept() {
+        this.selFriendIsKept = this.kept.includes(this.selFriendId);
+      },
+      friends() { 
+        this.selFriendId = this.friends[this.sel];
       }
     },
     computed: {
-      selFriendId: function(e) {
-        return this.friends[this.sel];
-      },
       selFriendUsername: function(e) {
         return this.friend.screen_name;
       },
       selFriendIsUnfollowed: function(e) {
         return this.unfollowed.includes(this.selFriendId);
-      },
-      selFriendIsKept: function(e) {
-        console.log('selfriendiskept', this.kept.includes(this.selFriendId));
-        return this.kept.includes(this.selFriendId);
       },
       iframeURL: function(e) {
         return 'https://twitter.com/intent/user?user_id='+this.friends[this.sel];

@@ -37,7 +37,7 @@ function load(store, useList) {
   } else {
     return fetch('https://tokimeki-unfollow.glitch.me/data/load_progress')
       .catch(e => console.log('error', e))
-      .then(res => res.json())
+      .then(res => res.json());
   }
 }
 
