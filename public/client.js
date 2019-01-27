@@ -1,6 +1,7 @@
 import * as Intro from './intro.js';
 import * as Tweets from './tweets.js';
 import * as Data from './data.js';
+import * as Progress from './progress.js';
 let store = window.localStorage;
 
 function getLoggedInUserData() {
@@ -98,7 +99,9 @@ function render(res) {
         });
       },
       addToList: Data.addToList,
-      keep: Data.keep,
+      keep: function() {
+        this.saveProgress(this.kept);
+      },
       follow: function() {
         Data.follow(this.selFriendId, (userId) => {
           this.unfollowed.pop(); // this seems risky since we are not verifiying if it's there or not
@@ -110,6 +113,19 @@ function render(res) {
         getLoggedInUserData();
         // proper reset should not call render() again
         // should only change this.$data
+      },
+      saveProgress: function(ids) {
+        console.log('saving', ids);
+        Progress.save(ids, store)
+          .then(function(res) {
+            console.log('response', res);
+            if (res.status == 200) {
+              console.log('save success');
+            }
+          });
+      },
+      loadProgress: function() {
+        this.kept = Progress.load(store);
       }
     },
     created: function() {

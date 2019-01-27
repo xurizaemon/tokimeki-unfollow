@@ -183,7 +183,7 @@ app.post('/data/follow', (req, res) => {
 //   });
 // });
 
-app.get('/data/saveProgress/:userIds', (req, res) => {
+app.post('/data/saveProgress', (req, res) => {
   if (!req.params.userIds) res.send({ status: 500, error: 'No user ids provided.' });
   // let PROGRESS_LIST_NAME = 'tokimeki_unfollow_keeps';
   let PROGRESS_LIST_NAME = 'test1';
@@ -216,7 +216,7 @@ app.get('/data/saveProgress/:userIds', (req, res) => {
       return twit.post('lists/members/create_all', {
         slug: PROGRESS_LIST_NAME,
         owner_id: req.session.userId,
-        user_id: req.params.userIds
+        user_id: req.body.userIds.join(',')
       })
     }
   }).then((result) => {
