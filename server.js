@@ -171,6 +171,17 @@ app.post('/data/lists/create', (req, res) => {
   });
 });
 
+app.get('/data/lists/:listId', (req, res) => {
+  twit.get('lists/show', {
+    slug: 'tokimeki_unfollow_keeps',
+    owner_id: req.session.userId
+  }).catch((e) => console.log('error', e.stack))
+    .then((result) => {
+     res.send({
+       friends: result.data.ids
+     });
+});
+
 app.get('/data/ratelimit', (req, res) => {
   twit.get('application/rate_limit_status', {
     resources: "friendships, user, statuses"
