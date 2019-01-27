@@ -56,6 +56,14 @@
                 <span v-else>Last but not least,</span>
                 <strong>{{ friend.name }}</strong>, a.k.a.
                 <span class="gray">@{{ friend.screen_name }}</span>!
+                <br>
+                <span v-if="showBio==false">
+                  <a href="#" v-on:click="showBio = true">Show bio.</a>
+                </span>
+                <span v-else id="bio">
+                  Bio: {{ friend.description }}
+                  &nbsp;<a href="#" v-on:click="showBio = false">Hide bio.</a>
+                </span>
               </p>
               <p>
                 Do the tweets still spark joy?

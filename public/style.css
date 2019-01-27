@@ -115,16 +115,24 @@ input[type="checkbox"] {
   box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1);
 }
 
+#twttr-widget.showBio {
+  bottom: 13.6em;
+}
+
 #ctrl {
   padding: 1.2em;
   position: absolute;
   bottom: 2em;
-  height: 6.8em;
+  height: 8em;
   left: 50%;
   width: 600px;
   margin-left: -300px;
   background: white;
 /*   border: 2px solid black; */
+}
+
+#ctrl.showBio {
+  height: 11.6em;
 }
 
 #ctrl h3 {
