@@ -12,7 +12,7 @@ let wdgt = Vue.component('twttr-widget', {
     twttr.widgets.load();
   },
   template: ` 
-    <div id='twttr-widget' :key='username' v-cloak>
+    <div :key='username' v-cloak>
       <a class="twitter-timeline"
         data-width="400"
         data-height="100%"
