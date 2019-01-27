@@ -29,18 +29,15 @@ function load(store, useList) {
   let storeIds = JSON.parse(store.getItem('kept_ids'));
   
   if (!useList) {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       resolve({
         user_ids: storeIds || []
       });
     });
   } else {
     return fetch('https://tokimeki-unfollow.glitch.me/data/load_progress')
-      .catch(function(e) {
-        console.log('error', e)
-    }).then(function(res) {
-      res.json()
-    });
+      .catch(e => console.log('error', e))
+      .then(res => res.json())
   }
 }
 

@@ -87,7 +87,7 @@ function render(res) {
           window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + userId)
         ]).then(res => Promise.all(res.map(r => r.json())))
           .then(res => {
-          console.log('got data for user', res);
+          console.log('got data for ' + res[0].user.screen_name + ', ' + res[0].user.id_str, res);
           this.friend = res[0].user;
           this.tweets = res[1].tweets;
         });
@@ -120,7 +120,7 @@ function render(res) {
       },
       loadProgress: function() {
         Progress.load(store)
-          .then(function(res) {
+          .then(res => {
             if (res.user_ids && typeof res.user_ids == 'object') { 
               this.kept = res.user_ids;
               this.friends = this.friends.filter(id => !this.kept.includes(id));
@@ -165,6 +165,7 @@ function render(res) {
         return this.unfollowed.includes(this.selFriendId);
       },
       selFriendIsKept: function(e) {
+        console.log('selfriendiskept', this.kept.includes(this.selFriendId));
         return this.kept.includes(this.selFriendId);
       },
       iframeURL: function(e) {
