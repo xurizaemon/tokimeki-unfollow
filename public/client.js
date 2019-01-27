@@ -72,8 +72,6 @@ function render(res) {
       unfollowed: [],
       kept: [],
       loadedProgress: false,
-      selFriendIsKept: false,
-      selFriendId: res.friends[0]
     },
     methods: {
       next: function(e) {
@@ -153,17 +151,19 @@ function render(res) {
       }
     },
     created: function() {
-      this.loadProgress().then(res => {
-        this.getData(this.selFriendId);
-      });
+      this.loadProgress();
     },
     watch: {
       sel: function() {
         // this.selFriendId = this.friends[this.sel];
-        this.getData(this.selFriendId);
+        // this.getData(this.selFriendId);
       },
-      selFriendId() {
+      selFriendId: {
+        handler: function(newId, oldId) {
+          if (newId != oldId) this.getData(this.selFriendId);
         // this.selFriendIsKept = this.kept.includes(this.selFriendId);
+        },
+        immediate: true
       },
       kept() {
         // this.selFriendIsKept = this.kept.includes(this.selFriendId);
@@ -174,6 +174,13 @@ function render(res) {
       }
     },
     computed: {
+      selFriendId() {
+        console.log(this.friends[this.sel]);
+        return this.friends[this.sel];
+      },
+      selFriendIsKept() {
+        return this.kept.includes(this.selFriendId);
+      },
       selFriendUsername: function(e) {
         return this.friend.screen_name;
       },
@@ -182,14 +189,6 @@ function render(res) {
       },
       iframeURL: function(e) {
         return 'https://twitter.com/intent/user?user_id='+this.friends[this.sel];
-      }
-    },
-    asyncComputed: {
-      selFriendId() {
-        return new Promise(resolve => resolve(this.friends[this.sel]));
-      },
-      selFriendIsKept() {
-        return new Promise(resolve => resolve(this.kept.includes(this.selFriendId)));
       }
     }
   });
