@@ -17,11 +17,13 @@ function save(ids, store) {
 }
 
 function load(store, useList) {
-  store.getItem('kept')
+  let storeIds = store.getItem('kept')
   
-  if (useList) {
+  if (!useList) {
+    return storeIds
+  } else {
+    return storeIds;
   }
-  return ids;
 }
 
 export { save, load };

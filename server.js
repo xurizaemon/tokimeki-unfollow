@@ -12,6 +12,7 @@ const LoginWithTwitter = new (require('login-with-twitter'))({
   callbackUrl: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback' 
 });
 let twit;
+const PROGRESS_LIST_SLUG = 'tokimeki_unfollow';
 
 const app = express();
 app.use(express.static('public'));
@@ -185,8 +186,6 @@ app.post('/data/follow', (req, res) => {
 
 app.post('/data/save_progress', (req, res) => {
   if (!req.body.userIds) res.send({ status: 500, error: 'No user ids provided.' });
-  // let PROGRESS_LIST_NAME = 'tokimeki_unfollow_keeps';
-  let PROGRESS_LIST_NAME = 'test1';
   let prevMemberCount = 0;
   
   twit.get('lists/show', {
@@ -197,7 +196,7 @@ app.post('/data/save_progress', (req, res) => {
     if (e.code == 34) {
       console.log('progress list does not exist, creating a new one');
       return twit.post('lists/create', {
-        name: PROGRESS_LIST_NAME,
+        name: PROGRESS_LIST_SLUG,
         mode: 'private',
         description: 'Tracks progress on Tokimeki Unfollow. These are the accounts marked to be kept.'
       }).catch(e => {
@@ -210,14 +209,16 @@ app.post('/data/save_progress', (req, res) => {
     }
   }).then((result) => {
     prevMemberCount = result.data.member_count;
-    if (result.data.name && result.data.name == PROGRESS_LIST_NAME) {
+    if (result.data.name && result.data.name == PROGRESS_LIST_SLUG) {
       console.log('got list for progress saving')
       // res.send(result);
       return twit.post('lists/members/create_all', {
-        slug: PROGRESS_LIST_NAME,
+        slug: PROGRESS_LIST_SLUG,
         owner_id: req.session.userId,
         user_id: req.body.userIds.join(',')
       })
+    } else {
+      // handle not getting the list? how to return a error
     }
   }).then((result) => {
     console.log('added successfully', result.data);
@@ -228,6 +229,27 @@ app.post('/data/save_progress', (req, res) => {
     });
   });
   
+});
+
+
+app.post('/data/load_progress', (req, res) => {
+  twit.get('lists/members', {
+    slug: PROGRESS_LIST_SLUG,
+    owner_id: req.session.userId,
+    include_entities: false,
+    count: 5000
+  }).catch(e => {
+    console.log('error loading progress list', e.stack);
+    res.send({
+      status: 500,
+      error: e.stack
+    });
+  }).then(result => {
+    console.log('loaded progress list', result.data.users);
+    res.send({
+      user_ids: result.data.users.map(user => user.id_str)
+    })
+  });
 });
 
 app.get('/data/ratelimit', (req, res) => {
