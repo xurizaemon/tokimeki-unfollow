@@ -12,7 +12,7 @@ const LoginWithTwitter = new (require('login-with-twitter'))({
   callbackUrl: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback' 
 });
 let twit;
-const PROGRESS_LIST_SLUG = 'tokimeki_unfollow';
+const PROGRESS_LIST_SLUG = 'tokimekitest2';
 
 const app = express();
 app.use(express.static('public'));
@@ -209,8 +209,9 @@ app.post('/data/save_progress', (req, res) => {
     }
   }).then((result) => {
     prevMemberCount = result.data.member_count;
-    if (result.data.name && result.data.name == PROGRESS_LIST_SLUG) {
+    if (result.data.slug && result.data.slug == PROGRESS_LIST_SLUG) {
       console.log('got list for progress saving')
+      console.log(result.data)
       return twit.post('lists/members/create_all', {
         slug: PROGRESS_LIST_SLUG,
         owner_id: req.session.userId,
@@ -222,12 +223,18 @@ app.post('/data/save_progress', (req, res) => {
   }).catch(e => {
     console.log(e)
   }).then((result) => {
-    console.log('added successfully', result.data);
-    res.send({
-      status: result.resp.toJSON().statusCode,
-      members_added: result.data.member_count - prevMemberCount,
-      member_count: result.data.member_count
-    });
+    if (result && result.data) {
+      console.log('added successfully', result.data);
+      res.send({
+        status: result.resp.toJSON().statusCode,
+        members_added: result.data.member_count - prevMemberCount,
+        member_count: result.data.member_count
+      });
+    } else {
+      res.send({
+        status: 500
+      });
+    }
   });
   
 });

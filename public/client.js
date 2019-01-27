@@ -158,7 +158,11 @@ function render(res) {
     },
     watch: {
       sel: function() {
+        this.selFriendId = this.friends[this.sel];
         this.getData(this.selFriendId);
+      },
+      selFriendId() {
+        this.selFriendIsKept = this.kept.includes(this.selFriendId);
       },
       kept() {
         this.selFriendIsKept = this.kept.includes(this.selFriendId);
