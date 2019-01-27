@@ -5,6 +5,7 @@ import * as Progress from './progress.js';
 let store = window.localStorage;
 
 function getLoggedInUserData() {
+  console.log('get logged in user data')
   Promise.all([
     window.fetch('https://tokimeki-unfollow.glitch.me/data/user'),
     window.fetch('https://tokimeki-unfollow.glitch.me/data/friends')
@@ -84,6 +85,7 @@ function render(res) {
       },
       getData: function(userId) {
         // TODO: cache data so when going back and forth (debug only problem) it doesnt trigger so many calls
+        console.log('getting data for ', userId);
         Promise.all([
           window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId),
           window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + userId)
@@ -129,6 +131,9 @@ function render(res) {
               console.log('loaded', this.kept);
               console.log('filtered', this.friends.length - this.kept.length);
               this.loadedProgress = (this.kept.length > 0);
+              return new Promise((resolve, reject) => {
+                
+              });
             }
         });
       },

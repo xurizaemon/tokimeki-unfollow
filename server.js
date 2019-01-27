@@ -87,8 +87,9 @@ app.get('/data/user/:userId', (req, res) => {
    id: req.params.userId
   }).catch((e) => console.log('get user error', e.stack))
     .then((result) => {
+    console.log(result);
      res.send({
-       user: result.data
+       user: result.data ? result.data : null
      });
   });
 });
