@@ -187,12 +187,12 @@ app.post('/data/follow', (req, res) => {
 app.post('/data/save_progress', (req, res) => {
   if (!req.body.userIds) res.send({ status: 500, error: 'No user ids provided.' });
   let prevMemberCount = 0;
+  console.log('saving', req.body.userIds);
   
   twit.get('lists/show', {
     slug: PROGRESS_LIST_SLUG,
     owner_id: req.session.userId
   }).catch((e) => {
-    console.log('error', e);
     if (e.code == 34) {
       console.log('progress list does not exist, creating a new one');
       return twit.post('lists/create', {
@@ -211,7 +211,6 @@ app.post('/data/save_progress', (req, res) => {
     prevMemberCount = result.data.member_count;
     if (result.data.name && result.data.name == PROGRESS_LIST_SLUG) {
       console.log('got list for progress saving')
-      // res.send(result);
       return twit.post('lists/members/create_all', {
         slug: PROGRESS_LIST_SLUG,
         owner_id: req.session.userId,
@@ -220,6 +219,8 @@ app.post('/data/save_progress', (req, res) => {
     } else {
       // handle not getting the list? how to return a error
     }
+  }).catch(e => {
+    console.log(e)
   }).then((result) => {
     console.log('added successfully', result.data);
     res.send({
@@ -233,16 +234,15 @@ app.post('/data/save_progress', (req, res) => {
 
 
 app.get('/data/load_progress', (req, res) => {
-  console.log('hello')
   twit.get('lists/members', {
     slug: PROGRESS_LIST_SLUG,
     owner_id: req.session.userId,
     include_entities: false,
     count: 5000
   }).catch(e => {
-    console.log('error loading progress list', e.stack);
     res.send({
       status: 500,
+      errorCode: e.code,
       error: e.stack
     });
   }).then(result => {

@@ -72,7 +72,7 @@ function render(res) {
       kept: [],
       loadedProgress: false,
       selFriendIsKept: false,
-      selFriendId: null
+      selFriendId: res.friends[0]
     },
     methods: {
       next: function(e) {
@@ -126,16 +126,16 @@ function render(res) {
       loadProgress: function() {
         return Progress.load(store, this.prefs.saveProgressAsList)
           .then(res => {
-            if (res.user_ids && typeof res.user_ids == 'object') { 
+            if (res && res.user_ids && typeof res.user_ids == 'object') { 
               this.kept = res.user_ids;
               this.friends = this.friends.filter(id => !this.kept.includes(id));
               console.log('loaded', this.kept);
               console.log('filtered', this.friends.length - this.kept.length);
               this.loadedProgress = (this.kept.length > 0);
-              return new Promise((resolve, reject) => {
-                resolve();
-              });
             }
+            return new Promise((resolve, reject) => {
+              resolve();
+            });
         });
       },
       follow: function() {
@@ -164,6 +164,7 @@ function render(res) {
         this.selFriendIsKept = this.kept.includes(this.selFriendId);
       },
       friends() { 
+        console.log(this.friends);
         this.selFriendId = this.friends[this.sel];
       }
     },
