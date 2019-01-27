@@ -13,7 +13,7 @@
         v-if="introFinished"
         v-on:intro-finished="introFinished = true"></intro>
       <div v-else>
-        <div id="twttr-widget" v-bind:class="{loading:loadingSelFriend}">
+        <div id="twttr-widget" v-bind:class="{loading:loadingSelFriend || loadedProgress}">
           <twttr-widget
             v-bind:username="friend.screen_name"
             v-bind:class="{showBio: showBio}"></twttr-widget>
