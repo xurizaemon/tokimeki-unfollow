@@ -185,9 +185,10 @@ app.post('/data/follow', (req, res) => {
 
 app.get('/data/saveProgress/:userIds', (req, res) => {
   if (!req.params.userIds) res.send({ status: 500, error: 'No user ids provided.' });
-  console.log(req.params.userIds)
   // let PROGRESS_LIST_NAME = 'tokimeki_unfollow_keeps';
   let PROGRESS_LIST_NAME = 'test1';
+  let prevMemberCount = 0;
+  
   twit.get('lists/show', {
     slug: PROGRESS_LIST_NAME,
     owner_id: req.session.userId
@@ -208,6 +209,7 @@ app.get('/data/saveProgress/:userIds', (req, res) => {
       })
     }
   }).then((result) => {
+    prevMemberCount = result.data.member_count;
     if (result.data.name && result.data.name == PROGRESS_LIST_NAME) {
       console.log('got list for progress saving')
       // res.send(result);
@@ -218,8 +220,12 @@ app.get('/data/saveProgress/:userIds', (req, res) => {
       })
     }
   }).then((result) => {
-    console.log(result.data);
-    res.send(result);
+    console.log('added successfully', result.data);
+    res.send({
+      status: result.resp.toJSON().statusCode,
+      members_added: result.data.member_count - prevMemberCount,
+      member_count: result.data.member_count
+    });
   });
   
 });
