@@ -18,9 +18,10 @@
           <div id="avvy"></div>
           <div id="info">
             <div v-if="loadedProgress">
-              Welcome back! I've loaded your progress from last time, when you 
-              kept {{ kept.length }} accounts that were important to you.
-              <br>
+              <p>
+                Welcome back! I've loaded your progress from last time, when you 
+                kept {{ kept.length }} accounts that were important to you.
+              </p>
               <strong>Let's get started on the {{ friends.length }} accounts left!</strong>
               
               <div id="btns">
@@ -57,11 +58,11 @@
                 <strong>{{ friend.name }}</strong>, a.k.a.
                 <span class="gray">@{{ friend.screen_name }}</span>!
                 <span v-if="showBio==false">
-                  <a href="#" v-on:click="showBio = true">Show bio.</a>
+                  <a href="#" v-on:click="showBio = true" class="keepblue">Show bio.</a>
                 </span>
-                <span v-else id="bio" class="gray">
-                  Bio: {{ friend.description }}
-                  &nbsp;<a href="#" v-on:click="showBio = false">Hide bio.</a>
+                <span v-else id="bio">
+                  <span class="gray">&lsquo;{{ friend.description }}&rsquo;</span>
+                  &nbsp;<a href="#" v-on:click="showBio = false" class="keepblue">Hide bio.</a>
                 </span>
               </p>
               <p>

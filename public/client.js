@@ -76,14 +76,14 @@ function render(res) {
     methods: {
       next: function(e) {
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
-        this.showBio = false;
+        if (this.prefs.showBio == false) this.showBio = false;
+        this.saveProgress(this.kept);
       },
       prev: function(e) {
         this.sel = Math.max(this.sel - 1, 0);
-        this.showBio = false;
+        if (this.prefs.showBio == false) this.showBio = false;
       },
       getData: function(userId) {
-        // TODO: cache data so when going back and forth (debug only problem) it doesnt trigger so many calls
         console.log('getting data for ', userId);
         if (userId == null) return;
         Promise.all([
@@ -107,13 +107,13 @@ function render(res) {
       keep: function() {
         console.log('keeping');
         this.kept.push(this.selFriendId);
-        this.saveProgress(this.kept);
       },
       unkeep: function() {
+        this.kept.pop(); // this seems risky since we are not verifiying if it's there or not
+        console.log('unkept', this.kept);
       },
       saveProgress: function(ids) {
         console.log('saving', ids);
-        // Progress.save(ids, store)
         Progress.save(ids, store, this.prefs.saveProgressAsList)
           .then(function(res) {
             console.log('response', res);

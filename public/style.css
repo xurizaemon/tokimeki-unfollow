@@ -33,6 +33,9 @@ h1 {
   color:#888;
 }
 
+.keepblue { color:blue; }
+a.keepblue:visited { color: blue; }
+
 p {
   max-width: 600px;
 }
@@ -125,8 +128,8 @@ input[type="checkbox"] {
   bottom: 2em;
   height: 8em;
   left: 50%;
-  width: 600px;
-  margin-left: -300px;
+  width: 640px;
+  margin-left: -320px;
   background: white;
 /*   border: 2px solid black; */
 }
