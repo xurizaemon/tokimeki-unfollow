@@ -153,33 +153,62 @@ app.post('/data/follow', (req, res) => {
   });
 });
 
-app.post('/data/lists/create', (req, res) => {
-  twit.post('lists/create', {
-    name: 'tokimeki_unfollow_keeps',
-    mode: 'private',
-    description: 'This list tracks progress in KonMari-ing follows on Tokimeki Unfollow. These are the accounts marked as still sparking joy and to be kept. Feel free to delete this if you are done using Tokimeki Unfollow.'
-  }).catch(e => {
-    console.log('error creating list', e.stack);
-    res.send({
-      status: 500,
-      error: e.stack
-    });
-  }).then(result => {
-    res.send({
-      status: result.resp.toJSON().statusCode
-    });
-  });
-});
+// app.post('/data/lists/create', (req, res) => {
+//   twit.post('lists/create', {
+//     name: 'tokimeki_unfollow_keeps',
+//     mode: 'private',
+//     description: 'This list tracks progress in KonMari-ing follows on Tokimeki Unfollow. These are the accounts marked as still sparking joy and to be kept. Feel free to delete this if you are done using Tokimeki Unfollow.'
+//   }).catch(e => {
+//     console.log('error creating list', e.stack);
+//     res.send({
+//       status: 500,
+//       error: e.stack
+//     });
+//   }).then(result => {
+//     res.send({
+//       status: result.resp.toJSON().statusCode
+//     });
+//   });
+// });
 
-app.get('/data/lists/:listId', (req, res) => {
+// app.get('/data/lists/:listSlug', (req, res) => {
+//   twit.get('lists/show', {
+//     slug: req.params.listSlug,
+//     owner_id: req.session.userId
+//   }).catch((e) => console.log('error', e.stack))
+//     .then((result) => {
+//      res.send({
+
+//      });
+//   });
+// });
+
+app.get('/data/saveProgress', (req, res) => {
+  let PROGRESS_LIST_NAME = 'tokimeki_unfollow_keeps';
   twit.get('lists/show', {
-    slug: 'tokimeki_unfollow_keeps',
+    slug: PROGRESS_LIST_NAME,
     owner_id: req.session.userId
   }).catch((e) => console.log('error', e.stack))
     .then((result) => {
-     res.send({
-       friends: result.data.ids
-     });
+     console.log(result);
+    res.send(result);
+  });
+  // twit.post('lists/create', {
+  //   name: PROGRESS_LIST_NAME,
+  //   mode: 'private',
+  //   description: 'This list tracks progress in KonMari-ing follows on Tokimeki Unfollow. These are the accounts marked as still sparking joy and to be kept. Feel free to delete this if you are done using Tokimeki Unfollow.'
+  // }).catch(e => {
+  //   console.log('error creating list', e.stack);
+  //   res.send({
+  //     status: 500,
+  //     error: e.stack
+  //   });
+  // }).then(result => {
+  //   console.log(result);
+  //   res.send({
+  //     status: result.resp.toJSON().statusCode
+  //   });
+  // });
 });
 
 app.get('/data/ratelimit', (req, res) => {
