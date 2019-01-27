@@ -188,27 +188,32 @@ app.get('/data/saveProgress', (req, res) => {
   twit.get('lists/show', {
     slug: PROGRESS_LIST_NAME,
     owner_id: req.session.userId
-  }).catch((e) => console.log('error', e.stack))
-    .then((result) => {
+  }).catch((e) => {
+    console.log(e.code);
+    console.log('error', e.stack);
+    if (e.code == 34) {
+      twit.post('lists/create', {
+        name: PROGRESS_LIST_NAME,
+        mode: 'private',
+        description: 'This list tracks progress in KonMari-ing follows on Tokimeki Unfollow. These are the accounts marked as still sparking joy and to be kept. Feel free to delete this if you are done using Tokimeki Unfollow.'
+      }).catch(e => {
+        console.log('error creating list', e.stack);
+        res.send({
+          status: 500,
+          error: e.stack
+        });
+      }).then(result => {
+        console.log(result);
+        res.send({
+          status: result.resp.toJSON().statusCode
+        });
+      });
+    }
+  }).then((result) => {
      console.log(result);
     res.send(result);
   });
-  // twit.post('lists/create', {
-  //   name: PROGRESS_LIST_NAME,
-  //   mode: 'private',
-  //   description: 'This list tracks progress in KonMari-ing follows on Tokimeki Unfollow. These are the accounts marked as still sparking joy and to be kept. Feel free to delete this if you are done using Tokimeki Unfollow.'
-  // }).catch(e => {
-  //   console.log('error creating list', e.stack);
-  //   res.send({
-  //     status: 500,
-  //     error: e.stack
-  //   });
-  // }).then(result => {
-  //   console.log(result);
-  //   res.send({
-  //     status: result.resp.toJSON().statusCode
-  //   });
-  // });
+  
 });
 
 app.get('/data/ratelimit', (req, res) => {
