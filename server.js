@@ -1,5 +1,3 @@
-// TODO:
-
 const fetch = require('node-fetch');
 const express = require('express');
 const passport = require('passport');
@@ -12,7 +10,7 @@ const LoginWithTwitter = new (require('login-with-twitter'))({
   callbackUrl: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback' 
 });
 let twit;
-const PROGRESS_LIST_SLUG = 'tokimekitest2';
+const PROGRESS_LIST_SLUG = 'tokimekitest2'; // TODO update this back
 
 const app = express();
 app.use(express.static('public'));
