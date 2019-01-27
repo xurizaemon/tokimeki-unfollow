@@ -184,33 +184,29 @@ app.post('/data/follow', (req, res) => {
 // });
 
 app.get('/data/saveProgress', (req, res) => {
-  let PROGRESS_LIST_NAME = 'tokimeki_unfollow_keeps';
+  // let PROGRESS_LIST_NAME = 'tokimeki_unfollow_keeps';
+  let PROGRESS_LIST_NAME = 'test1';
   twit.get('lists/show', {
     slug: PROGRESS_LIST_NAME,
     owner_id: req.session.userId
   }).catch((e) => {
-    console.log(e.code);
-    console.log('error', e.stack);
+    console.log('error', e);
     if (e.code == 34) {
-      twit.post('lists/create', {
+      console.log('progress list does not exist, creating a new one');
+      return twit.post('lists/create', {
         name: PROGRESS_LIST_NAME,
         mode: 'private',
-        description: 'This list tracks progress in KonMari-ing follows on Tokimeki Unfollow. These are the accounts marked as still sparking joy and to be kept. Feel free to delete this if you are done using Tokimeki Unfollow.'
+        description: 'Tracks progress on Tokimeki Unfollow. These are the accounts marked to be kept.'
       }).catch(e => {
         console.log('error creating list', e.stack);
         res.send({
           status: 500,
           error: e.stack
         });
-      }).then(result => {
-        console.log(result);
-        res.send({
-          status: result.resp.toJSON().statusCode
-        });
-      });
+      })
     }
   }).then((result) => {
-     console.log(result);
+    console.log(result);
     res.send(result);
   });
   
