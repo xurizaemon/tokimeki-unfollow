@@ -159,9 +159,8 @@ function render(res) {
         // this.getData(this.selFriendId);
       },
       selFriendId: {
-        handler: function(newId, oldId) {
-          if (newId != oldId) this.getData(this.selFriendId);
-        // this.selFriendIsKept = this.kept.includes(this.selFriendId);
+        handler: function() {
+          this.getData(this.selFriendId);
         },
         immediate: true
       },
