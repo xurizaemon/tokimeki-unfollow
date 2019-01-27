@@ -189,6 +189,7 @@ app.post('/data/save_progress', (req, res) => {
   let prevMemberCount = 0;
   console.log('saving', req.body.userIds);
   
+  // SUPPORT MATCHING BY NAME? PULL ALL LISTS AND .FILTER FOR THE ONE WE WANT?
   twit.get('lists/show', {
     slug: PROGRESS_LIST_SLUG,
     owner_id: req.session.userId
