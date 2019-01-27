@@ -183,8 +183,8 @@ app.post('/data/follow', (req, res) => {
 //   });
 // });
 
-app.post('/data/saveProgress', (req, res) => {
-  if (!req.params.userIds) res.send({ status: 500, error: 'No user ids provided.' });
+app.post('/data/save_progress', (req, res) => {
+  if (!req.body.userIds) res.send({ status: 500, error: 'No user ids provided.' });
   // let PROGRESS_LIST_NAME = 'tokimeki_unfollow_keeps';
   let PROGRESS_LIST_NAME = 'test1';
   let prevMemberCount = 0;

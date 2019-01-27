@@ -100,7 +100,11 @@ function render(res) {
       },
       addToList: Data.addToList,
       keep: function() {
+        console.log('keeping');
+        this.kept.push(this.selFriendId);
         this.saveProgress(this.kept);
+      },
+      unkeep: function() {
       },
       follow: function() {
         Data.follow(this.selFriendId, (userId) => {
@@ -126,9 +130,15 @@ function render(res) {
       },
       loadProgress: function() {
         this.kept = Progress.load(store);
+        this.friends.filter(id => !this.kept.includes(id));
+        console.log('loaded', this.kept);
+        console.log(this.kept.length);
+        console.log(this.friends.length);
+        console.log('filtered', this.friends.length - this.kept.length);
       }
     },
     created: function() {
+      this.loadProgress();
       this.getData(this.selFriendId);
     },
     watch: {
@@ -145,6 +155,9 @@ function render(res) {
       },
       selFriendIsUnfollowed: function(e) {
         return this.unfollowed.includes(this.selFriendId);
+      },
+      selFriendIsKept: function(e) {
+        return this.kept.includes(this.selFriendId);
       },
       iframeURL: function(e) {
         return 'https://twitter.com/intent/user?user_id='+this.friends[this.sel];

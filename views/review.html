@@ -15,10 +15,6 @@
         <twttr-widget v-bind:username="friend.screen_name"></twttr-widget>
         <div id="ctrl">
           <div id="avvy"></div>
-<!--           <div id="btns">
-             <a href="#" v-on:click="prev" class="button">Unfollow</a>
-            <a href="#" v-on:click="next" class="button">Keep</a>
-          </div> -->
           <div id="info">
             <div v-if="selFriendIsUnfollowed">
               <p>
@@ -28,7 +24,18 @@
               </p>
               <div id="btns">
                 <a href="#" v-on:click="follow" class="button dib">Undo</a>
-                <a href="#" v-on:click="next" class="button dib">Continue</a>
+                <a href="#" v-on:click="next" class="button dib">Next</a>
+              </div>
+            </div>
+            <div v-else-if="selFriendIsKept">
+              <p>
+                Glad to hear
+                <strong>{{ friend.name }}</strong>'s
+                tweets are still important to you. 
+              </p>
+              <div id="btns">
+                <a href="#" v-on:click="unkeep" class="button dib">Undo</a>
+                <a href="#" v-on:click="next" class="button dib">Next</a>
               </div>
             </div>
             <div v-else>
