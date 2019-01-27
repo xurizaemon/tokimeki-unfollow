@@ -120,6 +120,7 @@ function render(res) {
       },
       saveProgress: function(ids) {
         console.log('saving', ids);
+        // Progress.save(ids, store, this.prefs.saveProgressAsList)
         Progress.save(ids, store)
           .then(function(res) {
             console.log('response', res);
