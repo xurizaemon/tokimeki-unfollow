@@ -206,8 +206,15 @@ app.get('/data/saveProgress', (req, res) => {
       })
     }
   }).then((result) => {
-    console.log(result);
-    res.send(result);
+    if (result.data.name && result.data.name == PROGRESS_LIST_NAME) {
+      console.log('got list for progress saving')
+      // res.send(result);
+      return twit.post('lists/members/create_all', {
+        slug: PROGRESS_LIST_NAME,
+        owner_id: req.session.user_id,
+        user_id: ""
+      })
+    }
   });
   
 });
