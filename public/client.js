@@ -52,6 +52,7 @@ function defaultAppData() {
 
 function render(res) {
   console.log('Rendering ', res);
+  Vue.use(AsyncComputed);
 
   var app = new Vue({
     el: '#app',
@@ -158,18 +159,18 @@ function render(res) {
     },
     watch: {
       sel: function() {
-        this.selFriendId = this.friends[this.sel];
+        // this.selFriendId = this.friends[this.sel];
         this.getData(this.selFriendId);
       },
       selFriendId() {
-        this.selFriendIsKept = this.kept.includes(this.selFriendId);
+        // this.selFriendIsKept = this.kept.includes(this.selFriendId);
       },
       kept() {
-        this.selFriendIsKept = this.kept.includes(this.selFriendId);
+        // this.selFriendIsKept = this.kept.includes(this.selFriendId);
       },
       friends() { 
-        console.log(this.friends);
-        this.selFriendId = this.friends[this.sel];
+        // console.log(this.friends);
+        // this.selFriendId = this.friends[this.sel];
       }
     },
     computed: {
@@ -181,6 +182,14 @@ function render(res) {
       },
       iframeURL: function(e) {
         return 'https://twitter.com/intent/user?user_id='+this.friends[this.sel];
+      }
+    },
+    asyncComputed: {
+      selFriendId() {
+        return new Promise(resolve => resolve(this.friends[this.sel]));
+      },
+      selFriendIsKept() {
+        return new Promise(resolve => resolve(this.kept.includes(this.selFriendId)));
       }
     }
   });
