@@ -132,6 +132,18 @@ input[type="checkbox"] {
   opacity: 0;
 }
 
+#twttr-widget.unfollowed {
+  opacity: 0;
+  transform: rotate(-10deg) translate(-100px,200px) scale(.5);
+}
+
+#twttr-widget.kept {
+/*   opacity: 0;
+  transform: rotate(-10deg) translate(100px,200px) scale(.5); */
+/*   transform: translateY(-400px); */
+
+}
+
 #ctrl {
   padding: 1.2em;
   position: absolute;

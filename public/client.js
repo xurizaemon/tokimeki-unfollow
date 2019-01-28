@@ -170,7 +170,7 @@ function render(res) {
         return this.unfollowed.includes(this.selFriendId);
       },
       loadingSelFriend() {
-        return this.selFriendId != this.friend.id_str;
+        return this.sel > 0 && (this.selFriendId != this.friend.id_str);
       },
       iframeURL: function(e) {
         return 'https://twitter.com/intent/user?user_id='+this.friends[this.sel];
