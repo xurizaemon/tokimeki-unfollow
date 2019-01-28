@@ -1,3 +1,21 @@
 extends layout.pug
 block content
-  a(href='/auth/twitter') Login with Twitter
+  div#intro
+    p.expand.logored
+      img(src="https://cdn.glitch.com/74263575-5bd6-41c7-8958-90c644fd4514%2FScreen%20Shot%202019-01-23%20at%209.15.39%20PM.png?1548664893511")
+    h1
+      | Welcome to Tokimeki Unfollow~
+    p.
+      Do you think your feed sucks because you follow too many accounts?
+      You're in the right place!
+    p.
+      If you're like me, you've followed a bajillion accounts over your years on Twitter dot com.
+      Some of them date back to your first days as an egg — when you were probably an entirely different human being.
+      You have some socially-obliged follow-backs sprinkled among some thought leaders you've outgrown,
+      but you've never found the energy to go through and clean up your follows.
+    p.
+      Take a deep breath! Let's walk through our follows, one by one, and think about if each one still sparks joy, intrigue, inspiration,
+      or is in any way still important to you. <b>If not, hit that Unfollow button!</b>
+      
+    a.button.block(href='/auth/twitter') Login with Twitter
+    div#avvy-intro.fixed

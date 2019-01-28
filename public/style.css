@@ -34,6 +34,10 @@ h1 {
   color:#888;
 }
 
+.logored {
+  background: #fc583b;
+}
+
 .keepblue { color:blue }
 a.keepblue:visited { color: blue }
 a:hover { text-decoration: none }
@@ -53,6 +57,15 @@ input[type="checkbox"] {
   margin: 0 auto;
   max-width: 640px;
   position: relative;
+}
+
+#intro p.expand {
+  margin: -2em;
+  margin-bottom: 2em;
+}
+
+img {
+  max-width: 100%;
 }
 
 #twttr-widget {
