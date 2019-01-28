@@ -1,3 +1,5 @@
+let progressListId;
+
 function saveQuick(ids, store) {
   store.setItem('kept_ids', JSON.stringify(ids));
   console.log('saved', JSON.parse(store.getItem('kept_ids')));
@@ -27,7 +29,7 @@ function loadList(store, useList) {
     .catch(e => console.log('error', e))
     .then(res => {
     if (res.json) {
-      return res.json()
+      return res.json().user_ids;
     } else {
       // error! what to return?
     }

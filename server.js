@@ -231,7 +231,8 @@ app.post('/data/save_progress', (req, res) => {
       });
     } else {
       res.send({
-        status: 500
+        status: 500,
+        listId: result.data.id_str
       });
     }
   });

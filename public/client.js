@@ -78,6 +78,7 @@ function render(res) {
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
         if (this.prefs.showBio == false) this.showBio = false;
         Progress.saveQuick(this.kept);
+        this.saveProgressList();
       },
       prev: function(e) {
         this.sel = Math.max(this.sel - 1, 0);
@@ -115,11 +116,11 @@ function render(res) {
       saveProgressList: function() {
         Progress.saveList(this.kept)
           .then(res => {
-            console.log('response', res);
+            // console.log('response', res);
             if (res.status == 200) {
-              console.log('save success');
-              this.savedProgress = true;
-              window.setTimeout(() => this.savedProgress = false, 2000);
+              console.log('save list success');
+              // this.savedProgress = true;
+              // window.setTimeout(() => this.savedProgress = false, 2000);
             }
           });
       },
@@ -131,8 +132,8 @@ function render(res) {
       loadProgressList: function() {
         Progress.loadList()
           .then(ids => {
-            if (ids && typeof ids == 'object') { 
-              this.kept = res;
+            if (ids && ids.Constructor === Array) { 
+              this.kept = ids;
               this.friends = this.friends.filter(id => !this.kept.includes(id));
               this.loadedProgress = (this.kept.length > 0);
             }
@@ -153,6 +154,7 @@ function render(res) {
     },
     created: function() {
       this.loadProgressQuick();
+      this.loadProgressList();
     },
     watch: {
       selFriendId: {
@@ -164,7 +166,6 @@ function render(res) {
     },
     computed: {
       selFriendId() {
-        console.log(this.friends[this.sel]);
         return this.friends[this.sel];
       },
       selFriendIsKept() {

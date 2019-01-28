@@ -28,7 +28,7 @@
               <strong>Let's get started on the {{ friends.length }} accounts left!</strong>
               
               <div id="btns">
-                <a href="#" v-on:click="loadedProgress = false; twttr.widgets.load();" class="button dib">Start</a>
+                <a href="#" v-on:click="loadedProgress = false" class="button dib">Start</a>
               </div>
             </div>
             <div v-else-if="selFriendIsUnfollowed">
@@ -87,7 +87,6 @@
       <div id="logout">
         <a href="/logout">Log Out</a>
         <a href="#" v-if="introFinished" v-on:click="introFinished=false">Intro</a>
-        <a href="#" v-on:click="saveProgressList">Save Progress to Twitter</a>
       </div>
       <div id="debug">
         <ol>
