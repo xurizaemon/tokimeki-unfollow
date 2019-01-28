@@ -114,27 +114,28 @@ function render(res) {
       },
       saveProgress: function(ids) {
         console.log('saving', ids);
-        Progress.save(ids, store, this.prefs.saveProgressAsList)
-          .then(function(res) {
-            console.log('response', res);
-            if (res.status == 200) {
-              console.log('save success');
-            }
-          });
+        Progress.saveQuick(ids, store);
+        // Progress.save(ids, store, this.prefs.saveProgressAsList)
+        //   .then(function(res) {
+        //     console.log('response', res);
+        //     if (res.status == 200) {
+        //       console.log('save success');
+        //     }
+        //   });
       },
       loadProgress: function() {
-        return Progress.load(store, this.prefs.saveProgressAsList)
-          .then(res => {
-            if (res && res.user_ids && typeof res.user_ids == 'object') { 
-              this.kept = res.user_ids;
+        Progress.loadQuick(store);
+      },
+      loadProgressList: function() {
+        Progress.loadList()
+          .then(ids => {
+            if (ids && typeof ids == 'object') { 
+              this.kept = res;
               this.friends = this.friends.filter(id => !this.kept.includes(id));
               console.log('loaded', this.kept);
               console.log('filtered', this.friends.length - this.kept.length);
               this.loadedProgress = (this.kept.length > 0);
             }
-            return new Promise((resolve, reject) => {
-              resolve();
-            });
         });
       },
       follow: function() {

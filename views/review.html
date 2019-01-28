@@ -13,7 +13,7 @@
         v-if="introFinished"
         v-on:intro-finished="introFinished = true"></intro>
       <div v-else>
-        <div id="twttr-widget" v-bind:class="{loading:loadingSelFriend || loadedProgress}">
+        <div id="twttr-widget" v-bind:class="{loading:loadingSelFriend, faded:loadedProgress}">
           <twttr-widget
             v-bind:username="friend.screen_name"
             v-bind:class="{showBio: showBio}"></twttr-widget>
@@ -29,7 +29,7 @@
               <strong>Let's get started on the {{ friends.length }} accounts left!</strong>
               
               <div id="btns">
-                <a href="#" v-on:click="loadedProgress = false" class="button dib">Start</a>
+                <a href="#" v-on:click="loadedProgress = false; twttr.widgets.load();" class="button dib">Start</a>
               </div>
             </div>
             <div v-else-if="selFriendIsUnfollowed">
