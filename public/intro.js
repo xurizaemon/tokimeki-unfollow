@@ -75,7 +75,7 @@ let wdgt = Vue.component('intro', {
         </p>
       </form>
       <br>
-      <a href='#' class='button block' v-on:click="start">Start</a>
+      <button class='button block w100' v-on:click="start">Start</button>
   </div>
   `
 });
