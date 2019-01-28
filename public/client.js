@@ -75,6 +75,7 @@ function render(res) {
     },
     methods: {
       updatePrefs: function(e) {
+        console.log(e);
         [this.prefs.order, this.prefs.saveProgressAsList, this.prefs.showBio] = e;
       },
       next: function() {

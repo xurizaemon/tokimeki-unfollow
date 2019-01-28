@@ -2,7 +2,7 @@ let wdgt = Vue.component('intro', {
   data: function() {
     return {
       order: 'oldest',
-      saveList: true,
+      saveProgressAsList: true,
       showBio: false
     }
   },
@@ -12,7 +12,9 @@ let wdgt = Vue.component('intro', {
   ],
   methods: {
     start: function(e) {
-      
+      console.log(this.order);
+      console.log(this.saveProgressAsList
+      $emit('intro-finished', [this.order, this.saveProgressAsList, this.showBio]);
     }
   },
   computed: {
@@ -45,12 +47,12 @@ let wdgt = Vue.component('intro', {
       </h3>
       <form>
         <p>
-          <input type="checkbox" id="showBio" value="showBio">
+          <input type="checkbox" id="showBio" value="showBio" v-model="showBio">
           <label for="showBio"><b>Show account bio's</b> (Recommended: off)<br>
             I've followed a lot of accounts based on their profile, and not their actual content.</label>
         </p>
         <p>
-          <input type="checkbox" id="saveList" value="saveList" v-model="order" checked>
+          <input type="checkbox" id="saveList" value="saveList" v-model="saveProgressAsList">
           <label for="saveList"><b>Save progress as a private Twitter list</b> (Recommended: on)<br>
             Turn this on so you can resume this process from any device.
             If this is disabled, I'll save your progress to your web browser's local storage.
@@ -59,7 +61,7 @@ let wdgt = Vue.component('intro', {
         <p>
           <b>Select an order to use:</b> (Recommended: Oldest first)
           <br>
-          <input type="radio" name="order" id="oldest" value="oldest" v-model="order" checked>
+          <input type="radio" name="order" id="oldest" value="oldest" v-model="order">
           <label for="oldest">Oldest follow, chronological</label><br>
           <input type="radio" name="order" id="random" value="random" v-model="order">
           <label for="random">Random follow, random order</label><br>
@@ -68,7 +70,7 @@ let wdgt = Vue.component('intro', {
         </p>
       </form>
       <br>
-      <a href='#' class='button block' v-on:click="$emit('intro-finished', [this.order, this.saveList, this.showBio])">Start</a>
+      <a href='#' class='button block' v-on:click="start">Start</a>
   </div>
   `
 });
