@@ -11,14 +11,13 @@ body {
   font-size: 16px;
   line-height: 1.2em;
   background: #eee;
-/*   margin: 2em; */
 }
 
 h1, h2, h3, h4, h5, h6, p { margin-top: 0 }
 
 h1 {
-  font-style: italic;
   color: #373fff;
+  line-height: 1em;
 }
 
 .bold {

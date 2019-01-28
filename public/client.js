@@ -75,8 +75,16 @@ function render(res) {
     },
     methods: {
       updatePrefs: function(e) {
-        console.log(e);
         [this.prefs.order, this.prefs.saveProgressAsList, this.prefs.showBio] = e;
+        switch (this.prefs.order) {
+          case 'random':
+            this.friends = shuffle(this.friends);
+            break;
+          case 'oldest':
+            this.friends = this.friends.reverse();
+            break;
+        }
+        this.showBio = this.prefs.showBio;
       },
       next: function() {
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
@@ -153,14 +161,6 @@ function render(res) {
     created: function() {
       this.loadProgressQuick();
       this.loadProgressList();
-      switch (this.prefs.order) {
-        case 'random':
-          this.friends = shuffle(this.friends);
-          break;
-        case 'oldest':
-          this.friends = this.friends.reverse();
-          break;
-      }
     },
     watch: {
       selFriendId: {

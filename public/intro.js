@@ -8,13 +8,12 @@ let wdgt = Vue.component('intro', {
   },
   props: [
     'username',
-    'followingcount'
+    'followingcount',
+    'loadedprogress'
   ],
   methods: {
     start: function(e) {
-      console.log(this.order);
-      console.log(this.saveProgressAsList
-      $emit('intro-finished', [this.order, this.saveProgressAsList, this.showBio]);
+      this.$emit('intro-finished', [this.order, this.saveProgressAsList, this.showBio]);
     }
   },
   computed: {
@@ -26,7 +25,7 @@ let wdgt = Vue.component('intro', {
     <div id='intro' v-cloak>
       <div id="avvy-intro" class="fixed"></div>
       <h1>
-        Hello, @{{ username }}! Let's konmari those {{followingcount}} accounts you're following ~_~
+        <span v-if'Hello, @{{ username }}! Let's konmari those {{followingcount}} accounts you're following ~_~
       </h1>
       <p>
         Do you think your feed sucks because you follow too many accounts?

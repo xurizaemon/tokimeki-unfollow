@@ -8,6 +8,7 @@
     <div id="app" v-cloak>
       <intro
         v-bind:username="user.screen_name"
+        v-bind:loadedprogress="loadedProgress"
         v-bind:followingcount="friends.length"
         v-if="introFinished == false"
         v-on:intro-finished="introFinished = true; updatePrefs($event)"></intro>
