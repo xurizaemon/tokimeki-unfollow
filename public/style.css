@@ -10,6 +10,7 @@ body {
   font-family: monospace;
   font-size: 16px;
   line-height: 1.2em;
+  margin: 1em;
   background: #eee;
 }
 
@@ -18,6 +19,7 @@ h1, h2, h3, h4, h5, h6, p { margin-top: 0 }
 h1 {
   color: #373fff;
   line-height: 1em;
+  font-size: 1.8em;
 }
 
 .bold {
@@ -35,56 +37,6 @@ h1 {
 .keepblue { color:blue; }
 a.keepblue:visited { color: blue; }
 
-p {
-  max-width: 600px;
-}
-
-form {
-/*   margin-bottom: 1em;
-  padding: 1em;
-  background-color: #DBFFEA;
-  display: inline-block;
-  width: 100%;
-  border-radius: 3px; */
-}
-
-input {
-/*   display: block;
-  margin-bottom: 10px;
-  padding: 5px;
-  width: 100%;
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-  font-size: 16px; */
-}
-
-button {
-/*   font-size: 16px;
-  border-radius: 3px;
-  background-color: lightgrey;
-  border: 1px solid grey;
-  box-shadow: 2px 2px teal;
-  cursor: pointer; */
-}
-
-button:hover {
-/*   background-color: yellow; */
-}
-
-button:active {
-/*   box-shadow: none; */
-}
-
-li {
-/*   margin-bottom: 5px; */
-}
-
-footer {
-  margin-top: 50px;
-  padding-top: 25px;
-  border-top: 1px solid lightgrey;
-}
-
 [v-cloak] {
   display: none;
 }
@@ -98,7 +50,7 @@ input[type="checkbox"] {
   background: white;
   padding: 2em;
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 640px;
   position: relative;
 }
 
