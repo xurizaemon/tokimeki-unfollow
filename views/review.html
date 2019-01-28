@@ -10,7 +10,7 @@
         v-bind:username="user.screen_name"
         v-bind:followingcount="friends.length"
         v-if="introFinished"
-        v-on:intro-finished="introFinished = true"></intro>
+        v-on:intro-finished="introFinished = true; updatePrefs($event)"></intro>
       <div v-else>
         <div id="twttr-widget"
           v-bind:class="{

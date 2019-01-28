@@ -64,9 +64,9 @@ function render(res) {
       introFinished: false,
       showBio: false,
       prefs: {
-        showBio: false,
         order: 'oldest',
-        saveProgressAsList: true
+        saveProgressAsList: true,
+        showBio: false
       },
       unfollowed: [],
       kept: [],
@@ -74,13 +74,16 @@ function render(res) {
       savedProgress: false
     },
     methods: {
-      next: function(e) {
+      updatePrefs: function(e) {
+        [this.prefs.order, this.prefs.saveProgressAsList, this.prefs.showBio] = e;
+      },
+      next: function() {
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
         if (this.prefs.showBio == false) this.showBio = false;
         Progress.saveQuick(this.kept, store);
         this.saveProgressList();
       },
-      prev: function(e) {
+      prev: function() {
         this.sel = Math.max(this.sel - 1, 0);
         if (this.prefs.showBio == false) this.showBio = false;
       },
@@ -114,6 +117,7 @@ function render(res) {
         console.log('unkept', this.kept);
       },
       saveProgressList: function() {
+        if (this.prefs.saveProgressAsList == false) return;
         Progress.saveList(this.kept);
       },
       loadProgressQuick: function() {
@@ -122,6 +126,7 @@ function render(res) {
         this.loadedProgress = (this.kept.length > 0);
       },
       loadProgressList: function() {
+        if (this.prefs.saveProgressAsList == false) return;
         Progress.loadList()
           .then(ids => {
             if (ids && ids.Constructor === Array) { 
