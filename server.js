@@ -186,22 +186,12 @@ app.post('/data/save_progress', (req, res) => {
   if (!req.body.user_ids) res.send({ status: 500, error: 'No user ids provided.' });
   let prevMemberCount = 0;
   console.log('saving', req.body.user_ids);
-  
-  let opts;
-  if (req.body.list_id) {
-    console.log('list id received', req.body.list_id);
-    opts = {
-      list_id: req.body.list_id
-    };
-  } else {
-    opts = {
-      slug: PROGRESS_LIST_SLUG,
-      owner_id: req.session.userId
-    };
-  }
 
   // SUPPORT MATCHING BY NAME? PULL ALL LISTS AND .FILTER FOR THE ONE WE WANT?
-  twit.get('lists/show', opts).catch((e) => {
+  twit.get('lists/show', {
+    slug: PROGRESS_LIST_SLUG,
+    owner_id: req.session.userId
+  }).catch((e) => {
     if (e.code == 34) {
       console.log('progress list does not exist, creating a new one');
       return twit.post('lists/create', {
@@ -269,7 +259,7 @@ app.get('/data/load_progress', (req, res) => {
       error: e.stack
     });
   }).then(result => {
-    if (result && result.data) { 
+    if (result && result.data && result.data.users) { 
       console.log('loaded progress list');
       res.send({
         user_ids: result.data.users.map(user => user.id_str)

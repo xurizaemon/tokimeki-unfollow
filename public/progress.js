@@ -13,7 +13,7 @@ function saveList(ids, store) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      user_ids: ids.reverse().slice(0,100),
+      user_ids: ids.reverse().slice(0,100), // Endpoint only takes max 100, so save the latest 100
       list_id: store.getItem('progressListId') || ''
     })
   }).catch(e => console.log('error', e))
