@@ -5,7 +5,7 @@ function saveQuick(ids, store) {
   console.log('saved', JSON.parse(store.getItem('kept_ids')));
 }
 
-function saveList(ids) {
+function saveList(ids, store) {
   return fetch('https://tokimeki-unfollow.glitch.me/data/save_progress', {
     method: 'POST',
     headers: {
@@ -13,15 +13,15 @@ function saveList(ids) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      user_ids: ids,
-      list_id: progressListId || ''
+      user_ids: ids.reverse().slice(0,100),
+      list_id: store.getItem('progressListId') || ''
     })
   }).catch(e => console.log('error', e))
     .then(res => res.json())
     .then(res => {
       if (res.status == 200) {
-        progressListId = res.list_id || progressListId;
-        console.log('save list success', progressListId);
+        store.setItem('progressListId', res.list_id || store.getItem('progressListId'));
+        console.log('save list success', store.getItem('progressListId'));
       }
   });
 }
@@ -31,13 +31,13 @@ function loadQuick(store) {
   return JSON.parse(store.getItem('kept_ids'));
 }
 
-function loadList() {
-  return fetch('https://tokimeki-unfollow.glitch.me/data/load_progress')
+function loadList(store) {
+  return fetch('https://tokimeki-unfollow.glitch.me/data/load_progress', {
+    list_id: store.getItem('progressListId') || ''
+  })
     .catch(e => console.log('error', e))
     .then(res => {
     if (res.json) {
-      progressListId = res.json().list_id || progressListId;
-      console.log('load list success', progressListId);
       return res.json().user_ids;
     } else {
       // error! what to return?

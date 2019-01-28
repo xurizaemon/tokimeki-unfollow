@@ -127,7 +127,7 @@ function render(res) {
       },
       saveProgressList: function() {
         if (this.prefs.saveProgressAsList == false) return;
-        Progress.saveList(this.kept);
+        Progress.saveList(this.kept, store);
       },
       loadProgressQuick: function() {
         this.kept = Progress.loadQuick(store);
@@ -136,7 +136,7 @@ function render(res) {
       },
       loadProgressList: function() {
         if (this.prefs.saveProgressAsList == false) return;
-        Progress.loadList()
+        Progress.loadList(store)
           .then(ids => {
             if (ids && ids.Constructor === Array) { 
               this.kept = ids;

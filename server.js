@@ -187,21 +187,21 @@ app.post('/data/save_progress', (req, res) => {
   let prevMemberCount = 0;
   console.log('saving', req.body.user_ids);
   
-  let getList;
+  let opts;
   if (req.body.list_id) {
     console.log('list id received', req.body.list_id);
-    getList = twit.get('lists/show', {
+    opts = {
       list_id: req.body.list_id
-    })
+    };
   } else {
-    getList = twit.get('lists/show', {
+    opts = {
       slug: PROGRESS_LIST_SLUG,
       owner_id: req.session.userId
-    });
+    };
   }
 
   // SUPPORT MATCHING BY NAME? PULL ALL LISTS AND .FILTER FOR THE ONE WE WANT?
-  getList.catch((e) => {
+  twit.get('lists/show', opts).catch((e) => {
     if (e.code == 34) {
       console.log('progress list does not exist, creating a new one');
       return twit.post('lists/create', {
@@ -233,16 +233,16 @@ app.post('/data/save_progress', (req, res) => {
     console.log(e)
   }).then((result) => {
     if (result && result.data) {
-      console.log('added successfully', result.data);
+      console.log('saved list members successfully');
       res.send({
         status: result.resp.toJSON().statusCode,
         members_added: result.data.member_count - prevMemberCount,
-        member_count: result.data.member_count
+        member_count: result.data.member_count,
+        list_id: result.data.id_str
       });
     } else {
       res.send({
-        status: 500,
-        list_id: result.data.id_str
+        status: 500
       });
     }
   });
@@ -251,12 +251,18 @@ app.post('/data/save_progress', (req, res) => {
 
 
 app.get('/data/load_progress', (req, res) => {
-  twit.get('lists/members', {
-    slug: PROGRESS_LIST_SLUG,
-    owner_id: req.session.userId,
+  let opts = {
     include_entities: false,
     count: 5000
-  }).catch(e => {
+  }
+  if (req.body.list_id) {
+    opts.list_id = req.body.list_id;
+  } else {
+    opts.slug = PROGRESS_LIST_SLUG;
+    opts.owner_id = req.session.userId;
+  }
+  
+  twit.get('lists/members', opts).catch(e => {
     res.send({
       status: 500,
       errorCode: e.code,
@@ -264,10 +270,9 @@ app.get('/data/load_progress', (req, res) => {
     });
   }).then(result => {
     if (result && result.data) { 
-      console.log('loaded progress list', result.data.users);
+      console.log('loaded progress list');
       res.send({
-        user_ids: result.data.users.map(user => user.id_str),
-        list_id: result.data.id_str
+        user_ids: result.data.users.map(user => user.id_str)
       })
     }
   });
