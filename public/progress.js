@@ -1,11 +1,9 @@
-let progressListId;
-
 function saveQuick(ids, store) {
   store.setItem('kept_ids', JSON.stringify(ids));
   console.log('saved', JSON.parse(store.getItem('kept_ids')));
 }
 
-function saveList(ids, store) {
+function saveList(ids) {
   return fetch('https://tokimeki-unfollow.glitch.me/data/save_progress', {
     method: 'POST',
     headers: {
@@ -13,15 +11,13 @@ function saveList(ids, store) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      user_ids: ids.reverse().slice(0,100), // Endpoint only takes max 100, so save the latest 100
-      list_id: store.getItem('progressListId') || ''
+      user_ids: ids.reverse().slice(0,100) // Endpoint only takes max 100, so save the latest 100
     })
   }).catch(e => console.log('error', e))
     .then(res => res.json())
     .then(res => {
       if (res.status == 200) {
-        store.setItem('progressListId', res.list_id || store.getItem('progressListId'));
-        console.log('save list success', store.getItem('progressListId'));
+        console.log('save list success', res.list_id);
       }
   });
 }
@@ -31,10 +27,8 @@ function loadQuick(store) {
   return JSON.parse(store.getItem('kept_ids'));
 }
 
-function loadList(store) {
-  return fetch('https://tokimeki-unfollow.glitch.me/data/load_progress', {
-    list_id: store.getItem('progressListId') || ''
-  })
+function loadList() {
+  return fetch('https://tokimeki-unfollow.glitch.me/data/load_progress')
     .catch(e => console.log('error', e))
     .then(res => {
     if (res.json) {

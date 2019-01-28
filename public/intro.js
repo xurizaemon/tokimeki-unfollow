@@ -43,6 +43,10 @@ let wdgt = Vue.component('intro', {
         Take a deep breath! Let's walk through our follows, one by one, and think about if each one still sparks joy, intrigue, inspiration,
         or is in any way still important to you. <b>If not, hit that Unfollow button!</b>
       </p>
+      <p>
+        It's hard to do this all in one go, so don't feel bad if you need to take a break.
+        I'll save your progress as you go so you can pick it up again another time.
+      </p>
       <h3>
         Options
       </h3>
@@ -50,15 +54,14 @@ let wdgt = Vue.component('intro', {
         <p>
           <input type="checkbox" id="showBio" value="showBio" v-model="showBio">
           <label for="showBio"><b>Show account bio's</b> (Recommended: off)<br>
-            I've followed a lot of accounts based on their profile, and not their actual content.
-            It might help to hide their bio's so you can evaluate based on tweets only.</label>
+            I've followed a lot of accounts based on their profile or who they are, but not their actual tweets.
+            Hide their bio's so you can evaluate based on content only.</label>
         </p>
         <p>
           <input type="checkbox" id="saveList" value="saveList" v-model="saveProgressAsList">
           <label for="saveList"><b>Save progress as a private Twitter list</b> (Recommended: on)<br>
             Turn this on so you can resume this process from any device.
-            If this is disabled, I'll save your progress to this web browser's local storage.
-            It's going to be hard to do this all in one go, so don't feel bad if you need to take a break!</label>
+            If this is off, I'll still save your progress to this browser's local storage.</label>
         </p>
         <p>
           <b>Select an order to use:</b> (Recommended: Oldest first)

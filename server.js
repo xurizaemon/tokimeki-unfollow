@@ -226,8 +226,6 @@ app.post('/data/save_progress', (req, res) => {
       console.log('saved list members successfully');
       res.send({
         status: result.resp.toJSON().statusCode,
-        members_added: result.data.member_count - prevMemberCount,
-        member_count: result.data.member_count,
         list_id: result.data.id_str
       });
     } else {
@@ -241,18 +239,12 @@ app.post('/data/save_progress', (req, res) => {
 
 
 app.get('/data/load_progress', (req, res) => {
-  let opts = {
+  twit.get('lists/members', {
+    slug: PROGRESS_LIST_SLUG,
+    owner_id: req.session.userId,
     include_entities: false,
     count: 5000
-  }
-  if (req.body.list_id) {
-    opts.list_id = req.body.list_id;
-  } else {
-    opts.slug = PROGRESS_LIST_SLUG;
-    opts.owner_id = req.session.userId;
-  }
-  
-  twit.get('lists/members', opts).catch(e => {
+  }).catch(e => {
     res.send({
       status: 500,
       errorCode: e.code,
