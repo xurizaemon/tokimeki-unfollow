@@ -77,7 +77,7 @@ function render(res) {
       next: function(e) {
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
         if (this.prefs.showBio == false) this.showBio = false;
-        Progress.saveQuick(this.kept);
+        Progress.saveQuick(this.kept, store);
         this.saveProgressList();
       },
       prev: function(e) {
@@ -114,15 +114,7 @@ function render(res) {
         console.log('unkept', this.kept);
       },
       saveProgressList: function() {
-        Progress.saveList(this.kept)
-          .then(res => {
-            // console.log('response', res);
-            if (res.status == 200) {
-              console.log('save list success');
-              // this.savedProgress = true;
-              // window.setTimeout(() => this.savedProgress = false, 2000);
-            }
-          });
+        Progress.saveList(this.kept);
       },
       loadProgressQuick: function() {
         this.kept = Progress.loadQuick(store);

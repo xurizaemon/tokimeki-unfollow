@@ -16,7 +16,13 @@ function saveList(ids) {
       userIds: ids
     })
   }).catch(e => console.log('error', e))
-    .then(res => res.json());
+    .then(res => res.json())
+    .then(res => {
+      if (res.status == 200) {
+        progressListId = res.listId;
+        console.log('save list success');
+      }
+  });
 }
 
 function loadQuick(store) {
