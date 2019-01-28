@@ -69,15 +69,15 @@
                 <strong>{{ friend.name }}</strong>, a.k.a.
                 <span class="gray">@{{ friend.screen_name }}</span>!
                 <span v-if="showBio==false">
-                  <a href="#" v-on:click="showBio = true" class="keepblue">Show bio.</a>
+                  <a href="#" v-on:click="showBio = true" class="keepblue">Show bio</a>
                 </span>
                 <span v-else id="bio">
                   <span class="">&ldquo;{{ friend.description }}&rdquo;</span>
-                  <a href="#" v-on:click="showBio = false" class="keepblue">Hide bio.</a>
+                  <a href="#" v-on:click="showBio = false" class="keepblue">Hide bio</a>
                 </span>
               </p>
               <p>
-                Do the tweets still spark joy?
+                Do the tweets still spark joy or feel important to you?
               </p>
               <div id="btns">
                 <a href="#" v-on:click="prev" class="button dib"><-</a>
