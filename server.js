@@ -183,15 +183,25 @@ app.post('/data/follow', (req, res) => {
 // });
 
 app.post('/data/save_progress', (req, res) => {
-  if (!req.body.userIds) res.send({ status: 500, error: 'No user ids provided.' });
+  if (!req.body.user_ids) res.send({ status: 500, error: 'No user ids provided.' });
   let prevMemberCount = 0;
-  console.log('saving', req.body.userIds);
+  console.log('saving', req.body.user_ids);
   
+  let getList;
+  if (req.body.list_id) {
+    console.log('list id received', req.body.list_id);
+    getList = twit.get('lists/show', {
+      list_id: req.body.list_id
+    })
+  } else {
+    getList = twit.get('lists/show', {
+      slug: PROGRESS_LIST_SLUG,
+      owner_id: req.session.userId
+    });
+  }
+
   // SUPPORT MATCHING BY NAME? PULL ALL LISTS AND .FILTER FOR THE ONE WE WANT?
-  twit.get('lists/show', {
-    slug: PROGRESS_LIST_SLUG,
-    owner_id: req.session.userId
-  }).catch((e) => {
+  getList.catch((e) => {
     if (e.code == 34) {
       console.log('progress list does not exist, creating a new one');
       return twit.post('lists/create', {
@@ -214,7 +224,7 @@ app.post('/data/save_progress', (req, res) => {
       return twit.post('lists/members/create_all', {
         slug: PROGRESS_LIST_SLUG,
         owner_id: req.session.userId,
-        user_id: req.body.userIds.join(',')
+        user_id: req.body.user_ids.join(',')
       })
     } else {
       // handle not getting the list? how to return a error
@@ -232,7 +242,7 @@ app.post('/data/save_progress', (req, res) => {
     } else {
       res.send({
         status: 500,
-        listId: result.data.id_str
+        list_id: result.data.id_str
       });
     }
   });
@@ -256,7 +266,8 @@ app.get('/data/load_progress', (req, res) => {
     if (result && result.data) { 
       console.log('loaded progress list', result.data.users);
       res.send({
-        user_ids: result.data.users.map(user => user.id_str)
+        user_ids: result.data.users.map(user => user.id_str),
+        list_id: result.data.id_str
       })
     }
   });

@@ -48,16 +48,6 @@ let wdgt = Vue.component('intro', {
       </h3>
       <form>
         <p>
-          <b>Select an order to use:</b> (Recommended: Oldest first)
-          <br>
-          <input type="radio" name="order" id="oldest" value="oldest" v-model="order">
-          <label for="oldest">Oldest first, chronological order</label><br>
-          <input type="radio" name="order" id="random" value="random" v-model="order">
-          <label for="random">Random order</label><br>
-          <input type="radio" name="order" id="newest" value="newest" v-model="order">
-          <label for="newest">Newest first, reverse chronological order</label><br>
-        </p>
-        <p>
           <input type="checkbox" id="showBio" value="showBio" v-model="showBio">
           <label for="showBio"><b>Show account bio's</b> (Recommended: off)<br>
             I've followed a lot of accounts based on their profile, and not their actual content.
@@ -69,6 +59,16 @@ let wdgt = Vue.component('intro', {
             Turn this on so you can resume this process from any device.
             If this is disabled, I'll save your progress to this web browser's local storage.
             It's going to be hard to do this all in one go, so don't feel bad if you need to take a break!</label>
+        </p>
+        <p>
+          <b>Select an order to use:</b> (Recommended: Oldest first)
+          <br>
+          <input type="radio" name="order" id="oldest" value="oldest" v-model="order">
+          <label for="oldest">Oldest first, chronological order</label><br>
+          <input type="radio" name="order" id="random" value="random" v-model="order">
+          <label for="random">Random order</label><br>
+          <input type="radio" name="order" id="newest" value="newest" v-model="order">
+          <label for="newest">Newest first, reverse chronological order</label><br>
         </p>
       </form>
       <br>
