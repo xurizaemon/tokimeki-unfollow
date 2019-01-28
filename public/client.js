@@ -40,7 +40,7 @@ function invalidateStore(store) {
   if (new Date() - new Date(updated) >
       5 * 60 * 1000) { 
     console.log('More than 5 minutes since last update');
-    return true; // More than 5 minutes
+    return true;
   }
   return store.getItem('user') === null ||
     store.getItem('friends') === null
@@ -52,7 +52,6 @@ function defaultAppData() {
 
 function render(res) {
   console.log('Rendering ', res);
-  Vue.use(AsyncComputed);
 
   var app = new Vue({
     el: '#app',
@@ -72,20 +71,21 @@ function render(res) {
       unfollowed: [],
       kept: [],
       loadedProgress: false,
+      savedProgress: false
     },
     methods: {
       next: function(e) {
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
         if (this.prefs.showBio == false) this.showBio = false;
-        this.saveProgress(this.kept);
+        Progress.saveQuick(this.kept);
       },
       prev: function(e) {
         this.sel = Math.max(this.sel - 1, 0);
         if (this.prefs.showBio == false) this.showBio = false;
       },
       getData: function(userId) {
-        console.log('getting data for ', userId);
         if (userId == null) return;
+        console.log('getting data for ', userId);
         Promise.all([
           window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId),
           window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + userId)
@@ -112,19 +112,21 @@ function render(res) {
         this.kept.pop(); // this seems risky since we are not verifiying if it's there or not
         console.log('unkept', this.kept);
       },
-      saveProgress: function(ids) {
-        console.log('saving', ids);
-        Progress.saveQuick(ids, store);
-        // Progress.save(ids, store, this.prefs.saveProgressAsList)
-        //   .then(function(res) {
-        //     console.log('response', res);
-        //     if (res.status == 200) {
-        //       console.log('save success');
-        //     }
-        //   });
+      saveProgressList: function(ids) {
+        Progress.save(ids, store, this.prefs.saveProgressAsList)
+          .then(function(res) {
+            console.log('response', res);
+            if (res.status == 200) {
+              console.log('save success');
+              this.savedProgress = true;
+              window.setTimeout(() => this.savedProgress = false, 2000);
+            }
+          });
       },
-      loadProgress: function() {
-        Progress.loadQuick(store);
+      loadProgressQuick: function() {
+        this.kept = Progress.loadQuick(store);
+        this.friends = this.friends.filter(id => !this.kept.includes(id));
+        this.loadedProgress = (this.kept.length > 0);
       },
       loadProgressList: function() {
         Progress.loadList()
@@ -132,8 +134,6 @@ function render(res) {
             if (ids && typeof ids == 'object') { 
               this.kept = res;
               this.friends = this.friends.filter(id => !this.kept.includes(id));
-              console.log('loaded', this.kept);
-              console.log('filtered', this.friends.length - this.kept.length);
               this.loadedProgress = (this.kept.length > 0);
             }
         });
@@ -152,25 +152,14 @@ function render(res) {
       }
     },
     created: function() {
-      this.loadProgress();
+      this.loadProgressQuick();
     },
     watch: {
-      sel: function() {
-        // this.selFriendId = this.friends[this.sel];
-        // this.getData(this.selFriendId);
-      },
       selFriendId: {
         handler: function() {
           this.getData(this.selFriendId);
         },
         immediate: true
-      },
-      kept() {
-        // this.selFriendIsKept = this.kept.includes(this.selFriendId);
-      },
-      friends() { 
-        // console.log(this.friends);
-        // this.selFriendId = this.friends[this.sel];
       }
     },
     computed: {

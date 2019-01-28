@@ -31,10 +31,6 @@ function addToList(userId, listId) {
   })
 }
 
-function keep(userId) {
-  
-}
-
 function follow(userId, callback) {
   console.log('following');
   post('/data/follow', {
@@ -42,4 +38,4 @@ function follow(userId, callback) {
   }, () => callback(userId));
 }
 
-export { unfollow, addToList, keep, follow };
+export { unfollow, addToList, follow };

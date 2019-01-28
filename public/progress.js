@@ -1,5 +1,6 @@
 function saveQuick(ids, store) {
   store.setItem('kept_ids', JSON.stringify(ids));
+  console.log('saved', JSON.parse(store.getItem('kept_ids')));
 }
 
 function saveList(ids) {
@@ -17,6 +18,7 @@ function saveList(ids) {
 }
 
 function loadQuick(store) {
+  console.log('loading', JSON.parse(store.getItem('kept_ids')));
   return JSON.parse(store.getItem('kept_ids'));
 }
 
