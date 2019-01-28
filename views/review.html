@@ -81,31 +81,21 @@
               </div>
               </span>
             </div>
-                
-            
-<!--             <h3>
-              {{friend.name}} <span class="notbold gray">@{{ friend.screen_name }}</span>
-            </h3>
-            <div v-if="showBio==false">
-              <a href="#" v-on:click="showBio = true">View bio</a>
-            </div>
-            <div v-else id="bio">
-              {{ friend.description }}
-              <br>
-              <a href="#" v-on:click="showBio = false">Hide bio</a>
-            </div> -->
           </div>
         </div>
       </div>
       <div id="logout">
         <a href="/logout">Log Out</a>
         <a href="#" v-if="introFinished" v-on:click="introFinished=false">Intro</a>
-        <a href="#" v-on:click="resetApp">Refetch Data</a>
+        <a href="#" v-on:click="saveProgressList">Save Progress to Twitter</a>
       </div>
       <div id="debug">
         <ol>
           <li v-for="id in friends">{{ id }}</li>
         </ol>
+      </div>
+      <div id="alert" v-if="savedProgress">
+          Saved progress!
       </div>
     </div>
   <script type="module" src="/client.js" defer=""></script>

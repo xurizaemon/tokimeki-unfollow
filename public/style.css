@@ -237,6 +237,14 @@ input[type="checkbox"] {
   margin-left: 220px;
 }
 
+#alert {
+  background: white;
+  padding: 1em;
+  bottom: 1em;
+  right: 1em;
+  position: fixed;
+}
+
 .flex { display: flex }
 .flex-col { flex-direction: column }
 .fixed { position: fixed }

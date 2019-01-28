@@ -112,9 +112,9 @@ function render(res) {
         this.kept.pop(); // this seems risky since we are not verifiying if it's there or not
         console.log('unkept', this.kept);
       },
-      saveProgressList: function(ids) {
-        Progress.save(ids, store, this.prefs.saveProgressAsList)
-          .then(function(res) {
+      saveProgressList: function() {
+        Progress.saveList(this.kept)
+          .then(res => {
             console.log('response', res);
             if (res.status == 200) {
               console.log('save success');
