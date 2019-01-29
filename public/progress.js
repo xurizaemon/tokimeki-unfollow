@@ -30,9 +30,11 @@ function loadQuick(store) {
 function loadList() {
   return fetch('https://tokimeki-unfollow.glitch.me/data/load_progress')
     .catch(e => console.log('error', e))
+    .then(res => res.json())
     .then(res => {
-    if (res.json) {
-      return res.json().user_ids;
+    console.log('loaded', res);
+    if (res.user_ids) {
+      return res.user_ids;
     } else {
       // error! what to return?
     }

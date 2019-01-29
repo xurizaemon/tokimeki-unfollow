@@ -121,6 +121,16 @@ img {
   text-align: left;
   padding: 1em; 
   border-bottom: 1px solid #eee;
+  padding-left: 4em;
+  position: relative;
+}
+.backup-tweet-avatar {
+  position: absolute;
+  left: 1em;
+  width: 2em;
+  height: 2em;
+  top: 1em;
+  border-radius: 999px;
 }
 
 .backup-tweet {

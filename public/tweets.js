@@ -69,13 +69,16 @@ let wdgt = Vue.component('twttr-widget', {
       <div v-else>
         <ol id="backup-tweets">
           <li v-for='t in tweets' class="backup-tweet">
-            
+            <img v-bind:src="t.user.profile_image_url_https" class="backup-tweet-avatar">
+            <span>
+              <strong>{{ t.user.name }}</strong>
+              <span class="gray">@{{ t.user.screen_name }} · {{ formatTweetTime(t.created_at) }}</span>
+            </span>
             <p v-html="formatTweetText(t.text)"></p>
             <img
               v-if='t.entities && t.entities.media && t.entities.media[0]'
               v-bind:src='t.entities.media[0].media_url_https'
               class="w100">
-            <span class="gray">{{ formatTweetTime(t.created_at) }}</span>
           </li>
         </ol>
       </div>
