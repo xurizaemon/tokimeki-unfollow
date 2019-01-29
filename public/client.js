@@ -62,16 +62,19 @@ function render(res) {
   console.log('Rendering ', JSON.parse(JSON.stringify(res)));
   
   const dataDefaults = {
-    friend: { name: "Loading...", screen_name: "Loading..." }
+    friend: { name: "Loading...", screen_name: "Loading..." },
+    friendsNewest: res.friends,
+    friends: res.friends,
+    friendsOldest: res.friends.join(",").split(",").reverse()
   }
 
   var app = new Vue({
     el: '#app',
     data: {
       sel: 0,
-      friends: res.friends,
-      friendsNewest: res.friends,
-      friendsOldest: res.friends.reverse(),
+      friends: dataDefaults.friends,
+      friendsNewest: dataDefaults.friendsNewest,
+      friendsOldest: dataDefaults.friendsOldest,
       user: res.user,
       friend: dataDefaults.friend,
       introFinished: false,
@@ -106,7 +109,6 @@ function render(res) {
         store.setItem('prefsOrder', this.prefs.order);
         store.setItem('prefsSaveProgressAsList', this.prefs.saveProgressAsList);
         store.setItem('prefsShowBio', this.prefs.showBio);
-        console.log(this.prefs.order);
       },
       next: function() {
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
@@ -124,7 +126,7 @@ function render(res) {
         window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId)
           .then(res => res.json())
           .then(res => {
-          console.log('got data for ' + res.user.screen_name + ', ' + res.user.id_str, res);
+          console.log('got data for ' + res.user.screen_name + ', ' + res.user.id_str, JSON.parse(JSON.stringify(res)));
           this.friend = res.user;
         });
       },
@@ -157,7 +159,6 @@ function render(res) {
         if (this.prefs.saveProgressAsList == false) return;
         Progress.loadList(store)
           .then(res => {
-          console.log(res.user_ids.length)
             let ids = res.user_ids;
             if (ids && ids.length) {
               // Combine in case the quick load and twitter list are different
