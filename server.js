@@ -98,6 +98,7 @@ app.get('/data/tweets/:userId', (req, res) => {
     include_rts: true
   }).catch((e) => apiCatch(res, e))
     .then((result) => {
+    console.log(result);
      res.send({
        tweets: result.data
      });

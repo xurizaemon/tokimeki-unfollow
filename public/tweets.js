@@ -1,7 +1,6 @@
 let wdgt = Vue.component('twttr-widget', {
   data: function() {
     return {
-      tweets: []
     }
   },
   props: ['username', 'id', 'private'],
@@ -44,6 +43,7 @@ let wdgt = Vue.component('twttr-widget', {
   },
   mounted: function() {
     this.reloadTwttrWidget();
+    console.log(this.tweets);
   },
   updated: function() {
     this.reloadTwttrWidget();
@@ -61,7 +61,7 @@ let wdgt = Vue.component('twttr-widget', {
       </div>
       <div v-else>
         <ol id="backup-tweets">
-          <li v-for='t in tweets' :key="t.id">
+          <li v-for='t in tweets' :key="t.id_str">
             <tweet v-bind:tweet="tweetOrRT(t)">
             </tweet>
           </li>

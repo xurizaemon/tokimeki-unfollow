@@ -68,7 +68,6 @@ function render(res) {
       friends: res.friends,
       user: res.user,
       friend: { screen_name: "Loading..." },
-      tweets: [],
       introFinished: false,
       showBio: false,
       prefs: {
@@ -107,14 +106,16 @@ function render(res) {
       getData: function(userId) {
         if (userId == null) return;
         console.log('getting data for ', userId);
-        Promise.all([
-          window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId),
-          window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + userId)
-        ]).then(res => Promise.all(res.map(r => r.json())))
+        // Promise.all([
+        //   window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId),
+        //   window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + userId)
+        // ])
+        window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId)
+          .then(res => Promise.all(res.map(r => r.json())))
           .then(res => {
           console.log('got data for ' + res[0].user.screen_name + ', ' + res[0].user.id_str, res);
           this.friend = res[0].user;
-          this.tweets = res[1].tweets;
+          // this.tweets = res[1].tweets;
         });
       },
       unfollow: function() {
