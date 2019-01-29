@@ -43,6 +43,8 @@ let wdgt = Vue.component('twttr-widget', {
       return twttr && twttr !== undefined;
     },
     shouldUseTwttrWidget() {
+      console.log('private', this.private);
+      console.log('twttr loaded', this.twttrScriptLoaded)
       return this.twttrScriptLoaded && this.private === false;
     }
   },

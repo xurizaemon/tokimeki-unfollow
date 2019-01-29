@@ -95,8 +95,8 @@ function render(res) {
             this.friends = this.friendsOldest;
             break;
           case 'random':
-            this.friends = shuffle(this.friends);
-            console.log('shuffle!', JSON.parse(JSON.stringify(this.friends)))
+            // Hack to trigger updating/watching, otherwise Vue won't notice
+            this.friends = shuffle(this.friends).join(',').split(',');
             break;
           case 'newest':
             this.friends = this.friendsNewest;
@@ -189,14 +189,10 @@ function render(res) {
           this.getData(this.selFriendId);
         },
         immediate: true
-      },
-      friends: function() {
-        console.log('watch');
       }
     },
     computed: {
       selFriendId() {
-        console.log('selfriendid');
         return this.friends[this.sel];
       },
       selFriendIsKept() {
