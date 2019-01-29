@@ -110,6 +110,17 @@ img {
 
 }
 
+/* Backup tweet rendering */
+#backup-tweets {
+  padding: .5em;
+}
+.backup-tweet {
+  text-align: left;
+  
+}
+
+/* Bottom control panel */
+
 #ctrl {
   padding: 1.2em;
   position: absolute;

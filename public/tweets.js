@@ -1,3 +1,5 @@
+'use strict';var _typeof='function'==typeof Symbol&&'symbol'==typeof Symbol.iterator?function(obj){return typeof obj}:function(obj){return obj&&'function'==typeof Symbol&&obj.constructor===Symbol&&obj!==Symbol.prototype?'symbol':typeof obj};/*global define*/var _html=require('linkifyjs/html'),_html2=_interopRequireDefault(_html);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj}}(function(){function a(b,c){b.innerHTML=(0,_html2.default)(b.innerHTML,c.value)}'object'==('undefined'==typeof exports?'undefined':_typeof(exports))?module.exports=a:'function'==typeof define&&define.amd?define([],function(){return a}):window.Vue&&window.Vue.directive('linkified',a)})();
+
 let wdgt = Vue.component('twttr-widget', {
   data: function() {
     return {
@@ -20,6 +22,14 @@ let wdgt = Vue.component('twttr-widget', {
     },
     reloadTwttrWidget() {
       if (twttr) twttr.widgets.load();
+    },
+    formatTweetTime(timeString) {
+      let d = new Date(timeString),
+          month = d.getMonth,
+          day = d.getDay(),
+          date = d.getDate(),
+          year = String(d.getFullYear()).slice(2,4)
+      return `${month}/${day}/${year}`;
     }
   },
   watch: {
@@ -55,14 +65,14 @@ let wdgt = Vue.component('twttr-widget', {
           data-chrome="nofooter noheader"
           v-bind:href="href">Loading tweets by {{ username }}...</a>
       </div>
-      <div v-else id="twttr-widget-backup">
-        <ol>
-          <li v-for='t in tweets' class="tweet">
+      <div v-else>
+        <ol id="backup-tweets">
+          <li v-for='t in tweets' class="backup-tweet">
             {{ t.text }}
             <br>
             <img v-if='t.entities && t.entities.media && t.entities.media[0]' v-bind:src='t.entities.media[0].media_url_https'>
             <br>
-            <i>{{ t.created_at }}</i>
+            <i>{{ formatTweetTime(t.created_at) }}</i>
           </li>
         </ol>
       </div>
