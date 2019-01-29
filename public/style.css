@@ -132,8 +132,15 @@ img {
   top: 1em;
   border-radius: 999px;
 }
+.retweet {
+  padding-top: .5em;
+  padding-left: 4em;
+  margin-bottom: -.8em;
+  text-align: left;
+}
 
-.backup-tweet {
+.backup-tweet img {
+  margin-top: 1em;
 }
 
 /* Bottom control panel */
