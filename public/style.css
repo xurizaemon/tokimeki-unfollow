@@ -139,8 +139,13 @@ img {
   text-align: left;
 }
 
-.backup-tweet img {
+.backup-tweet-image {
   margin-top: 1em;
+}
+
+.backup-tweet .backup-tweet {
+  margin-top: 1em;
+  border: 1px solid #eee;
 }
 
 /* Bottom control panel */

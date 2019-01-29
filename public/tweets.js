@@ -61,10 +61,10 @@ let wdgt = Vue.component('twttr-widget', {
       </div>
       <div v-else>
         <ol id="backup-tweets">
-          <tweet v-for='t in tweets'
-            :key="t.id"
-            v-bind:tweet="tweetOrRT(t)">
-          </tweet>
+          <li v-for='t in tweets' :key="t.id">
+            <tweet v-bind:tweet="tweetOrRT(t)">
+            </tweet>
+          </li>
         </ol>
       </div>
     </div>

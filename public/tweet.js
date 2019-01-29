@@ -10,13 +10,13 @@ let tweetComponent = Vue.component('tweet', {
     }
   },
   template:`
-    <li>
+    <div>
       <div v-if="tweet.retweeted_by" class="retweet gray w100">
         &#x1f501;&#xFE0E; Retweeted
       </div>
       <div class="backup-tweet">
         <img v-bind:src="tweet.user.profile_image_url_https" class="backup-tweet-avatar">
-        <span>
+        <a href="https://twitter.com/{{ tweet.user.screen_name }}">
           <strong>{{ tweet.user.name }}</strong>
           <span class="gray">
             @{{ tweet.user.screen_name }} ·
@@ -28,8 +28,9 @@ let tweetComponent = Vue.component('tweet', {
         <img
           v-if='tweet.entities && tweet.entities.media && tweet.entities.media[0]'
           v-bind:src='tweet.entities.media[0].media_url_https'
-          class="w100">
+          class="backup-tweet-image w100">
+        <tweet v-if="tweet.quoted_status" v-bind:tweet="tweet.quoted_status" class="w100"></tweet>
       </div>
-    </li>
+    </div>
   `
 });
