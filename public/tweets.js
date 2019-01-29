@@ -73,7 +73,10 @@ let wdgt = Vue.component('twttr-widget', {
             <img v-bind:src="t.user.profile_image_url_https" class="backup-tweet-avatar">
             <span>
               <strong>{{ t.user.name }}</strong>
-              <span class="gray">@{{ t.user.screen_name }} · {{ formatTweetTime(t.created_at) }}</span>
+              <span class="gray">
+                @{{ t.user.screen_name }} ·
+                <vue2-timeago :datetime="new Date(t.created_at)"></vue2-timeago>
+              </span>
             </span>
             <p v-html="formatTweetText(t.text)"></p>
             <img

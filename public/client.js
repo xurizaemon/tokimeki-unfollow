@@ -10,7 +10,6 @@ Vue.autolinker = function(txt) {
     hashtag: 'twitter'
   });
 }
-Vue.use(window.VueTimeago);
 
 function getLoggedInUserData() {
   console.log('get logged in user data')
