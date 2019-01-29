@@ -1,9 +1,8 @@
-import * as Autolinker from './_autolinker.js';
-Object.defineProperty(Vue.prototype, '$autolinker', { value: Autolinker });
 import * as Intro from './intro.js';
 import * as Tweets from './tweets.js';
 import * as Data from './data.js';
 import * as Progress from './progress.js';
+Vue.autolinker = Autolinker.link;
 let store = window.localStorage;
 
 function getLoggedInUserData() {
@@ -69,7 +68,7 @@ function render(res) {
         order: 'oldest',
         saveProgressAsList: true,
         showBio: false
-      }
+      },
       unfollowed: [],
       kept: [],
       loadedProgress: false,
