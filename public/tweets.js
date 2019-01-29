@@ -10,7 +10,13 @@ let wdgt = Vue.component('twttr-widget', {
       window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + id)
         .catch(e => console.log('error getting tweets', e))
         .then(r => r.json())
-        .then(r => this.tweets = r.tweets);
+        .then(r => {
+          if (r.tweets) {
+            this.tweets = r.tweets
+          } else {
+            this.tweets = [{text: "Unable to load tweets. Try again."}]
+          }
+        });
     },
     reloadTwttrWidget() {
       if (twttr) twttr.widgets.load();
@@ -49,9 +55,9 @@ let wdgt = Vue.component('twttr-widget', {
           data-chrome="nofooter noheader"
           v-bind:href="href">Loading tweets by {{ username }}...</a>
       </div>
-      <div v-else>
+      <div v-else id="twttr-widget-backup">
         <ol>
-          <li v-for='t in tweets'>
+          <li v-for='t in tweets' class="tweet">
             {{ t.text }}
             <br>
             <img v-if='t.entities && t.entities.media && t.entities.media[0]' v-bind:src='t.entities.media[0].media_url_https'>
@@ -63,29 +69,3 @@ let wdgt = Vue.component('twttr-widget', {
     </div>
   `
 });
-      // data: function() {
-      //   return {
-      //     user: {screen_name:'Loading...'},
-      //     tweets: [{text:'Loading tweets...'},{text:'...'},{text:'...'}]
-      //   }
-      // },
-  // methods: {
-  //   getData: function(userId) {
-  //     Promise.all([
-  //       window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId),
-  //       window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + userId)
-  //     ]).then(res => Promise.all(res.map(r => r.json())))
-  //       .then(res => {
-  //       console.log(res);
-  //       this.user = res[0].user;
-  //       this.tweets = res[1].tweets;
-  //     });
-  //   }
-  // },
-  // created: function() {
-  //   this.getData(this.id);
-  // },
-  
-
-
-

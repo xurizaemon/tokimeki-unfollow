@@ -94,9 +94,8 @@ app.get('/data/user/:userId', (req, res) => {
 app.get('/data/tweets/:userId', (req, res) => {
   twit.get('statuses/user_timeline', {
     user_id: req.params.userId,
-    count: 5,
-    include_rts: true,
-    exclude_replies: true
+    count: 200,
+    include_rts: true
   }).catch((e) => apiCatch(res, e))
     .then((result) => {
      res.send({
