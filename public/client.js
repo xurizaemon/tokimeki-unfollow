@@ -1,5 +1,6 @@
 import * as Intro from './intro.js';
 import * as Tweets from './tweets.js';
+import * as Tweet from './tweet.js';
 import * as Data from './data.js';
 import * as Progress from './progress.js';
 let store = window.localStorage;

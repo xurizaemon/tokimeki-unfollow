@@ -21,17 +21,9 @@ let wdgt = Vue.component('twttr-widget', {
     reloadTwttrWidget() {
       if (twttr) twttr.widgets.load();
     },
-    formatTweetTime(timeString) {
-      let d = new Date(timeString),
-          month = d.getMonth(),
-          day = d.getDay(),
-          date = d.getDate(),
-          year = String(d.getFullYear()).slice(2,4);
-      month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][month];
-      return `${month} ${date}, ${year}`;
-    },
-    formatTweetText(text) {
-      return Vue.autolinker(text);
+    tweetOrRT(tweet) {
+      if (tweet.retweeted_status) tweet.retweeted_status.retweeted_by = tweet.user.name;
+      return tweet.retweeted_status || tweet;
     }
   },
   watch: {
@@ -69,21 +61,10 @@ let wdgt = Vue.component('twttr-widget', {
       </div>
       <div v-else>
         <ol id="backup-tweets">
-          <li v-for='t in tweets' class="backup-tweet">
-            <img v-bind:src="t.user.profile_image_url_https" class="backup-tweet-avatar">
-            <span>
-              <strong>{{ t.user.name }}</strong>
-              <span class="gray">
-                @{{ t.user.screen_name }} ·
-                <vue2-timeago :datetime="new Date(t.created_at)"></vue2-timeago>
-              </span>
-            </span>
-            <p v-html="formatTweetText(t.text)"></p>
-            <img
-              v-if='t.entities && t.entities.media && t.entities.media[0]'
-              v-bind:src='t.entities.media[0].media_url_https'
-              class="w100">
-          </li>
+          <tweet v-for='t in tweets'
+            :key="t.id"
+            v-bind:tweet="tweetOrRT(t)">
+          </tweet>
         </ol>
       </div>
     </div>
