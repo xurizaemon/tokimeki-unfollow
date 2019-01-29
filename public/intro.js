@@ -1,15 +1,18 @@
 let wdgt = Vue.component('intro', {
   data: function() {
     return {
-      order: 'oldest',
-      saveProgressAsList: true,
-      showBio: false
+      order: this.initialorder,
+      saveProgressAsList: this.initialsaveprogressaslist,
+      showBio: this.initialshowbio
     }
   },
   props: [
     'username',
     'followingcount',
-    'loadedprogress'
+    'loadedprogress',
+    'initialorder',
+    'initialsaveprogressaslist',
+    'initialshowbio'
   ],
   methods: {
     start: function(e) {

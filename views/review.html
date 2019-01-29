@@ -9,6 +9,9 @@
         v-bind:username="user.screen_name"
         v-bind:loadedprogress="loadedProgress"
         v-bind:followingcount="friends.length"
+        v-bind:initialorder="prefs.order"
+        v-bind:initialsaveprogressaslist="prefs.saveProgressAsList"
+        v-bind:initialshowbio="prefs.showBio"
         v-if="introFinished == false"
         v-on:intro-finished="introFinished = true; updatePrefs($event)"></intro>
       <div v-else>

@@ -71,9 +71,9 @@ function render(res) {
       introFinished: false,
       showBio: false,
       prefs: {
-        order: 'oldest',
-        saveProgressAsList: true,
-        showBio: false
+        order: store.getItem('prefsOrder') || 'oldest',
+        saveProgressAsList: store.getItem('prefsSaveProgressAsList')JSON.parse(store.getItem('prefsSaveProgressAsList')) || true,
+        showBio: JSON.parse(store.getItem('prefsShowBio')) || false
       },
       unfollowed: [],
       kept: [],
@@ -93,8 +93,9 @@ function render(res) {
         }
         this.showBio = this.prefs.showBio;
         store.setItem('prefsOrder', this.prefs.order);
-        store.setItem('prefsOrder', this.prefs.order);
-        store.setItem('prefsOrder', this.prefs.order);
+        store.setItem('prefsSaveProgressAsList', this.prefs.saveProgressAsList);
+        store.setItem('prefsShowBio', this.prefs.showBio);
+        console.log('showbiosaved', store.getItem('prefsSaveProgressAsList') || 'poop');
       },
       next: function() {
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
@@ -171,6 +172,7 @@ function render(res) {
     created: function() {
       this.loadProgressQuick();
       this.loadProgressList();
+      console.log('prefs', JSON.parse(JSON.stringify(this.prefs)));
     },
     watch: {
       selFriendId: {
