@@ -23,14 +23,14 @@ let wdgt = Vue.component('twttr-widget', {
     },
     formatTweetTime(timeString) {
       let d = new Date(timeString),
-          month = d.getMonth,
+          month = d.getMonth(),
           day = d.getDay(),
           date = d.getDate(),
           year = String(d.getFullYear()).slice(2,4)
       return `${month}/${day}/${year}`;
     },
     formatTweetText(text) {
-      return this.$autolinker.link(text);
+      return Vue.autolinker(text);
     }
   },
   watch: {
@@ -69,14 +69,12 @@ let wdgt = Vue.component('twttr-widget', {
       <div v-else>
         <ol id="backup-tweets">
           <li v-for='t in tweets' class="backup-tweet">
-            <p>
-              {{ formatTweetText(t.text) }}
-            </p>
+            
+            <p v-html="formatTweetText(t.text)"></p>
             <img
               v-if='t.entities && t.entities.media && t.entities.media[0]'
               v-bind:src='t.entities.media[0].media_url_https'
               class="w100">
-            <br>
             <span class="gray">{{ formatTweetTime(t.created_at) }}</span>
           </li>
         </ol>

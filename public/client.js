@@ -2,7 +2,13 @@ import * as Intro from './intro.js';
 import * as Tweets from './tweets.js';
 import * as Data from './data.js';
 import * as Progress from './progress.js';
-Vue.autolinker = Autolinker.link;
+Vue.autolinker = function(txt) {
+  return Autolinker.link(txt, {
+    mention: 'twitter',
+    hashtag: 'twitter'
+  });
+}
+console.log(Vue.autolinker('google.com @tarngerine'))
 let store = window.localStorage;
 
 function getLoggedInUserData() {
