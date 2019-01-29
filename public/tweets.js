@@ -48,7 +48,6 @@ let wdgt = Vue.component('twttr-widget', {
   },
   mounted: function() {
     this.reloadTwttrWidget();
-    console.log(this.tweets);
   },
   updated: function() {
     this.reloadTwttrWidget();

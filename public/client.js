@@ -54,10 +54,6 @@ function invalidateStore(store) {
     store.getItem('friends') === null
 }
 
-function defaultAppData() {
-  return 
-}
-
 function render(res) {
   console.log('Rendering ', JSON.parse(JSON.stringify(res)));
   
@@ -100,6 +96,7 @@ function render(res) {
             break;
           case 'random':
             this.friends = shuffle(this.friends);
+            console.log('shuffle!', JSON.parse(JSON.stringify(this.friends)))
             break;
           case 'newest':
             this.friends = this.friendsNewest;
@@ -151,7 +148,7 @@ function render(res) {
         Progress.saveList(this.kept, store);
       },
       loadProgressQuick: function() {
-        this.kept = Progress.loadQuick(store);
+        this.kept = Progress.loadQuick(store) || this.kept;
         this.friends = this.friends.filter(id => !this.kept.includes(id));
         this.loadedProgress = (this.kept.length > 0);
       },
@@ -192,10 +189,14 @@ function render(res) {
           this.getData(this.selFriendId);
         },
         immediate: true
+      },
+      friends: function() {
+        console.log('watch');
       }
     },
     computed: {
       selFriendId() {
+        console.log('selfriendid');
         return this.friends[this.sel];
       },
       selFriendIsKept() {

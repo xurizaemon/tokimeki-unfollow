@@ -24,7 +24,7 @@ function saveList(ids) {
 
 function loadQuick(store) {
   console.log('loading', JSON.parse(store.getItem('kept_ids')));
-  return JSON.parse(store.getItem('kept_ids')) || [];
+  return JSON.parse(store.getItem('kept_ids'));
 }
 
 function loadList() {
