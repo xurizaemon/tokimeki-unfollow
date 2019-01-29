@@ -11,6 +11,9 @@ let wdgt = Vue.component('twttr-widget', {
         .catch(e => console.log('error getting tweets', e))
         .then(r => r.json())
         .then(r => this.tweets = r.tweets);
+    },
+    reloadTwttrWidget() {
+      if (twttr) twttr.widgets.load();
     }
   },
   watch: {
@@ -21,17 +24,23 @@ let wdgt = Vue.component('twttr-widget', {
   computed: {
     href: function() {
       return 'https://twitter.com/'+ this.username + '?ref_src=twsrc%5Etfw'
+    },
+    twttrScriptLoaded() {
+      return twttr && twttr !== undefined;
+    },
+    shouldUseTwttrWidget() {
+      return this.twttrScriptLoaded && this.private === false;
     }
   },
   mounted: function() {
-    twttr.widgets.load();
+    this.reloadTwttrWidget();
   },
   updated: function() {
-    twttr.widgets.load();
+    this.reloadTwttrWidget();
   },
   template: `
     <div :key='username' v-cloak>
-      <div v-if="private">
+      <div v-if="shouldUseTwttrWidget">
         <a class="twitter-timeline"
           data-width="400"
           data-height="100%"
