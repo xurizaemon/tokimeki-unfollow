@@ -26,8 +26,9 @@ let wdgt = Vue.component('twttr-widget', {
           month = d.getMonth(),
           day = d.getDay(),
           date = d.getDate(),
-          year = String(d.getFullYear()).slice(2,4)
-      return `${month}/${day}/${year}`;
+          year = String(d.getFullYear()).slice(2,4);
+      month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][month];
+      return `${month} ${date}, ${year}`;
     },
     formatTweetText(text) {
       return Vue.autolinker(text);

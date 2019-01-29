@@ -2,14 +2,15 @@ import * as Intro from './intro.js';
 import * as Tweets from './tweets.js';
 import * as Data from './data.js';
 import * as Progress from './progress.js';
+let store = window.localStorage;
+
 Vue.autolinker = function(txt) {
   return Autolinker.link(txt, {
     mention: 'twitter',
     hashtag: 'twitter'
   });
 }
-console.log(Vue.autolinker('google.com @tarngerine'))
-let store = window.localStorage;
+Vue.use(window.VueTimeago);
 
 function getLoggedInUserData() {
   console.log('get logged in user data')
@@ -144,9 +145,10 @@ function render(res) {
       loadProgressList: function() {
         if (this.prefs.saveProgressAsList == false) return;
         Progress.loadList(store)
-          .then(ids => {
-            if (ids && ids.Constructor === Array) {
-              console.log("loaded", ids)
+          .then(res => {
+          console.log(res.user_ids.length)
+            let ids = res.user_ids;
+            if (ids && ids.length) {
               // Combine in case the quick load and twitter list are different
               this.kept = this.kept.concat(ids.filter((id, i) => this.kept.indexOf(id) < 0));
               this.friends = this.friends.filter(id => !this.kept.includes(id));
