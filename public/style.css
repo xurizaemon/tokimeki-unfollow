@@ -34,6 +34,8 @@ h1 {
   color:#888;
 }
 
+.black { color: black; }
+
 .logoredbg {
   background: #fc583b;
 }
@@ -41,6 +43,8 @@ h1 {
 .keepblue { color:blue }
 a.keepblue:visited { color: blue }
 a:hover { text-decoration: none }
+.nodec { text-decoration: none }
+a.nodec:hover { text-decoration: underline }
 
 [v-cloak] {
   display: none;
