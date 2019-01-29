@@ -1,27 +1,19 @@
-Welcome to Glitch
-=================
+### Tokimeki Unfollow
+> ~KonMari your Twitter follows~
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+Do you think your feed sucks because you follow too many accounts? You're in the right place!
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+If you're like me, you've followed a bajillion accounts over your years on Twitter dot com. Some of them date back to your first days as an egg — when you were probably an entirely different human being. You have some socially-obliged follow-backs sprinkled among some thought leaders you've outgrown, but you've never found the energy to go through and clean up your follows.
 
-Find out more [about Glitch](https://glitch.com/about).
+Take a deep breath! Let's walk through our follows, one by one, and think about if each one still sparks joy, intrigue, inspiration, or is in any way still important to you. **If not, hit that Unfollow button!**
 
+It's hard to do this all in one go, so don't feel bad if you need to take a break. I'll save your progress as you go so you can pick it up again another time.
 
-Your Project
-------------
+## Todos
+- Mobile UI
+- Add to list
+- Animation/UI cleanup
+- Refactor/cleanup, esp around promises
 
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
-
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
-
-
-Made by [Glitch](https://glitch.com/)
--------------------
-
-\ ゜o゜)ノ
+---
+A tool by [Julius Tarng](https://tarng.com)
