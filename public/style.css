@@ -112,11 +112,15 @@ img {
 
 /* Backup tweet rendering */
 #backup-tweets {
-  padding: .5em;
+  padding: 0;
 }
 .backup-tweet {
   text-align: left;
-  
+  padding: 1em; 
+  border-bottom: 1px solid #eee;
+}
+
+.backup-tweet {
 }
 
 /* Bottom control panel */

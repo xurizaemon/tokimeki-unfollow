@@ -1,5 +1,3 @@
-'use strict';var _typeof='function'==typeof Symbol&&'symbol'==typeof Symbol.iterator?function(obj){return typeof obj}:function(obj){return obj&&'function'==typeof Symbol&&obj.constructor===Symbol&&obj!==Symbol.prototype?'symbol':typeof obj};/*global define*/var _html=require('linkifyjs/html'),_html2=_interopRequireDefault(_html);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj}}(function(){function a(b,c){b.innerHTML=(0,_html2.default)(b.innerHTML,c.value)}'object'==('undefined'==typeof exports?'undefined':_typeof(exports))?module.exports=a:'function'==typeof define&&define.amd?define([],function(){return a}):window.Vue&&window.Vue.directive('linkified',a)})();
-
 let wdgt = Vue.component('twttr-widget', {
   data: function() {
     return {
@@ -68,11 +66,15 @@ let wdgt = Vue.component('twttr-widget', {
       <div v-else>
         <ol id="backup-tweets">
           <li v-for='t in tweets' class="backup-tweet">
-            {{ t.text }}
+            <p v-linkified>
+              {{ t.text }}
+            </p>
+            <img
+              v-if='t.entities && t.entities.media && t.entities.media[0]'
+              v-bind:src='t.entities.media[0].media_url_https'
+              class="w100">
             <br>
-            <img v-if='t.entities && t.entities.media && t.entities.media[0]' v-bind:src='t.entities.media[0].media_url_https'>
-            <br>
-            <i>{{ formatTweetTime(t.created_at) }}</i>
+            <span class="gray">{{ formatTweetTime(t.created_at) }}</i>
           </li>
         </ol>
       </div>
