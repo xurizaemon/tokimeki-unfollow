@@ -28,6 +28,7 @@ let wdgt = Vue.component('twttr-widget', {
   },
   watch: {
     id() {
+      this.tweets = [];
       this.getData(this.id);
     }
   },

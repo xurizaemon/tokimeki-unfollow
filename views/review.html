@@ -25,8 +25,8 @@
           }">
           <twttr-widget
             v-bind:username="friend.screen_name"
-            v-bind:id="friend.id_str"
-            v-bind:private="true || friend.protected"></twttr-widget>
+            v-bind:id="selFriendId"
+            v-bind:private="friend.protected"></twttr-widget>
         </div>
         <div id="ctrl" v-bind:class="{showBio:showBio}">
           <div id="avvy"></div>

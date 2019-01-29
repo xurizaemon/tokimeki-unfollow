@@ -226,7 +226,6 @@ app.get('/data/load_progress', (req, res) => {
     count: 5000
   }).catch(e => apiCatch(res, e)).then(result => {
     if (result && result.data && result.data.users) { 
-      console.log('loaded progress list');
       res.send({
         user_ids: result.data.users.map(user => user.id_str)
       })

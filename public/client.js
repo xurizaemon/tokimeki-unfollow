@@ -59,21 +59,29 @@ function defaultAppData() {
 }
 
 function render(res) {
-  console.log('Rendering ', res);
+  console.log('Rendering ', JSON.parse(JSON.stringify(res)));
+  
+  const dataDefaults = {
+    friend: { name: "Loading...", screen_name: "Loading..." }
+  }
 
   var app = new Vue({
     el: '#app',
     data: {
       sel: 0,
       friends: res.friends,
+      friendsNewest: res.friends,
+      friendsOldest: res.friends.reverse(),
       user: res.user,
-      friend: { screen_name: "Loading..." },
+      friend: dataDefaults.friend,
       introFinished: false,
       showBio: false,
       prefs: {
         order: store.getItem('prefsOrder') || 'oldest',
-        saveProgressAsList: store.getItem('prefsSaveProgressAsList')JSON.parse(store.getItem('prefsSaveProgressAsList')) || true,
-        showBio: JSON.parse(store.getItem('prefsShowBio')) || false
+        saveProgressAsList: store.getItem('prefsSaveProgressAsList') ?
+          JSON.parse(store.getItem('prefsSaveProgressAsList')) : true,
+        showBio: store.getItem('prefsShowBio') ?
+          JSON.parse(store.getItem('prefsShowBio')) : false
       },
       unfollowed: [],
       kept: [],
@@ -84,18 +92,21 @@ function render(res) {
       updatePrefs: function(e) {
         [this.prefs.order, this.prefs.saveProgressAsList, this.prefs.showBio] = e;
         switch (this.prefs.order) {
+          case 'oldest':
+            this.friends = this.friendsOldest;
+            break;
           case 'random':
             this.friends = shuffle(this.friends);
             break;
-          case 'oldest':
-            this.friends = this.friends.reverse();
+          case 'newest':
+            this.friends = this.friendsNewest;
             break;
         }
         this.showBio = this.prefs.showBio;
         store.setItem('prefsOrder', this.prefs.order);
         store.setItem('prefsSaveProgressAsList', this.prefs.saveProgressAsList);
         store.setItem('prefsShowBio', this.prefs.showBio);
-        console.log('showbiosaved', store.getItem('prefsSaveProgressAsList') || 'poop');
+        console.log(this.prefs.order);
       },
       next: function() {
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
@@ -172,11 +183,11 @@ function render(res) {
     created: function() {
       this.loadProgressQuick();
       this.loadProgressList();
-      console.log('prefs', JSON.parse(JSON.stringify(this.prefs)));
     },
     watch: {
       selFriendId: {
         handler: function() {
+          this.friend = dataDefaults.friend
           this.getData(this.selFriendId);
         },
         immediate: true
