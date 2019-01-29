@@ -66,8 +66,8 @@ let wdgt = Vue.component('twttr-widget', {
       <div v-else>
         <ol id="backup-tweets">
           <li v-for='t in tweets' class="backup-tweet">
-            <p v-linkified>
-              {{ t.text }}
+            <p>
+              {{ Autolinker.link(t.text) }}
             </p>
             <img
               v-if='t.entities && t.entities.media && t.entities.media[0]'

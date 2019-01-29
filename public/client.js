@@ -1,8 +1,9 @@
+import * as Autolinker from './_autolinker.js';
+Object.defineProperty(Vue.prototype, '$autolinker', { value: Autolinker });
 import * as Intro from './intro.js';
 import * as Tweets from './tweets.js';
 import * as Data from './data.js';
 import * as Progress from './progress.js';
-import * as linkify from './_vue-linkify.js';
 let store = window.localStorage;
 
 function getLoggedInUserData() {
@@ -53,8 +54,6 @@ function defaultAppData() {
 
 function render(res) {
   console.log('Rendering ', res);
-  
-  Vue.directive('linkified', linkify);
 
   var app = new Vue({
     el: '#app',
@@ -70,7 +69,7 @@ function render(res) {
         order: 'oldest',
         saveProgressAsList: true,
         showBio: false
-      },
+      }
       unfollowed: [],
       kept: [],
       loadedProgress: false,
