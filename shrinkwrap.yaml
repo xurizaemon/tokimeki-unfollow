@@ -5,11 +5,8 @@ dependencies:
   login-with-twitter: 1.2.0
   node-fetch: 2.3.0
   node-localstorage: 1.3.1
-  passport: 0.4.0
-  passport-twitter: 1.0.4
   pug: 2.0.3
   twit: 2.2.11
-  twitter: 1.7.1
 packages:
   /@types/babel-types/7.0.4:
     dev: false
@@ -305,13 +302,6 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-gKTdMjdIOEv6JICDYirt7Jgq3/M=
-  /deep-extend/0.5.1:
-    dev: false
-    engines:
-      iojs: '>=1.0.0'
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha512-N8vBdOa+DF7zkRrDCsaOXoCs/E2fJfx9B9MrKnnSiHNh4ws7eSys6YQE4KvT1cecKmOASYQBhbKjeuDD9lT81w==
   /delayed-stream/1.0.0:
     dev: false
     engines:
@@ -756,10 +746,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ==
-  /oauth/0.9.15:
-    dev: false
-    resolution:
-      integrity: sha1-vR/vr2hslrdUda7VGWQS/2DPucE=
   /object-assign/4.1.1:
     dev: false
     engines:
@@ -792,40 +778,6 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-/CidTtiZMRlGDBViUyYs3I3mW/M=
-  /passport-oauth1/1.1.0:
-    dependencies:
-      oauth: 0.9.15
-      passport-strategy: 1.0.0
-      utils-merge: 1.0.1
-    dev: false
-    engines:
-      node: '>= 0.4.0'
-    resolution:
-      integrity: sha1-p96YiiEfnPRoc3cTDqdN8ycwyRg=
-  /passport-strategy/1.0.0:
-    dev: false
-    engines:
-      node: '>= 0.4.0'
-    resolution:
-      integrity: sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ=
-  /passport-twitter/1.0.4:
-    dependencies:
-      passport-oauth1: 1.1.0
-      xtraverse: 0.1.0
-    dev: false
-    engines:
-      node: '>= 0.4.0'
-    resolution:
-      integrity: sha1-AaeZ4fdgvy3knyul+6MigvGJMtc=
-  /passport/0.4.0:
-    dependencies:
-      passport-strategy: 1.0.0
-      pause: 0.0.1
-    dev: false
-    engines:
-      node: '>= 0.4.0'
-    resolution:
-      integrity: sha1-xQlWkTR71a07XhgCOMORTRbwWBE=
   /path-parse/1.0.6:
     dev: false
     resolution:
@@ -834,10 +786,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
-  /pause/0.0.1:
-    dev: false
-    resolution:
-      integrity: sha1-HUCLP9t2kjuVQ9lvtMnf1TXZy10=
   /performance-now/2.1.0:
     dev: false
     resolution:
@@ -1181,13 +1129,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-BkdwvZGRVoUTcEBp0zuocuqfih4LB+kEFUWkWJOVBg6pAE9Ebv9vmsYTTrfXleZGf45Bj5H3A1/O9YhF2uSYNg==
-  /twitter/1.7.1:
-    dependencies:
-      deep-extend: 0.5.1
-      request: 2.88.0
-    dev: false
-    resolution:
-      integrity: sha1-B2I3jx3BwFDkj2ZqypBOJLGpYvQ=
   /type-is/1.6.16:
     dependencies:
       media-typer: 0.3.0
@@ -1290,20 +1231,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-+Aek8LHZ6ROuekgRLmzDrxmRtF8=
-  /xmldom/0.1.27:
-    dev: false
-    engines:
-      node: '>=0.1'
-    resolution:
-      integrity: sha1-1QH5ezvbQDr4757MIFcxh6rawOk=
-  /xtraverse/0.1.0:
-    dependencies:
-      xmldom: 0.1.27
-    dev: false
-    engines:
-      node: '>= 0.4.0'
-    resolution:
-      integrity: sha1-t0G60BjveNip0ug63gB7P3lZxzI=
   /yargs/3.10.0:
     dependencies:
       camelcase: 1.2.1
@@ -1323,8 +1250,5 @@ specifiers:
   login-with-twitter: ^1.2.0
   node-fetch: ^2.3.0
   node-localstorage: ^1.3.1
-  passport: ^0.4.0
-  passport-twitter: ^1.0.4
   pug: ^2.0.3
   twit: ^2.2.11
-  twitter: ^1.7.1

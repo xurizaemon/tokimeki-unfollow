@@ -1,7 +1,4 @@
-const fetch = require('node-fetch');
 const express = require('express');
-const passport = require('passport');
-let {Strategy} = require('passport-twitter');
 const session = require('cookie-session');
 const twitter = require('twit');
 const LoginWithTwitter = new (require('login-with-twitter'))({
