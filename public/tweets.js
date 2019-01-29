@@ -1,8 +1,16 @@
 let wdgt = Vue.component('twttr-widget', {
+  data: function() {
+    return {
+      tweets: []
+    }
+  },
   props: ['username', 'id', 'private'],
   methods: {
-    getData() {
-            
+    getData(id) {
+      window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + id)
+        .catch(e => console.log('error getting tweets', e))
+        .then(r => r.json())
+        .then(r => this.tweets = r.tweets);
     }
   },
   watch: {

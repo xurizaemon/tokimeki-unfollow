@@ -72,7 +72,7 @@ app.use('/data', (req, res, next) => {
 app.get('/data/user', (req, res) => {
   twit.get('users/show', {
    id: req.session.userId
-  }).catch((e) => console.log('error', e.stack))
+  }).catch((e) => apiCatch(res, e))
     .then((result) => {
      res.send({
        user: result.data
@@ -83,7 +83,7 @@ app.get('/data/user', (req, res) => {
 app.get('/data/user/:userId', (req, res) => {
   twit.get('users/show', {
    id: req.params.userId
-  }).catch((e) => console.log('get user error', e.stack))
+  }).catch((e) => apiCatch(res, e))
     .then((result) => {
      res.send({
        user: result && result.data ? result.data : null
@@ -97,7 +97,7 @@ app.get('/data/tweets/:userId', (req, res) => {
     count: 5,
     include_rts: true,
     exclude_replies: true
-  }).catch((e) => console.log('get tweets error', e.stack))
+  }).catch((e) => apiCatch(res, e))
     .then((result) => {
      res.send({
        tweets: result.data
@@ -109,7 +109,7 @@ app.get('/data/friends', (req, res) => {
   twit.get('friends/ids', {
     stringify_ids: true
   })
-    .catch((e) => console.log('error', e.stack))
+    .catch((e) => apiCatch(res, e))
     .then((result) => {
      res.send({
        friends: result.data.ids
@@ -120,13 +120,8 @@ app.get('/data/friends', (req, res) => {
 app.post('/data/unfollow', (req, res) => {
   twit.post('friendships/destroy', {
     user_id: String(req.body.userId)
-  }).catch(e => {
-    console.log('error unfollowing', e.stack);
-    res.send({
-      status: 500,
-      error: e.stack
-    });
-  }).then(result => {
+  }).catch(e => apiCatch(res, e))
+    .then(result => {
     // console.log(result.data);
     // console.log(result.resp.toJSON());
     res.send({
@@ -139,13 +134,7 @@ app.post('/data/unfollow', (req, res) => {
 app.post('/data/follow', (req, res) => {
   twit.post('friendships/create', {
     user_id: String(req.body.userId)
-  }).catch(e => {
-    console.log('error following', e.stack);
-    res.send({
-      status: 500,
-      error: e.stack
-    });
-  }).then(result => {
+  }).catch(e => apiCatch(res, e)).then(result => {
     res.send({
       status: result.resp.toJSON().statusCode
     });
@@ -198,13 +187,7 @@ app.post('/data/save_progress', (req, res) => {
         name: PROGRESS_LIST_SLUG,
         mode: 'private',
         description: 'Tracks progress on Tokimeki Unfollow. These are the accounts marked to be kept.'
-      }).catch(e => {
-        console.log('error creating list', e.stack);
-        res.send({
-          status: 500,
-          error: e.stack
-        });
-      })
+      }).catch(e => apiCatch(res, e))
     }
   }).then((result) => {
     prevMemberCount = result.data.member_count;
@@ -219,9 +202,7 @@ app.post('/data/save_progress', (req, res) => {
     } else {
       // handle not getting the list? how to return a error
     }
-  }).catch(e => {
-    console.log(e)
-  }).then((result) => {
+  }).catch(e => apiCatch(res, e)).then((result) => {
     if (result && result.data) {
       console.log('saved list members successfully');
       res.send({
@@ -244,13 +225,7 @@ app.get('/data/load_progress', (req, res) => {
     owner_id: req.session.userId,
     include_entities: false,
     count: 5000
-  }).catch(e => {
-    res.send({
-      status: 500,
-      errorCode: e.code,
-      error: e.stack
-    });
-  }).then(result => {
+  }).catch(e => apiCatch(res, e)).then(result => {
     if (result && result.data && result.data.users) { 
       console.log('loaded progress list');
       res.send({
@@ -263,12 +238,21 @@ app.get('/data/load_progress', (req, res) => {
 app.get('/data/ratelimit', (req, res) => {
   twit.get('application/rate_limit_status', {
     resources: "friendships, user, statuses"
-  }).catch(e =>  console.log('error',e.stack))
+  }).catch(e => apiCatch(res, e))
     .then(result => {
     console.log(result);
     res.send(result);
   })
 });
+
+function apiCatch(res, e) {
+  console.log('error', e.stack);
+  res.send({
+    status: 500,
+    errorCode: e.code,
+    error: e.stack
+  });
+}
 
 // setup login route to link to with login link on website
 app.get('/auth/twitter', (req, res, next) => {

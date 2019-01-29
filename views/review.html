@@ -22,7 +22,9 @@
             kept:selFriendIsKept
           }">
           <twttr-widget
-            v-bind:username="friend.screen_name"></twttr-widget>
+            v-bind:username="friend.screen_name"
+            v-bind:id="friend.id_str"
+            v-bind:private="true || friend.protected"></twttr-widget>
         </div>
         <div id="ctrl" v-bind:class="{showBio:showBio}">
           <div id="avvy"></div>
