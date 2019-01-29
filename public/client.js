@@ -92,6 +92,9 @@ function render(res) {
             break;
         }
         this.showBio = this.prefs.showBio;
+        store.setItem('prefsOrder', this.prefs.order);
+        store.setItem('prefsOrder', this.prefs.order);
+        store.setItem('prefsOrder', this.prefs.order);
       },
       next: function() {
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
@@ -106,16 +109,11 @@ function render(res) {
       getData: function(userId) {
         if (userId == null) return;
         console.log('getting data for ', userId);
-        // Promise.all([
-        //   window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId),
-        //   window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + userId)
-        // ])
         window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId)
-          .then(res => Promise.all(res.map(r => r.json())))
+          .then(res => res.json())
           .then(res => {
-          console.log('got data for ' + res[0].user.screen_name + ', ' + res[0].user.id_str, res);
-          this.friend = res[0].user;
-          // this.tweets = res[1].tweets;
+          console.log('got data for ' + res.user.screen_name + ', ' + res.user.id_str, res);
+          this.friend = res.user;
         });
       },
       unfollow: function() {
