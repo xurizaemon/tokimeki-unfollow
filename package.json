@@ -1,7 +1,4 @@
 {
-  "//1": "describes your app and its dependencies",
-  "//2": "https://docs.npmjs.com/files/package.json",
-  "//3": "updating this file will download and update your packages",
   "name": "tokimeki-unfollow",
   "version": "0.0.1",
   "description": "KonMari your Twitter follows",
@@ -21,12 +18,15 @@
     "node": "8.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/hello-express"
+    "url": "https://glitch.com/edit/#!/tokimeki-unfollow"
   },
   "license": "MIT",
   "keywords": [
     "node",
     "glitch",
-    "express"
+    "express",
+    "twitter",
+    "konmari",
+    "unfollow"
   ]
 }
