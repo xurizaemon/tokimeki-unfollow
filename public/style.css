@@ -289,17 +289,14 @@ img {
 .block { display: block }
 .w100 { width: 100% }
 
-.bold {
-  font-weight: bold;
-}
-.notbold {
-  font-weight: normal;
-}
-.gray {
-  color:#888;
-}
-.black { color: black; }
+.bold { font-weight: bold }
+.notbold { font-weight: normal }
+.gray { color:#888 }
+.black { color: black }
 
+.logored {
+  color: #fc583b;
+}
 .logoredbg {
   background: #fc583b;
 }
