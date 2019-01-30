@@ -16,9 +16,8 @@ function post(url, obj, callback) {
   });
 }
 
-// Rate limit is 15/15 min window
-// How to queue unfollows for later?
-// Write a service that stays alive and queues unfollows
+// Rate limit is 15/15 min window in docs
+// But in testing I unfollowed > 60 ppl no problem
 function unfollow(userId, callback) {
   console.log('unfollowing');
   post('/data/unfollow', {
@@ -26,16 +25,16 @@ function unfollow(userId, callback) {
   }, (res) => callback(userId));
 }
 
-function addToList(userId, listId) {
-  post('/lists/create', {
-  })
-}
-
 function follow(userId, callback) {
   console.log('following');
   post('/data/follow', {
     userId: userId
   }, () => callback(userId));
+}
+
+function addToList(userId, listId) {
+  post('/lists/create', {
+  })
 }
 
 export { unfollow, addToList, follow };

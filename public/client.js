@@ -19,14 +19,19 @@ function getLoggedInUserData() {
     window.fetch('https://tokimeki-unfollow.glitch.me/data/friends')
   ]).then(res => Promise.all(res.map(r => r.json())))
     .then(res => {
-    console.log('fetched new user data', res);
-    store.setItem('updated', new Date().toString());
-    store.setItem('user', JSON.stringify(res[0].data));
-    store.setItem('friends', JSON.stringify(res[1].data.ids));
-    render({
-      user: res[0].user,
-      friends: res[1].data.ids
-    });
+    if (res[0].status == 200 && res[1].status == 200) {
+      console.log('fetched new user data', res);
+      store.setItem('updated', new Date().toString());
+      store.setItem('user', JSON.stringify(res[0].data));
+      store.setItem('friends', JSON.stringify(res[1].data.ids));
+      render({
+        user: res[0].user,
+        friends: res[1].data.ids
+      });
+    } else {
+      console.log('error loading user data', res.errorCode, res.error);
+      alert(res.error);
+    }
   });
 }
 
@@ -123,8 +128,14 @@ function render(res) {
         window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId)
           .then(res => res.json())
           .then(res => {
-          console.log('got user ' + res.data.screen_name + ', ' + res.data.id_str, JSON.parse(JSON.stringify(res)));
-          this.friend = res.data;
+          if (res.status = 200) {
+            console.log('got user ' + res.data.screen_name + ', ' + res.data.id_str, JSON.parse(JSON.stringify(res)));
+            this.friend = res.data;
+          } else {
+            console.log('could not get user', res.error, res.errorCode);
+            alert(res.error);
+            this.friend = dataDefaults.friend;
+          }
         });
       },
       unfollow: function() {

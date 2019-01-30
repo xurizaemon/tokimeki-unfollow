@@ -39,9 +39,9 @@ router.get('/data/tweets/:userId', (req, res) => {
   }).catch((e) => apiCatch(res, e))
     .then((result) => {
     apiSend(res, result);
-     res.send({
-       tweets: result.data
-     });
+     // res.send({
+     //   tweets: result.data
+     // });
   });
 });
 

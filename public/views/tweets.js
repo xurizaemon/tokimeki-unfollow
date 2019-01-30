@@ -9,12 +9,14 @@ let wdgt = Vue.component('twttr-widget', {
     getData(id) {
       window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + id)
         .catch(e => console.log('error getting tweets', e))
-        .then(r => r.json())
-        .then(r => {
-          if (r.tweets) {
-            this.tweets = r.tweets
+        .then(res => res.json())
+        .then(res => {
+          if (res.status == 200) {
+            this.tweets = res.data;
           } else {
-            this.tweets = [{text: "Unable to load tweets. Try again."}]
+            this.tweets = [{
+              text: `Unable to load tweets. Error ${res.errorCode}: ${res.error} Try again.`
+            }];
           }
         });
     },
