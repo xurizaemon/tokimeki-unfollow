@@ -16,22 +16,29 @@ function getLoggedInUserData() {
   console.log('get logged in user data')
   Promise.all([
     window.fetch('https://tokimeki-unfollow.glitch.me/data/user'),
-    window.fetch('https://tokimeki-unfollow.glitch.me/data/friends')
+    window.fetch('https://tokimeki-unfollow.glitch.me/data/friends'),
+    window.fetch('https://tokimeki-unfollow.glitch.me/data/lists/ownerships')
   ]).then(res => Promise.all(res.map(r => r.json())))
     .then(res => {
-    if (res[0].status == 200 && res[1].status == 200) {
+    if (res[0].status == 200 &&
+        res[1].status == 200 &&
+        res[2].status == 200) {
       console.log('fetched new user data', res);
       store.setItem('updated', new Date().toString());
       store.setItem('user', JSON.stringify(res[0].data));
       store.setItem('friends', JSON.stringify(res[1].data.ids));
+      store.setItem('lists', JSON.stringify(res[1].data.lists));
       render({
         user: res[0].data,
-        friends: res[1].data.ids
+        friends: res[1].data.ids,
+        lists: res[2].data.lists
       });
     } else {
-      console.log('error loading user data', res.errorCode, res.error);
-      alert(res.error);
+      throw res;
     }
+  }).catch(e => {
+    console.log('error loading user data', e);
+    alert(e);
   });
 }
 
@@ -42,7 +49,8 @@ if (invalidateStore(store)) {
   console.log('Valid data in store');
   render({
     user: JSON.parse(store.getItem('user')),
-    friends: JSON.parse(store.getItem('friends'))
+    friends: JSON.parse(store.getItem('friends')),
+    lists: JSON.parse(store.getItem('lists'))
   });
 }
 
@@ -56,7 +64,8 @@ function invalidateStore(store) {
     return true;
   }
   return store.getItem('user') === null ||
-    store.getItem('friends') === null
+    store.getItem('friends') === null ||
+    store.getItem('lists') === null
 }
 
 function render(res) {

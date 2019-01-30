@@ -40,10 +40,7 @@ function addToList(userId, listId) {
 function getLists(userId) {
   return fetch('https://tokimeki-unfollow.glitch.me/data/lists/ownerships')
     .catch(e => console.log('error', e))
-    .then(res => res.json())
-    .then(res => {
-      return res.data.lists.filter(list => list.name !==   
-  });
+    .then(res => res.json());
 }
 
 export { addToList, getLists, unfollow, follow };

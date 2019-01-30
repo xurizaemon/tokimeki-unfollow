@@ -74,7 +74,16 @@ router.get('/data/lists/ownerships', (req, res) => {
   twit.get('lists/ownerships', {
   }).catch(e => apiCatch(e))
     .then(result => {
-    apiSend(res, result);
+    apiSend(res, result, {
+      lists: result.data.lists.filter(list => list.name !== PROGRESS_LIST_SLUG)
+        .map(list => {
+          return {
+            id_str: list.id_str,
+            name: list.name,
+            member_count: list.member_count
+          }
+        })
+    });
   });
 });
 
