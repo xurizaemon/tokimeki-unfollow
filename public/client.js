@@ -1,8 +1,8 @@
-import * as Intro from './intro.js';
-import * as Tweets from './tweets.js';
-import * as Tweet from './tweet.js';
-import * as Data from './data.js';
-import * as Progress from './progress.js';
+import * as Intro from './views/intro.js';
+import * as Tweets from './views/tweets.js';
+import * as Tweet from './views/tweet.js';
+import * as Data from './modules/data.js';
+import * as Progress from './modules/progress.js';
 let store = window.localStorage;
 
 Vue.autolinker = function(txt) {
@@ -83,7 +83,8 @@ function render(res) {
       unfollowed: [],
       kept: [],
       loadedProgress: false,
-      savedProgress: false
+      savedProgress: false,
+      finished: false
     },
     methods: {
       updatePrefs: function(e) {
@@ -106,6 +107,7 @@ function render(res) {
         store.setItem('prefsShowBio', this.prefs.showBio);
       },
       next: function() {
+        if (this.sel == this.friends.length - 1) this.finished = true;
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
         if (this.prefs.showBio == false) this.showBio = false;
         Progress.saveQuick(this.kept, store);
@@ -207,7 +209,10 @@ function render(res) {
       loadingSelFriend() {
         return this.sel > 0 && (this.selFriendId != this.friend.id_str);
       },
-      iframeURL: function(e) {
+      finished() {
+        return 
+      },
+      iframeURL() {
         return 'https://twitter.com/intent/user?user_id='+this.friends[this.sel];
       }
     }
