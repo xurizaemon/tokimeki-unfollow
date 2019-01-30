@@ -70,7 +70,7 @@ router.post('/data/follow', (req, res) => {
 });
 
 /* Lists */
-router.get('/data/lists/all', (req, res) => {
+router.get('/data/lists/ownerships', (req, res) => {
   twit.get('lists/ownerships', {
   }).catch(e => apiCatch(e))
     .then(result => {
