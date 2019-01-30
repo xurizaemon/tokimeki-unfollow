@@ -1,17 +1,18 @@
 let addToListMenu = Vue.component('add-to-list-menu', {
   data: function() {
     return {
-      title: '',
-      private: true
+      name: '',
+      private: true,
+      showCreateListMenu: false
     }
   },
-  props: ['initialLists'],
+  props: ['lists'],
   methods: {
     close() {
       this.$emit('close-menu', [this.order, this.saveProgressAsList, this.showBio]);
     },
     create() {
-      this.$emit('create-list', [this.title, this.private]);
+      this.$emit('create-list', [this.name, this.private]);
     }
   },
   template:`
@@ -24,10 +25,10 @@ let addToListMenu = Vue.component('add-to-list-menu', {
         <button v-on:click="close" class="button w100">Cancel</button>
       </div>
       <div v-if="showCreateListMenu" class="button-menu">
-        <div v-if="title.length > 25" class="input w100 logored">
+        <div v-if="name.length > 25" class="input w100 logored">
           Max 25 characters -_-
         </div>
-        <input type="text" placeholder="Enter list name..." v-model="title" class="input w100 bold">
+        <input type="text" placeholder="Enter list name..." v-model="name" class="input w100 bold">
         <div class="input w100">
           <input type="checkbox" id="private" value="private" v-model="private">
           <label for="private">Private</label>

@@ -1,5 +1,5 @@
 function post(url, obj, callback) {
-  fetch('https://tokimeki-unfollow.glitch.me' + url, {
+  return fetch('https://tokimeki-unfollow.glitch.me' + url, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -9,11 +9,17 @@ function post(url, obj, callback) {
   }).catch(e => console.log('error', e.stack))
     .then(res => res.json())
     .then(res => {
-    console.log('response', res);
-    if (res.status == 200) {
-      callback();
-    }
-  });
+      console.log('response', res);
+      if (res.status == 200) {
+        return res;
+      } else {
+        throw {
+          status: res.status,
+          errorCode: res.errorCode,
+          error: res.error
+        }
+      }
+  }).catch(e => console.log('error', e));
 }
 
 // Rate limit is 15/15 min window in docs
@@ -22,25 +28,25 @@ function unfollow(userId, callback) {
   console.log('unfollowing');
   post('/data/unfollow', {
     userId: userId
-  }, (res) => callback(userId));
+  }).then(res => callback(userId));
 }
 
 function follow(userId, callback) {
   console.log('following');
   post('/data/follow', {
     userId: userId
-  }, () => callback(userId));
+  }).then(res => callback(userId));
 }
 
 function addToList(userId, listId) {
   post('/data/lists/members/create_all', {
   })
 }
-function createList(title, isPrivate) {
-  post('/data/lists/create', {
+function createList(name, isPrivate) {
+  return post('/data/lists/create', {
     name: name,
     private: isPrivate
-  })
+  });
 }
 
 

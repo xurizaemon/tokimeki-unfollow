@@ -163,8 +163,15 @@ function render(res) {
       },
       addToList: Data.addToList,
       createList(e) {
-        let [title, privateList] = e;
-        Data.createList(title, privateList)
+        let [name, isPrivate] = e;
+        Data.createList(name, isPrivate)
+          .then(res => {
+          this.lists.unshift({
+            name: res.data.name,
+            id_str: res.data.id_str,
+            member_count: res.data.member_count
+          })
+        });
       },
       keep: function() {
         console.log('keeping');
