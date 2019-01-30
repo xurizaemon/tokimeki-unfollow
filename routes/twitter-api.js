@@ -99,7 +99,8 @@ router.post('/data/lists/create', (req, res) => {
 });
 
 router.post('/data/lists/members/create', (req, res) => {
-  twit.post('lists/create', {
+  console.log('adding to list', req.body);
+  twit.post('lists/members/create', {
     list_id: req.body.list_id,
     user_id: req.body.user_id
   }).catch(e => apiCatch(e))

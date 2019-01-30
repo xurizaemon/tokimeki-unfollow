@@ -163,6 +163,7 @@ function render(res) {
       },
       addToList(e) {
         let listId = e;
+        console.log(e)
         Data.addToList(this.selFriendId, listId)
           .then(res => {
           console.log('added to list', res.data);

@@ -21,8 +21,8 @@ let addToListMenu = Vue.component('add-to-list-menu', {
       this.$nextTick(() => this.$refs.input.focus())
     },
     addToList(listId) {
-      alert(listId);
       this.$emit('add-to-list', listId);
+      this.close();
     }
   },
   computed: {

@@ -7,7 +7,17 @@ function post(url, obj, callback) {
     },
     body: JSON.stringify(obj)
   }).catch(e => console.log('error', e.stack))
-    .then(res => res.json())
+    .then(res => {
+    if (res.status = 200) {
+      return res.json()
+    } else {
+      throw {
+        status: res.status,
+        statusText: res.statusText
+          error: res.error
+      }
+    }
+  })
     .then(res => {
       console.log('response', res);
       if (res.status == 200) {
@@ -39,7 +49,7 @@ function follow(userId, callback) {
 }
 
 function addToList(userId, listId) {
-  return post('/data/lists/members/create_all', {
+  return post('/data/lists/members/createdd', {
     user_id: userId,
     list_id: listId
   })
