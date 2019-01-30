@@ -59,9 +59,8 @@ function render(res) {
   
   const dataDefaults = {
     friend: { name: "Loading...", screen_name: "Loading..." },
-    friendsNewest: res.friends,
     friends: res.friends,
-    friendsOldest: res.friends.join(",").split(",").reverse()
+    friendsOldest: res.friends.slice().reverse()
   }
 
   var app = new Vue({
@@ -69,8 +68,7 @@ function render(res) {
     data: {
       sel: 0,
       friends: dataDefaults.friends,
-      friendsNewest: dataDefaults.friendsNewest,
-      friendsOldest: dataDefaults.friendsOldest,
+      friendsOrdered: dataDefaults.friends,
       user: res.user,
       friend: dataDefaults.friend,
       introFinished: false,
@@ -92,14 +90,14 @@ function render(res) {
         [this.prefs.order, this.prefs.saveProgressAsList, this.prefs.showBio] = e;
         switch (this.prefs.order) {
           case 'oldest':
-            this.friends = this.friendsOldest;
+            this.friendsOrdered = this.friends.slice().reverse();
             break;
           case 'random':
             // Hack to trigger updating/watching, otherwise Vue won't notice
-            this.friends = shuffle(this.friends).join(',').split(',');
+            this.friendsOrdered = shuffle(this.friends).slice();
             break;
           case 'newest':
-            this.friends = this.friendsNewest;
+            this.friendsOrdered = this.friends;
             break;
         }
         this.showBio = this.prefs.showBio;
@@ -150,6 +148,7 @@ function render(res) {
       loadProgressQuick: function() {
         this.kept = Progress.loadQuick(store) || this.kept;
         this.friends = this.friends.filter(id => !this.kept.includes(id));
+        console.log('has david?', this.friends.includes(9716782));
         this.loadedProgress = (this.kept.length > 0);
       },
       loadProgressList: function() {
@@ -161,6 +160,7 @@ function render(res) {
               // Combine in case the quick load and twitter list are different
               this.kept = this.kept.concat(ids.filter((id, i) => this.kept.indexOf(id) < 0));
               this.friends = this.friends.filter(id => !this.kept.includes(id));
+              console.log('has david?', this.friends.includes(9716782));
               this.loadedProgress = (this.kept.length > 0);
             }
         });
@@ -193,6 +193,7 @@ function render(res) {
     },
     computed: {
       selFriendId() {
+        console.log("selFriendId updated:", this.friends[this.sel]);
         return this.friends[this.sel];
       },
       selFriendIsKept() {
