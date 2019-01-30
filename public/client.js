@@ -161,7 +161,10 @@ function render(res) {
           console.log(this.unfollowed);
         });
       },
-      addToList: Data.addToList,
+      addToList(e) {
+        let listId = e;
+        Data.addToList(this.selFriendId, listId);
+      },
       createList(e) {
         let [name, isPrivate] = e;
         Data.createList(name, isPrivate)

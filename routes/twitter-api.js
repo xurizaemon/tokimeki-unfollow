@@ -100,7 +100,7 @@ router.post('/data/lists/create', (req, res) => {
 
 router.post('/data/lists/members/create', (req, res) => {
   twit.post('lists/create', {
-    id: req.session.list_id,
+    list_id: req.body.list_id,
     user_id: req.body.user_id
   }).catch(e => apiCatch(e))
     .then(result => {

@@ -40,6 +40,8 @@ function follow(userId, callback) {
 
 function addToList(userId, listId) {
   post('/data/lists/members/create_all', {
+    user_id: userId,
+    list_id: listId
   })
 }
 function createList(name, isPrivate) {

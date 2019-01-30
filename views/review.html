@@ -109,6 +109,7 @@
                 </div>
                 <add-to-list-menu
                   v-if="showAddToListMenu"
+                  v-on:add-to-list="addToList($event)"
                   v-on:create-list="createList($event)"
                   v-on:close-menu="showAddToListMenu = false"
                   v-bind:lists="lists"></add-to-list-menu>

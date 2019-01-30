@@ -19,6 +19,10 @@ let addToListMenu = Vue.component('add-to-list-menu', {
     },
     focusInput() {
       this.$nextTick(() => this.$refs.input.focus())
+    },
+    addToList(listId) {
+      alert(listId);
+      this.$emit('add-to-list', listId);
     }
   },
   computed: {
@@ -29,7 +33,7 @@ let addToListMenu = Vue.component('add-to-list-menu', {
   template:`
     <div>
       <div v-if="!showCreateListMenu" class="button-menu">
-        <button v-for="list in lists" class="button w100">
+        <button v-for="list in lists" v-on:click="addToList(list.id_str)" :key="list.id_str" class="button w100">
           {{ list.name }}
         </button>
         <button v-on:click="showCreateListMenu = true; focusInput()" class="button w100">Create New List...</button>
