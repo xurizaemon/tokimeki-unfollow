@@ -6,17 +6,11 @@ function post(url, obj, callback) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(obj)
-  }).catch(e => console.log('error', e.stack))
+  }).catch(e => showUserError(e)) // do i need two catches?
     .then(res => {
-    if (res.status = 200) {
-      return res.json()
-    } else {
-      throw {
-        status: res.status,
-        statusText: res.statusText
-          error: res.error
-      }
-    }
+    if (res.status == 200) {
+      return res.json();
+    } else { throw res }
   })
     .then(res => {
       console.log('response', res);
@@ -29,7 +23,7 @@ function post(url, obj, callback) {
           error: res.error
         }
       }
-  }).catch(e => console.log('error', e));
+  }).catch(e => showUserError(e));
 }
 
 // Rate limit is 15/15 min window in docs
@@ -49,7 +43,7 @@ function follow(userId, callback) {
 }
 
 function addToList(userId, listId) {
-  return post('/data/lists/members/createdd', {
+  return post('/data/lists/members/create', {
     user_id: userId,
     list_id: listId
   })
@@ -64,8 +58,17 @@ function createList(name, isPrivate) {
 
 function getLists(userId) {
   return fetch('https://tokimeki-unfollow.glitch.me/data/lists/ownerships')
-    .catch(e => console.log('error', e))
+    .catch(e => showUserError(e))
     .then(res => res.json());
+}
+
+function showUserError(e) {
+  console.log('error', e)
+  if (e.url) {
+    alert('Error: ' + e.status + ' ' + e.statusText + ', ' + e.url);
+  } else {
+    alert('Error: ' + e.status + ', ' + e.error);
+  }
 }
 
 export { addToList, createList, getLists, unfollow, follow };
