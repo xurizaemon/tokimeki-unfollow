@@ -1,21 +1,20 @@
-const { apiCatch, restoreSession, validateSession } = require('./helpers');
+const { restoreSession, validateSession } = require('./helpers');
 const express = require('express');
 const session = require('cookie-session');
-const LoginWithTwitter = new (require('login-with-twitter'))({
-  consumerKey: process.env.KEY,
-  consumerSecret: process.env.SECRET,
-  callbackUrl: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback' 
-});
 
 const app = express();
 app.use(express.static('public'));
-app.use(express.json()); // handle parsing json data from requests
+app.use(express.json()); // Handle parsing json data from requests
 app.use(session({
   name: 'session',
   secret: 'keyboard cat',
-  maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
+  maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
 }));
 app.set('view engine', 'pug');
+
+// Routes
+app.use(require('./routes-twitter'));
+app.use(require('./auth'));
 
 // Main page
 app.get('/', function(req, res) {
@@ -25,13 +24,10 @@ app.get('/', function(req, res) {
 });
 
 // Review page
-// TODO: SHOULD PROB BE THE SAME AS THE MAIN PAGEj
+// TODO: SHOULD PROB BE THE SAME AS THE MAIN PAGE
 app.get('/review', restoreSession, (req, res) => {
   res.sendFile(__dirname + '/views/review.html');
 });
-
-app.use(require('./routes-twitter'));
-app.use(require('./auth'));
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, function() {

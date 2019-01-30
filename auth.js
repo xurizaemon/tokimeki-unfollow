@@ -1,7 +1,10 @@
 let express = require('express');
 let router = express.Router();
-let LoginWithTwitter = require('login-with-twitter');
-
+const LoginWithTwitter = new (require('login-with-twitter'))({
+  consumerKey: process.env.KEY,
+  consumerSecret: process.env.SECRET,
+  callbackUrl: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback' 
+});
 
 // setup login route to link to with login link on website
 router.get('/auth/twitter', (req, res, next) => {
