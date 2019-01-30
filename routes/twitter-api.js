@@ -137,7 +137,7 @@ router.post('/data/save_progress', (req, res) => {
       });
     } else {
       throw {
-        statusCode: 404,
+        status: 404,
         errorCode: 69,
         error: `Couldn't get list matching slug ${PROGRESS_LIST_SLUG}, got ${result.data.slug} instead.`
       };

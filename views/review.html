@@ -83,38 +83,52 @@
             <div v-else>
               <span v-if="loadingSelFriend">Loading next follow...</span>
               <span v-else>
-              <p>
-                <span v-if="sel == 0">First up,</span>
-                <span v-else-if="sel < (friends.length - 1)">#{{sel + 1}}:</span>
-                <span v-else>Last but not least,</span>
-                <strong>{{ friend.name }}</strong>, a.k.a.
-                <span class="gray">@{{ friend.screen_name }}</span>!
-                <span v-if="showBio==false">
-                  <a href="#" v-on:click="showBio = true" class="keepblue">Show bio</a>
+                <span v-if="selFriendIsAddedToList">
+                  <p>
+                    Added
+                    <strong>{{ friend.name }}</strong>, a.k.a.
+                    <span class="gray">@{{ friend.screen_name }}</span>
+                    to the list TODOLISTNAMEHERE!
+                    You can view their tweets in the list any time, whether or not you follow them.  
+                  </p>
+                  <p>
+                    You can add them to more lists, or 
+                  </p>
                 </span>
-                <span v-else id="bio">
-                  <span class="">&ldquo;{{ friend.description }}&rdquo;</span>
-                  <a href="#" v-on:click="showBio = false" class="keepblue">Hide bio</a>
+                <span v-else>
+                  <p>
+                    <span v-if="sel == 0">First up,</span>
+                    <span v-else-if="sel < (friends.length - 1)">#{{sel + 1}}:</span>
+                    <span v-else>Last but not least,</span>
+                    <strong>{{ friend.name }}</strong>, a.k.a.
+                    <span class="gray">@{{ friend.screen_name }}</span>!
+                    <span v-if="showBio==false">
+                      <a href="#" v-on:click="showBio = true" class="keepblue">Show bio</a>
+                    </span>
+                    <span v-else id="bio">
+                      <span class="">&ldquo;{{ friend.description }}&rdquo;</span>
+                      <a href="#" v-on:click="showBio = false" class="keepblue">Hide bio</a>
+                    </span>
+                  </p>
+                  <p>
+                    Do the tweets still spark joy or feel important to you?
+                  </p>
                 </span>
-              </p>
-              <p>
-                Do the tweets still spark joy or feel important to you?
-              </p>
-              <div id="btns">
-<!--                 <a href="#" v-on:click="prev" class="button dib"><-</a> -->
-                <div v-if="!showAddToListMenu" class="dib">
-                  <button v-on:click="unfollow" class="button dib">Unfollow</button>
-                  <button v-on:click="showAddToListMenu = true" class="button dib">Add to List</button>
-                  <button v-on:click="keep" class="button dib">Keep</button>
+                <div id="btns">
+  <!--                 <a href="#" v-on:click="prev" class="button dib"><-</a> -->
+                  <div v-if="!showAddToListMenu" class="dib">
+                    <button v-on:click="unfollow" class="button dib">Unfollow</button>
+                    <button v-on:click="showAddToListMenu = true" class="button dib">Add to List</button>
+                    <button v-on:click="keep" class="button dib">Keep</button>
+                  </div>
+                  <add-to-list-menu
+                    v-if="showAddToListMenu"
+                    v-on:add-to-list="addToList($event)"
+                    v-on:create-list="createList($event)"
+                    v-on:close-menu="showAddToListMenu = false"
+                    v-bind:lists="lists"></add-to-list-menu>
+  <!--                 <a href="#" v-on:click="next" class="button dib">-></a> -->
                 </div>
-                <add-to-list-menu
-                  v-if="showAddToListMenu"
-                  v-on:add-to-list="addToList($event)"
-                  v-on:create-list="createList($event)"
-                  v-on:close-menu="showAddToListMenu = false"
-                  v-bind:lists="lists"></add-to-list-menu>
-<!--                 <a href="#" v-on:click="next" class="button dib">-></a> -->
-              </div>
               </span>
             </div>
           </div>

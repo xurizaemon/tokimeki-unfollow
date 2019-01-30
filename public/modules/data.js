@@ -39,7 +39,7 @@ function follow(userId, callback) {
 }
 
 function addToList(userId, listId) {
-  post('/data/lists/members/create_all', {
+  return post('/data/lists/members/create_all', {
     user_id: userId,
     list_id: listId
   })

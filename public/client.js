@@ -102,11 +102,11 @@ function render(res) {
       },
       unfollowed: [],
       kept: [],
+      addedToList: [],
       loadedProgress: false,
       savedProgress: false,
       finished: false,
-      showAddToListMenu: false,
-      showCreateListMenu: false
+      showAddToListMenu: false
     },
     methods: {
       updatePrefs: function(e) {
@@ -163,7 +163,13 @@ function render(res) {
       },
       addToList(e) {
         let listId = e;
-        Data.addToList(this.selFriendId, listId);
+        Data.addToList(this.selFriendId, listId)
+          .then(res => {
+          console.log('added to list', res.data);
+          this.addedToList.push(this.selFriendId);
+          console.log('added to list', this.selFriendId);
+          console.log(this.addedToList);
+        });
       },
       createList(e) {
         let [name, isPrivate] = e;
@@ -248,6 +254,9 @@ function render(res) {
       },
       selFriendIsUnfollowed: function(e) {
         return this.unfollowed.includes(this.selFriendId);
+      },
+      selFriendIsAddedToList() {
+        return this.addedToList.includes(this.selFriendId);
       },
       loadingSelFriend() {
         return this.sel > 0 && (this.selFriendId != this.friend.id_str);
