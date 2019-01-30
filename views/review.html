@@ -115,11 +115,12 @@
                   <button v-on:click="showAddToListMenu = false" class="button w100">Cancel</button>
                 </div>
                 <div v-if="showCreateListMenu" class="button-menu">
-                  <input type="text" placeholder="Enter list name..." class="button w100">
-                  <input type="checkbox" id="private" name="private">
-                  <label for="private">Private</label>
-                  <br>
-                  <button v-on:click="showCreateListMenu = false; show" class="button w100">Create List</button>
+                  <input type="text" placeholder="Enter list name..." class="input w100 bold">
+                  <div class="input w100">
+                    <input type="checkbox" id="private" name="private">
+                    <label for="private">Private</label>
+                  </div>
+                  <button v-on:click="showCreateListMenu = false; showAddtoListMenu = false; createList()" class="button w100">Create List</button>
                   <button v-on:click="showCreateListMenu = false" class="button w100">Cancel</button>
                 </div>
 <!--                 <a href="#" v-on:click="next" class="button dib">-></a> -->

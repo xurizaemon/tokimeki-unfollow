@@ -22,30 +22,6 @@ h1 {
   font-size: 1.8em;
 }
 
-.bold {
-  font-weight: bold;
-}
-
-.notbold {
-  font-weight: normal;
-}
-
-.gray {
-  color:#888;
-}
-
-.black { color: black; }
-
-.logoredbg {
-  background: #fc583b;
-}
-
-.keepblue { color:blue }
-a.keepblue:visited { color: blue }
-a:hover { text-decoration: none }
-.nodec { text-decoration: none }
-a.nodec:hover { text-decoration: underline }
-
 [v-cloak] {
   display: none;
 }
@@ -53,6 +29,12 @@ a.nodec:hover { text-decoration: underline }
 input[type="checkbox"] {
   display: inline-block;
   width: auto;
+}
+
+button, input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 #intro {
@@ -231,8 +213,16 @@ img {
 }
 
 .button-menu .button {
-  box-shadow: 0 1px 0 0 #eee;
+  box-shadow: none;
+  border-bottom: 1px solid #eee;
   margin-bottom: 1px;
+}
+
+.input {
+  padding: .5em 1em;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  text-align: center;
 }
 
 .abs { position: absolute }
@@ -298,3 +288,24 @@ img {
 .dib { display: inline-block }
 .block { display: block }
 .w100 { width: 100% }
+
+.bold {
+  font-weight: bold;
+}
+.notbold {
+  font-weight: normal;
+}
+.gray {
+  color:#888;
+}
+.black { color: black; }
+
+.logoredbg {
+  background: #fc583b;
+}
+
+.keepblue { color:blue }
+a.keepblue:visited { color: blue }
+a:hover { text-decoration: none }
+.nodec { text-decoration: none }
+a.nodec:hover { text-decoration: underline }
