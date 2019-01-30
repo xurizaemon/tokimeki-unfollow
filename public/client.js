@@ -170,7 +170,8 @@ function render(res) {
             name: res.data.name,
             id_str: res.data.id_str,
             member_count: res.data.member_count
-          })
+          });
+          store.setItem('lists', JSON.stringify(this.lists));
         });
       },
       keep: function() {

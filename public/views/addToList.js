@@ -12,7 +12,18 @@ let addToListMenu = Vue.component('add-to-list-menu', {
       this.$emit('close-menu', [this.order, this.saveProgressAsList, this.showBio]);
     },
     create() {
-      this.$emit('create-list', [this.name, this.private]);
+      if (this.nameValid) { 
+        this.showCreateListMenu = false;
+        this.$emit('create-list', [this.name, this.private]);
+      }
+    },
+    focusInput() {
+      this.$nextTick(() => this.$refs.input.focus())
+    }
+  },
+  computed: {
+    nameValid() {
+      return this.name.length <= 25;
     }
   },
   template:`
@@ -21,19 +32,19 @@ let addToListMenu = Vue.component('add-to-list-menu', {
         <button v-for="list in lists" class="button w100">
           {{ list.name }}
         </button>
-        <button v-on:click="showCreateListMenu = true" class="button w100">Create New List...</button>
+        <button v-on:click="showCreateListMenu = true; focusInput()" class="button w100">Create New List...</button>
         <button v-on:click="close" class="button w100">Cancel</button>
       </div>
       <div v-if="showCreateListMenu" class="button-menu">
-        <div v-if="name.length > 25" class="input w100 logored">
+        <div v-if="!nameValid" class="input w100 logored">
           Max 25 characters -_-
         </div>
-        <input type="text" placeholder="Enter list name..." v-model="name" class="input w100 bold">
+        <input type="text" placeholder="Enter list name..." ref="input" v-model="name" class="input w100 bold">
         <div class="input w100">
           <input type="checkbox" id="private" value="private" v-model="private">
           <label for="private">Private</label>
         </div>
-        <button v-on:click="showCreateListMenu = false; createList()" class="button w100">Create List</button>
+        <button v-on:click="create" class="button w100" :class={gray:!nameValid,nodec:!nameValid}>Create List</button>
         <button v-on:click="showCreateListMenu = false" class="button w100">Cancel</button>
       </div>
     </div>
