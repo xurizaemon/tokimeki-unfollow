@@ -118,19 +118,25 @@ router.post('/data/save_progress', (req, res) => {
       }).catch(e => apiCatch(res, e))
     }
   }).then((result) => {
-    prevMemberCount = result.data.member_count;
     if (result.data.slug && result.data.slug == PROGRESS_LIST_SLUG) {
-      console.log('got list for progress saving')
-      console.log(result.data)
+      console.log('got list for progress saving, adding members...', result.data)
       return twit.post('lists/members/create_all', {
         slug: PROGRESS_LIST_SLUG,
         owner_id: req.session.userId,
         user_id: req.body.user_ids.join(',')
-      })
+      });
     } else {
-      // handle not getting the list? how to return a error
+      throw {
+        statusCode: 404,
+        errorCode: 69,
+        error: `Couldn't get list matching slug ${PROGRESS_LIST_SLUG}, got ${result.data.slug} instead.`
+      };
     }
-  }).catch(e => apiCatch(res, e)).then((result) => {
+  }).catch(e => apiCatch(res, e))
+    .then((result) => {
+    apiSend(res, result, {
+      list_id: result.data.id_str
+    });
     if (result && result.data) {
       console.log('saved list members successfully');
       res.send({
