@@ -19,13 +19,13 @@ function getLoggedInUserData() {
     window.fetch('https://tokimeki-unfollow.glitch.me/data/friends')
   ]).then(res => Promise.all(res.map(r => r.json())))
     .then(res => {
-    console.log(res);
+    console.log('fetched new user data', res);
     store.setItem('updated', new Date().toString());
-    store.setItem('user', JSON.stringify(res[0].user));
-    store.setItem('friends', JSON.stringify(res[1].friends));
+    store.setItem('user', JSON.stringify(res[0].data));
+    store.setItem('friends', JSON.stringify(res[1].data.ids));
     render({
       user: res[0].user,
-      friends: res[1].friends
+      friends: res[1].data.ids
     });
   });
 }
@@ -123,8 +123,8 @@ function render(res) {
         window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId)
           .then(res => res.json())
           .then(res => {
-          console.log('got user ' + res.user.screen_name + ', ' + res.user.id_str, JSON.parse(JSON.stringify(res)));
-          this.friend = res.user;
+          console.log('got user ' + res.data.screen_name + ', ' + res.data.id_str, JSON.parse(JSON.stringify(res)));
+          this.friend = res.data;
         });
       },
       unfollow: function() {

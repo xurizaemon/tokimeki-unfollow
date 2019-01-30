@@ -1,4 +1,4 @@
-let { genTwit, restoreSession, validateSession } = require('../helpers');
+let { apiCatch, apiSend, genTwit, restoreSession, validateSession } = require('../helpers');
 let express = require('express');
 let router = express.Router();
 
@@ -18,9 +18,7 @@ router.get('/data/user', (req, res) => {
    id: req.session.userId
   }).catch((e) => apiCatch(res, e))
     .then((result) => {
-     res.send({
-       user: result.data
-     });
+    apiSend(res, result);
   });
 });
 
@@ -29,9 +27,7 @@ router.get('/data/user/:userId', (req, res) => {
    id: req.params.userId
   }).catch((e) => apiCatch(res, e))
     .then((result) => {
-     res.send({
-       user: result && result.data ? result.data : null
-     });
+    apiSend(res, result);
   });
 });
 
@@ -42,6 +38,7 @@ router.get('/data/tweets/:userId', (req, res) => {
     include_rts: true
   }).catch((e) => apiCatch(res, e))
     .then((result) => {
+    apiSend(res, result);
      res.send({
        tweets: result.data
      });
@@ -54,9 +51,7 @@ router.get('/data/friends', (req, res) => {
   })
     .catch((e) => apiCatch(res, e))
     .then((result) => {
-     res.send({
-       friends: result.data.ids
-     });
+    apiSend(res, result);
   });
 });
 
@@ -86,9 +81,7 @@ router.get('/data/lists/all', (req, res) => {
   twit.get('lists/ownerships', {
   }).catch(e => apiCatch(e))
     .then(result => {
-    res.send({
-      lists: result.data
-    });
+    apiSend(res, result);
   });
 });
 
@@ -187,14 +180,5 @@ router.get('/data/ratelimit', (req, res) => {
     res.send(result);
   })
 });
-
-function apiCatch(res, e) {
-  console.log('error', e.stack);
-  res.send({
-    status: 500,
-    errorCode: e.code,
-    error: e.stack
-  });
-}
 
 module.exports = router;

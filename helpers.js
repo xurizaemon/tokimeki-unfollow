@@ -38,14 +38,21 @@ function apiCatch(res, e) {
   });
 }
 
-function apiSend(res, result, data) {
+function apiSend(res, result) {
   let resp = result.resp.toJSON();
-  res.send(Object.assign({
+  res.send({
     status: resp.statusCode,
     errorCode: resp.errorCode,
-    error: resp.error
-  }, data))
+    error: resp.error,
+    data: result.data
+  })
   
 }
 
-module.exports = { apiCatch, genTwit, restoreSession, validateSession };
+module.exports = {
+  apiCatch,
+  apiSend,
+  genTwit,
+  restoreSession,
+  validateSession
+};
