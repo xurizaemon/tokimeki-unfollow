@@ -1,6 +1,7 @@
-function saveQuick(ids, store) {
-  store.setItem('kept_ids', JSON.stringify(ids));
-  console.log('saved', JSON.parse(store.getItem('kept_ids')));
+function saveQuick(kept_ids, unfollowed_ids, store) {
+  store.setItem('kept_ids', JSON.stringify(kept_ids));
+  store.setItem('unfollowed_ids', JSON.stringify(unfollowed_ids));
+  console.log('saved', JSON.parse(store.getItem('kept_ids')), JSON.parse(store.getItem('unfollowed_ids')));
 }
 
 function saveList(ids) {
@@ -23,8 +24,13 @@ function saveList(ids) {
 }
 
 function loadQuick(store) {
-  console.log('loading', JSON.parse(store.getItem('kept_ids')));
-  return JSON.parse(store.getItem('kept_ids'));
+  let kept = JSON.parse(store.getItem('kept_ids'));
+  let unfollowed = JSON.parse(store.getItem('unfollowed_ids'));
+  console.log('loaded', kept, unfollowed);
+  return {
+    kept: kept,
+    unfollowed: unfollowed
+  };
 }
 
 function loadList() {

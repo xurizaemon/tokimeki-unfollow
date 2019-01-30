@@ -5,15 +5,27 @@
   </head>
   <body>
     <div id="app" v-cloak>
+      <div v-if="finished">
+        <h1>
+          Tokimeki Complete!
+        </h1>
+        <br>
+        <strong>{{ unfollowed.length }}</strong> unfollowed
+        <br>
+        <strong>{{ addedToList.length }}</strong> added to lists
+        <br>
+        <strong>{{ kept.length }}</strong> follows kept
+      </div>
       <intro
+        v-else-if="introFinished == false"
+        v-on:intro-finished="introFinished = true; updatePrefs($event)"
         v-bind:username="user.screen_name"
         v-bind:loadedprogress="loadedProgress"
         v-bind:followingcount="friends.length"
         v-bind:initialorder="prefs.order"
         v-bind:initialsaveprogressaslist="prefs.saveProgressAsList"
-        v-bind:initialshowbio="prefs.showBio"
-        v-if="introFinished == false"
-        v-on:intro-finished="introFinished = true; updatePrefs($event)"></intro>
+        v-bind:initialshowbio="prefs.showBio">
+      </intro>
       <div v-else>
         <div id="twttr-widget"
           v-bind:class="{

@@ -161,7 +161,8 @@ function render(res) {
         Progress.saveList(this.kept, store);
       },
       loadProgressQuick: function() {
-        this.kept = Progress.loadQuick(store) || this.kept;
+        this.kept = Progress.loadQuick(store).kept || this.kept;
+        this.unfollowed = Progress.loadQuick(store).unfollowed || this.unfollowed;
         this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
         this.loadedProgress = (this.kept.length > 0);
       },
