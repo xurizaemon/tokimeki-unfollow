@@ -30,23 +30,23 @@ function genTwit(token, secret) {
 }
 
 function apiCatch(res, e) {
-  console.log('Error caught:', e.code, e.stack);
+  console.log('Error caught:', e.statusCode, e.code, e.message);
   res.send({
-    status: 500,
+    status: e.statusCode || 500,
     errorCode: e.code,
-    error: e.stack
+    error: e.message
   });
 }
 
 function apiSend(res, result) {
+  if (result === undefined) return;
   let resp = result.resp.toJSON();
   res.send({
     status: resp.statusCode,
     errorCode: resp.errorCode,
     error: resp.error,
     data: result.data
-  })
-  
+  });
 }
 
 module.exports = {

@@ -39,17 +39,13 @@ router.get('/data/tweets/:userId', (req, res) => {
   }).catch((e) => apiCatch(res, e))
     .then((result) => {
     apiSend(res, result);
-     // res.send({
-     //   tweets: result.data
-     // });
   });
 });
 
 router.get('/data/friends', (req, res) => {
   twit.get('friends/ids', {
     stringify_ids: true
-  })
-    .catch((e) => apiCatch(res, e))
+  }).catch((e) => apiCatch(res, e))
     .then((result) => {
     apiSend(res, result);
   });
@@ -60,20 +56,16 @@ router.post('/data/unfollow', (req, res) => {
     user_id: String(req.body.userId)
   }).catch(e => apiCatch(res, e))
     .then(result => {
-    res.send({
-      status: result.resp.toJSON().statusCode,
-      data: result.data
-    });
+    apiSend(res, result);
   });
 });
 
 router.post('/data/follow', (req, res) => {
   twit.post('friendships/create', {
     user_id: String(req.body.userId)
-  }).catch(e => apiCatch(res, e)).then(result => {
-    res.send({
-      status: result.resp.toJSON().statusCode
-    });
+  }).catch(e => apiCatch(res, e))
+    .then(result => {
+    apiSend(res, result);
   });
 });
 
@@ -92,9 +84,7 @@ router.post('/data/lists/create', (req, res) => {
     description: req.body.description
   }).catch(e => apiCatch(e))
     .then(result => {
-    res.send({
-      status: result.resp.toJSON().statusCode
-    });
+    apiSend(res, result);
   });
 });
 
@@ -164,7 +154,7 @@ router.get('/data/load_progress', (req, res) => {
     count: 5000
   }).catch(e => apiCatch(res, e)).then(result => {
     if (result && result.data && result.data.users) { 
-      res.send({
+      res.send({id_str
         user_ids: result.data.users.map(user => user.id_str)
       })
     }

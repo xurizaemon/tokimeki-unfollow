@@ -115,7 +115,6 @@ function render(res) {
         if (this.sel == this.friends.length - 1) this.finished = true;
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
         if (this.prefs.showBio == false) this.showBio = false;
-        Progress.saveQuick(this.kept, store);
         this.saveProgressList();
       },
       prev: function() {
@@ -157,8 +156,9 @@ function render(res) {
       filterKeptFriends: function() {
       },
       saveProgressList: function() {
+        Progress.saveQuick(this.kept, this.unfollowed, store);
         if (this.prefs.saveProgressAsList == false) return;
-        Progress.saveList(this.kept, store);
+        Progress.saveList(this.kept, this.unfollowed, store);
       },
       loadProgressQuick: function() {
         this.kept = Progress.loadQuick(store).kept || this.kept;
