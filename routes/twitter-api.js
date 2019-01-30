@@ -84,6 +84,16 @@ router.post('/data/follow', (req, res) => {
   });
 });
 
+app.get('/data/lists/all', (req, res) => {
+  twit.get('lists/ownerships', {
+  }).catch(e => apiCatch(e))
+    .then(result => {
+    res.send({
+      lists: result.resp.
+    });
+  });
+});
+
 // app.post('/data/lists/create', (req, res) => {
 //   twit.post('lists/create', {
 //     name: 'tokimeki_unfollow_keeps',
