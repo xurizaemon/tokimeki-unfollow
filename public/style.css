@@ -221,11 +221,18 @@ img {
 }
 
 .button-menu {
-  width: 24em;
+  width: 17em;
   position: absolute;
   left: 50%;
-  margin-left: -12em;
-  bottom: 0;
+  margin-left: -8.5em;
+  bottom: .5em;
+  background: white;
+  box-shadow: .25em .5em .5em 0 rgba(0,0,0,.1);
+}
+
+.button-menu .button {
+  box-shadow: 0 1px 0 0 #eee;
+  margin-bottom: 1px;
 }
 
 .abs { position: absolute }

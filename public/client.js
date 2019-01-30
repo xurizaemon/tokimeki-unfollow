@@ -104,7 +104,8 @@ function render(res) {
       loadedProgress: false,
       savedProgress: false,
       finished: false,
-      showAddToListMenu: false
+      showAddToListMenu: false,
+      showCreateListMenu: false
     },
     methods: {
       updatePrefs: function(e) {

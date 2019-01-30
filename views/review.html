@@ -102,18 +102,18 @@
               </p>
               <div id="btns">
 <!--                 <a href="#" v-on:click="prev" class="button dib"><-</a> -->
-                <button v-on:click="unfollow" class="button dib">Unfollow</button>
-                <div class="dib">
-                  <button v-if="!showAddToListMenu" v-on:click="showAddToListMenu = true" class="button dib">Add to List</button>
-                  <div v-if="showAddToListMenu" class="button-menu">
-                    <button v-for="list in lists" class="button w100">
-                      {{ list.name }}
-                    </button>
-                    <button v-on:click="createList" class="button dib">+ Create List</button>
-                    <button v-on:click="showAddToListMenu = false" class="button dib">Cancel</button>
-                  </div>
+                <div v-if="!showAddToListMenu" class="dib">
+                  <button v-on:click="unfollow" class="button dib">Unfollow</button>
+                  <button v-on:click="showAddToListMenu = true" class="button dib">Add to List</button>
+                  <button v-on:click="keep" class="button dib">Keep</button>
                 </div>
-                <button v-on:click="keep" class="button dib">Keep</button>
+                <div v-if="showAddToListMenu" class="button-menu">
+                  <button v-for="list in lists" class="button w100">
+                    {{ list.name }}
+                  </button>
+                  <button v-on:click="showCreateListMenu = true" class="button w100">Create New List...</button>
+                  <button v-on:click="showAddToListMenu = false" class="button w100">Cancel</button>
+                </div>
 <!--                 <a href="#" v-on:click="next" class="button dib">-></a> -->
               </div>
               </span>
