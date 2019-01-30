@@ -170,10 +170,9 @@ function render(res) {
         if (this.prefs.saveProgressAsList == false) return;
         Progress.loadList(store)
           .then(res => {
-            let ids = res.user_ids;
-            if (ids && ids.length) {
+            if (res.user_ids) {
               // Combine in case the quick load and twitter list are different
-              this.kept = this.kept.concat(ids.filter((id, i) => this.kept.indexOf(id) < 0));
+              this.kept = this.kept.concat(res.user_ids.filter((id, i) => this.kept.indexOf(id) < 0));
               this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
               this.loadedProgress = (this.kept.length > 0);
             }

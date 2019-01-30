@@ -38,14 +38,14 @@ function apiCatch(res, e) {
   });
 }
 
-function apiSend(res, result) {
+function apiSend(res, result, customData) {
   if (result === undefined) return;
   let resp = result.resp.toJSON();
   res.send({
     status: resp.statusCode,
     errorCode: resp.errorCode,
     error: resp.error,
-    data: result.data
+    data: customData || result.data
   });
 }
 

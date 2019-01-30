@@ -153,11 +153,10 @@ router.get('/data/load_progress', (req, res) => {
     include_entities: false,
     count: 5000
   }).catch(e => apiCatch(res, e)).then(result => {
-    if (result && result.data && result.data.users) { 
-      res.send({id_str
-        user_ids: result.data.users.map(user => user.id_str)
-      })
-    }
+    apiSend(res, result, {
+      user_ids: result.data.users ? 
+        result.data.users.map(user => user.id_str) : []
+    });
   });
 });
 
