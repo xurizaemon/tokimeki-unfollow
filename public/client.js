@@ -60,7 +60,7 @@ function render(res) {
   const dataDefaults = {
     friend: { name: "Loading...", screen_name: "Loading..." },
     friends: res.friends,
-    friendsOldest: res.friends.slice().reverse()
+    user: res.user
   }
 
   var app = new Vue({
@@ -68,8 +68,8 @@ function render(res) {
     data: {
       sel: 0,
       friends: dataDefaults.friends,
-      friendsOrdered: dataDefaults.friends,
-      user: res.user,
+      friendsFiltered: dataDefaults.friends,
+      user: dataDefaults.user,
       friend: dataDefaults.friend,
       introFinished: false,
       showBio: false,
@@ -90,14 +90,14 @@ function render(res) {
         [this.prefs.order, this.prefs.saveProgressAsList, this.prefs.showBio] = e;
         switch (this.prefs.order) {
           case 'oldest':
-            this.friendsOrdered = this.friends.slice().reverse();
+            this.friends = this.friendsFiltered.slice().reverse();
             break;
           case 'random':
             // Hack to trigger updating/watching, otherwise Vue won't notice
-            this.friendsOrdered = shuffle(this.friends).slice();
+            this.friends = shuffle(this.friendsFiltered.slice()).slice();
             break;
           case 'newest':
-            this.friendsOrdered = this.friends;
+            this.friends = this.friendsFiltered;
             break;
         }
         this.showBio = this.prefs.showBio;
@@ -117,11 +117,11 @@ function render(res) {
       },
       getData: function(userId) {
         if (userId == null) return;
-        console.log('getting data for ', userId);
+        console.log('fetching user ', userId);
         window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId)
           .then(res => res.json())
           .then(res => {
-          console.log('got data for ' + res.user.screen_name + ', ' + res.user.id_str, JSON.parse(JSON.stringify(res)));
+          console.log('got user ' + res.user.screen_name + ', ' + res.user.id_str, JSON.parse(JSON.stringify(res)));
           this.friend = res.user;
         });
       },
@@ -141,14 +141,15 @@ function render(res) {
         this.kept.pop(); // this seems risky since we are not verifiying if it's there or not
         console.log('unkept', this.kept);
       },
+      filterKeptFriends: function() {
+      },
       saveProgressList: function() {
         if (this.prefs.saveProgressAsList == false) return;
         Progress.saveList(this.kept, store);
       },
       loadProgressQuick: function() {
         this.kept = Progress.loadQuick(store) || this.kept;
-        this.friends = this.friends.filter(id => !this.kept.includes(id));
-        console.log('has david?', this.friends.includes(9716782));
+        this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
         this.loadedProgress = (this.kept.length > 0);
       },
       loadProgressList: function() {
@@ -159,8 +160,7 @@ function render(res) {
             if (ids && ids.length) {
               // Combine in case the quick load and twitter list are different
               this.kept = this.kept.concat(ids.filter((id, i) => this.kept.indexOf(id) < 0));
-              this.friends = this.friends.filter(id => !this.kept.includes(id));
-              console.log('has david?', this.friends.includes(9716782));
+              this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
               this.loadedProgress = (this.kept.length > 0);
             }
         });
@@ -193,7 +193,6 @@ function render(res) {
     },
     computed: {
       selFriendId() {
-        console.log("selFriendId updated:", this.friends[this.sel]);
         return this.friends[this.sel];
       },
       selFriendIsKept() {
