@@ -18,7 +18,7 @@ function saveList(kept_ids, unfollowed_ids) {
     .then(res => res.json())
     .then(res => {
       if (res.status == 200) {
-        console.log('save list success', res.list_id);
+        console.log('save list success', res.data.list_id);
       }
   });
 }

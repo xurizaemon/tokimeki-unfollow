@@ -25,7 +25,7 @@ function getLoggedInUserData() {
       store.setItem('user', JSON.stringify(res[0].data));
       store.setItem('friends', JSON.stringify(res[1].data.ids));
       render({
-        user: res[0].user,
+        user: res[0].data,
         friends: res[1].data.ids
       });
     } else {
@@ -219,9 +219,6 @@ function render(res) {
       },
       loadingSelFriend() {
         return this.sel > 0 && (this.selFriendId != this.friend.id_str);
-      },
-      finished() {
-        return 
       },
       iframeURL() {
         return 'https://twitter.com/intent/user?user_id='+this.friends[this.sel];

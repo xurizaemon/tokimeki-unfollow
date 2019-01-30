@@ -69,6 +69,7 @@ router.post('/data/follow', (req, res) => {
   });
 });
 
+/* Lists */
 router.get('/data/lists/all', (req, res) => {
   twit.get('lists/ownerships', {
   }).catch(e => apiCatch(e))
@@ -88,17 +89,17 @@ router.post('/data/lists/create', (req, res) => {
   });
 });
 
-// router.get('/data/lists/:listSlug', (req, res) => {
-//   twit.get('lists/show', {
-//     slug: req.params.listSlug,
-//     owner_id: req.session.userId
-//   }).catch((e) => console.log('error', e.stack))
-//     .then((result) => {
-//      res.send({
-//      });
-//   });
-// });
+router.post('/data/lists/members/create', (req, res) => {
+  twit.post('lists/create', {
+    id: req.session.list_id,
+    user_id: req.body.user_id
+  }).catch(e => apiCatch(e))
+    .then(result => {
+    apiSend(res, result);
+  });
+});
 
+/* Saving/Loading Progress as a List */
 router.post('/data/save_progress', (req, res) => {
   if (!req.body.user_ids) res.send({ status: 500, error: 'No user ids provided.' });
   let prevMemberCount = 0;
@@ -137,19 +138,7 @@ router.post('/data/save_progress', (req, res) => {
     apiSend(res, result, {
       list_id: result.data.id_str
     });
-    if (result && result.data) {
-      console.log('saved list members successfully');
-      res.send({
-        status: result.resp.toJSON().statusCode,
-        list_id: result.data.id_str
-      });
-    } else {
-      res.send({
-        status: 500
-      });
-    }
   });
-  
 });
 
 router.get('/data/load_progress', (req, res) => {
