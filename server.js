@@ -13,8 +13,8 @@ app.use(session({
 app.set('view engine', 'pug');
 
 // Routes
-app.use(require('./routes-twitter'));
-app.use(require('./auth'));
+app.use(require('./routes/twitter-api'));
+app.use(require('./routes/twitter-login'));
 
 // Main page
 app.get('/', function(req, res) {

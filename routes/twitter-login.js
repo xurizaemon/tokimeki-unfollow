@@ -1,5 +1,6 @@
 let express = require('express');
 let router = express.Router();
+
 const LoginWithTwitter = new (require('login-with-twitter'))({
   consumerKey: process.env.KEY,
   consumerSecret: process.env.SECRET,
