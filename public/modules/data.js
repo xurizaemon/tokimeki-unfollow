@@ -33,9 +33,16 @@ function follow(userId, callback) {
 }
 
 function addToList(userId, listId) {
-  post('/lists/create', {
+  post('/data/lists/members/create_all', {
   })
 }
+function createList(title, isPrivate) {
+  post('/data/lists/create', {
+    name: name,
+    private: isPrivate
+  })
+}
+
 
 function getLists(userId) {
   return fetch('https://tokimeki-unfollow.glitch.me/data/lists/ownerships')
@@ -43,4 +50,4 @@ function getLists(userId) {
     .then(res => res.json());
 }
 
-export { addToList, getLists, unfollow, follow };
+export { addToList, createList, getLists, unfollow, follow };

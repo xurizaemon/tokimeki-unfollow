@@ -107,9 +107,9 @@
                   <button v-on:click="showAddToListMenu = true" class="button dib">Add to List</button>
                   <button v-on:click="keep" class="button dib">Keep</button>
                 </div>
-                <create-list-menu v-if="showAddToListMenu"
-                  v-on:create-list="createList"
-                  v-on:close-menu="showAddToListMenu = false"></create-list-menu>
+                <add-to-list-menu v-if="showAddToListMenu"
+                  v-on:create-list="createList($event)"
+                  v-on:close-menu="showAddToListMenu = false"></add-to-list-menu>
 <!--                 <a href="#" v-on:click="next" class="button dib">-></a> -->
               </div>
               </span>

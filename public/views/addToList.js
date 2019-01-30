@@ -1,4 +1,4 @@
-let createListMenu = Vue.component('create-list-menu', {
+let addToListMenu = Vue.component('add-to-list-menu', {
   data: function() {
     return {
       title: '',
@@ -8,7 +8,10 @@ let createListMenu = Vue.component('create-list-menu', {
   props: ['initialLists'],
   methods: {
     close() {
-      this.$emit('close-add-to-list-menu', [this.order, this.saveProgressAsList, this.showBio]);
+      this.$emit('close-menu', [this.order, this.saveProgressAsList, this.showBio]);
+    },
+    create() {
+      this.$emit('create-list', [this.title, this.private]);
     }
   },
   template:`
@@ -18,18 +21,18 @@ let createListMenu = Vue.component('create-list-menu', {
           {{ list.name }}
         </button>
         <button v-on:click="showCreateListMenu = true" class="button w100">Create New List...</button>
-        <button v-on:click="showAddToListMenu = false" class="button w100">Cancel</button>
+        <button v-on:click="close" class="button w100">Cancel</button>
       </div>
       <div v-if="showCreateListMenu" class="button-menu">
-        <div v-if="createListName.length > 25" class="input w100 logored">
+        <div v-if="title.length > 25" class="input w100 logored">
           Max 25 characters -_-
         </div>
-        <input type="text" placeholder="Enter list name..." v-model="createListName" class="input w100 bold">
+        <input type="text" placeholder="Enter list name..." v-model="title" class="input w100 bold">
         <div class="input w100">
-          <input type="checkbox" id="private" name="private">
+          <input type="checkbox" id="private" value="private" v-model="private">
           <label for="private">Private</label>
         </div>
-        <button v-on:click="showCreateListMenu = false; showAddtoListMenu = false; createList()" class="button w100">Create List</button>
+        <button v-on:click="showCreateListMenu = false; createList()" class="button w100">Create List</button>
         <button v-on:click="showCreateListMenu = false" class="button w100">Cancel</button>
       </div>
     </div>

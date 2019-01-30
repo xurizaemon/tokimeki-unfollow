@@ -1,6 +1,7 @@
 import * as Intro from './views/intro.js';
 import * as Tweets from './views/tweets.js';
 import * as Tweet from './views/tweet.js';
+import * as AddToList from './views/addToList.js';
 import * as Data from './modules/data.js';
 import * as Progress from './modules/progress.js';
 let store = window.localStorage;
@@ -161,6 +162,10 @@ function render(res) {
         });
       },
       addToList: Data.addToList,
+      createList(e) {
+        let [title, privateList] = e;
+        Data.createList(title, privateList)
+      },
       keep: function() {
         console.log('keeping');
         this.kept.push(this.selFriendId);
