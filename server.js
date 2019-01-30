@@ -27,10 +27,12 @@ app.get('/', function(req, res) {
 });
 
 // Review page
-// TODO: SHOULD PROB BE THE SAME AS THE MAIN PAGE
+// TODO: SHOULD PROB BE THE SAME AS THE MAIN PAGEj
 app.get('/review', restoreSession, (req, res) => {
   res.sendFile(__dirname + '/views/review.html');
 });
+
+app.use(require('./routes-twitter'));
 
 // Middleware to restore Twitter auth session using cookies
 function restoreSession(req, res, next) {
