@@ -107,12 +107,20 @@
                   <button v-on:click="showAddToListMenu = true" class="button dib">Add to List</button>
                   <button v-on:click="keep" class="button dib">Keep</button>
                 </div>
-                <div v-if="showAddToListMenu" class="button-menu">
+                <div v-if="showAddToListMenu && !showCreateListMenu" class="button-menu">
                   <button v-for="list in lists" class="button w100">
                     {{ list.name }}
                   </button>
                   <button v-on:click="showCreateListMenu = true" class="button w100">Create New List...</button>
                   <button v-on:click="showAddToListMenu = false" class="button w100">Cancel</button>
+                </div>
+                <div v-if="showCreateListMenu" class="button-menu">
+                  <input type="text" placeholder="Enter list name..." class="button w100">
+                  <input type="checkbox" id="private" name="private">
+                  <label for="private">Private</label>
+                  <br>
+                  <button v-on:click="showCreateListMenu = false; show" class="button w100">Create List</button>
+                  <button v-on:click="showCreateListMenu = false" class="button w100">Cancel</button>
                 </div>
 <!--                 <a href="#" v-on:click="next" class="button dib">-></a> -->
               </div>
