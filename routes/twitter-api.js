@@ -65,8 +65,6 @@ router.post('/data/unfollow', (req, res) => {
     user_id: String(req.body.userId)
   }).catch(e => apiCatch(res, e))
     .then(result => {
-    // console.log(result.data);
-    // console.log(result.resp.toJSON());
     res.send({
       status: result.resp.toJSON().statusCode,
       data: result.data
@@ -84,35 +82,30 @@ router.post('/data/follow', (req, res) => {
   });
 });
 
-app.get('/data/lists/all', (req, res) => {
+router.get('/data/lists/all', (req, res) => {
   twit.get('lists/ownerships', {
   }).catch(e => apiCatch(e))
     .then(result => {
     res.send({
-      lists: result.resp.
+      lists: result.data
     });
   });
 });
 
-// app.post('/data/lists/create', (req, res) => {
-//   twit.post('lists/create', {
-//     name: 'tokimeki_unfollow_keeps',
-//     mode: 'private',
-//     description: 'This list tracks progress in KonMari-ing follows on Tokimeki Unfollow. These are the accounts marked as still sparking joy and to be kept. Feel free to delete this if you are done using Tokimeki Unfollow.'
-//   }).catch(e => {
-//     console.log('error creating list', e.stack);
-//     res.send({
-//       status: 500,
-//       error: e.stack
-//     });
-//   }).then(result => {
-//     res.send({
-//       status: result.resp.toJSON().statusCode
-//     });
-//   });
-// });
+router.post('/data/lists/create', (req, res) => {
+  twit.post('lists/create', {
+    name: req.body.name,
+    mode: req.body.private ? 'private' : 'public',
+    description: req.body.description
+  }).catch(e => apiCatch(e))
+    .then(result => {
+    res.send({
+      status: result.resp.toJSON().statusCode
+    });
+  });
+});
 
-// app.get('/data/lists/:listSlug', (req, res) => {
+// router.get('/data/lists/:listSlug', (req, res) => {
 //   twit.get('lists/show', {
 //     slug: req.params.listSlug,
 //     owner_id: req.session.userId
