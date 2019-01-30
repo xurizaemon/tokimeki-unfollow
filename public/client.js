@@ -27,7 +27,7 @@ function getLoggedInUserData() {
       store.setItem('updated', new Date().toString());
       store.setItem('user', JSON.stringify(res[0].data));
       store.setItem('friends', JSON.stringify(res[1].data.ids));
-      store.setItem('lists', JSON.stringify(res[1].data.lists));
+      store.setItem('lists', JSON.stringify(res[2].data.lists));
       render({
         user: res[0].data,
         friends: res[1].data.ids,
@@ -65,7 +65,10 @@ function invalidateStore(store) {
   }
   return store.getItem('user') === null ||
     store.getItem('friends') === null ||
-    store.getItem('lists') === null
+    store.getItem('lists') === null ||
+    store.getItem('user') === 'undefined' ||
+    store.getItem('friends') === 'undefined' ||
+    store.getItem('lists') === 'undefined'
 }
 
 function render(res) {
@@ -74,17 +77,19 @@ function render(res) {
   const dataDefaults = {
     friend: { name: "Loading...", screen_name: "Loading..." },
     friends: res.friends,
-    user: res.user
+    user: res.user,
+    lists: res.lists
   }
 
   var app = new Vue({
     el: '#app',
     data: {
       sel: 0,
+      user: dataDefaults.user,
       friends: dataDefaults.friends,
       friendsFiltered: dataDefaults.friends,
-      user: dataDefaults.user,
       friend: dataDefaults.friend,
+      lists: dataDefaults.lists,
       introFinished: false,
       showBio: false,
       prefs: {
@@ -98,7 +103,8 @@ function render(res) {
       kept: [],
       loadedProgress: false,
       savedProgress: false,
-      finished: false
+      finished: false,
+      showAddToListMenu: false
     },
     methods: {
       updatePrefs: function(e) {

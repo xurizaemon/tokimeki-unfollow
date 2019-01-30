@@ -103,7 +103,16 @@
               <div id="btns">
 <!--                 <a href="#" v-on:click="prev" class="button dib"><-</a> -->
                 <button v-on:click="unfollow" class="button dib">Unfollow</button>
-                <button v-on:click="addToList" class="button dib">Add to List</button>
+                <div class="dib">
+                  <button v-on:click="showAddToListMenu = true" class="button dib">Add to List</button>
+                  <div v-if:"showAddToListMenu" class="button-menu w100">
+                    <button v-for="list in lists" class="button">
+                      {{ list.name }}
+                    </button>
+                    <button v-on:click="createList">+ Create List</button>
+                    <button v-on:click="showAddToListMenu = false">Cancel</button>
+                  </div>
+                </div>
                 <button v-on:click="keep" class="button dib">Keep</button>
 <!--                 <a href="#" v-on:click="next" class="button dib">-></a> -->
               </div>
