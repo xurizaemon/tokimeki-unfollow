@@ -1,45 +1,17 @@
+let { genTwit, restoreSession, validateSession } = require('./helpers');
 let express = require('express');
 let router = express.Router();
-
-let twitter = require('twit');
-let twit; // Global holder for twit instance
+let twit;
 
 const PROGRESS_LIST_SLUG = 'tokimekitest2'; // TODO update this back
-
-// Middleware to restore Twitter auth session using cookies
-function restoreSession(req, res, next) {
-  // console.log(req.session);
-    
-  let sessionHasData = validateSession(req.session);
-  // console.log(sessionHasData ? 'cookie session has data' : 'cookie session empty');
-  if (!sessionHasData) { return res.redirect('/logout') }
-  
-  twit = new twitter({
-    consumer_key: process.env.KEY,
-    consumer_secret: process.env.SECRET,
-    access_token: req.session.token,
-    access_token_secret: req.session.secret
-  });
-  if (twit === undefined) { return res.redirect('/logout') }
-  next();
-}
-
-function validateSession(sess) {
-  return ( typeof sess === 'object' &&
-    sess.token !== undefined &&
-    sess.secret !== undefined &&
-    sess.username !== undefined &&
-    sess.userId !== undefined
-  );
-}
 
 // Middleware restore session for all /data calls
 router.use('/data', restoreSession);
 router.use('/data', (req, res, next) => {
   res.setHeader('Content-Type', 'application/json');
+  twit = genTwit(req.session.token, req.session.secret);
   next();
 });
-
 
 router.get('/data/user', (req, res) => {
   twit.get('users/show', {

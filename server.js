@@ -31,6 +31,7 @@ app.get('/review', restoreSession, (req, res) => {
 });
 
 app.use(require('./routes-twitter'));
+// app.use(require('./auth'));
 
 // setup login route to link to with login link on website
 app.get('/auth/twitter', (req, res, next) => {

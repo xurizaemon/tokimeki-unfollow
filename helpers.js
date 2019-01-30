@@ -1,3 +1,5 @@
+let Twit = require('twit');
+
 // Middleware to restore Twitter auth session using cookies
 function restoreSession(req, res, next) {
   // console.log(req.session);
@@ -6,13 +8,6 @@ function restoreSession(req, res, next) {
   // console.log(sessionHasData ? 'cookie session has data' : 'cookie session empty');
   if (!sessionHasData) { return res.redirect('/logout') }
   
-  twit = new twitter({
-    consumer_key: process.env.KEY,
-    consumer_secret: process.env.SECRET,
-    access_token: req.session.token,
-    access_token_secret: req.session.secret
-  });
-  if (twit === undefined) { return res.redirect('/logout') }
   next();
 }
 
@@ -25,6 +20,15 @@ function validateSession(sess) {
   );
 }
 
+function genTwit(token, secret) {
+  return new Twit({
+    consumer_key: process.env.KEY,
+    consumer_secret: process.env.SECRET,
+    access_token: token,
+    access_token_secret: secret
+  });
+}
+
 function apiCatch(res, e) {
   console.log('error', e.stack);
   res.send({
@@ -34,4 +38,4 @@ function apiCatch(res, e) {
   });
 }
 
-module.exports = { apiCatch, restoreSession, validateSession };
+module.exports = { apiCatch, genTwit, restoreSession, validateSession };
