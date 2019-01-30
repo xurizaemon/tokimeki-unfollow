@@ -218,6 +218,16 @@ img {
   margin-bottom: 1px;
 }
 
+.button-menu > .button:last-child {
+  border: none;
+  margin: 0;
+}
+
+.button-menu-scrollable {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
 .input {
   padding: .5em 1em;
   border: 0;

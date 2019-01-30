@@ -103,6 +103,7 @@ function render(res) {
       unfollowed: [],
       kept: [],
       addedToList: [],
+      lastAddedToList: '',
       loadedProgress: false,
       savedProgress: false,
       finished: false,
@@ -170,6 +171,7 @@ function render(res) {
           this.addedToList.push(this.selFriendId);
           console.log('added to list', this.selFriendId);
           console.log(this.addedToList);
+          this.lastAddedToList = res.data.name;
         });
       },
       createList(e) {
