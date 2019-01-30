@@ -220,6 +220,14 @@ img {
   background: #eef;
 }
 
+.button-menu {
+  width: 24em;
+  position: absolute;
+  left: 50%;
+  margin-left: -12em;
+  bottom: 0;
+}
+
 .abs { position: absolute }
 .right {
 /*   right: -1em; */
