@@ -57,11 +57,22 @@ img {
 
 .flex-parent {
   display: flex;
-  max-height: 100vh;
-  flex-direction: column;
+  height: 100vh;
+  flex-direction: column-reverse;
+  align-items: center;
+  margin: -1em;
 }
 
+#bottom {
+  flex-grow: 0;
+  order: 1;
+  padding: 1em;
+}
+
+
 #twttr-widget {
+  order:2;
+  flex-grow: 1;
   background: white;
 /*   position: absolute;
   bottom: 11.2em;
@@ -143,6 +154,7 @@ img {
 /* Bottom control panel */
 
 #ctrl {
+  position: relative;
   padding: 1.2em;
 /*   position: absolute;
   bottom: 2em; */
