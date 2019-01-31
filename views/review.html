@@ -26,7 +26,7 @@
         v-bind:initialsaveprogressaslist="prefs.saveProgressAsList"
         v-bind:initialshowbio="prefs.showBio">
       </intro>
-      <div v-else>
+      <div v-else class="flex-parent">
         <div id="twttr-widget"
           v-bind:class="{
             loading:loadingSelFriend,
@@ -40,94 +40,96 @@
             v-bind:id="selFriendId"
             v-bind:private="friend.protected"></twttr-widget>
         </div>
-        <div id="ctrl" v-bind:class="{showBio:showBio}">
-          <div id="avvy"></div>
-          <div id="info">
-            <div v-if="loadedProgress">
-              <p>
-                Welcome back! I've loaded your progress from last time, when you 
-                kept {{ kept.length }} accounts that were important to you.
-              </p>
-              <strong>Let's get started on the {{ friends.length }} accounts left!</strong>
-              
-              <div id="btns">
-                <a href="#" v-on:click="loadedProgress = false" class="button dib">Start</a>
-              </div>
-            </div>
-            <div v-else-if="selFriendIsUnfollowed">
-              <p>
-                Great, unfollowed! Let's thank
-                <strong>{{ friend.name }}</strong>
-                for all the tweets you've enjoyed before.
-              </p>
-              <div id="btns">
-                <a href="#" v-on:click="follow" class="button dib">Undo</a>
-                <a href="#" v-on:click="next" class="button dib">Next</a>
-              </div>
-            </div>
-            <div v-else-if="selFriendIsKept">
-              <p>
-                Glad to hear
-                <strong>{{ friend.name }}</strong>'s
-                tweets are still important to you. 
-              </p>
-              <div id="btns">
-                <a href="#" v-on:click="unkeep" class="button dib">Undo</a>
-                <a href="#" v-on:click="next" class="button dib">Next</a>
-              </div>
-            </div>
-            <div v-else-if="finished">
-              Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
-              If you ever feel like it's getting out of control again, you know where to go!
-            </div>
-            <div v-else>
-              <span v-if="loadingSelFriend">Loading next follow...</span>
-              <span v-else>
-                <span v-if="selFriendIsAddedToList">
-                  <p>
-                    Added
-                    <strong>{{ friend.name }}</strong>
-                    to <strong>{{ lastAddedToList }}!</strong>
-                  </p>
-                  <p>
-                    Did you know? You can still view someone's tweets in a list even if you don't follow them.
-                  </p>
-                </span>
-                <span v-else>
-                  <p>
-                    <span v-if="sel == 0">First up,</span>
-                    <span v-else-if="sel < (friends.length - 1)">#{{sel + 1}}:</span>
-                    <span v-else>Last but not least,</span>
-                    <strong>{{ friend.name }}</strong>, a.k.a.
-                    <span class="gray">@{{ friend.screen_name }}</span>!
-                    <span v-if="showBio==false">
-                      <a href="#" v-on:click="showBio = true" class="keepblue">Show bio</a>
-                    </span>
-                    <span v-else id="bio">
-                      <span class="">&ldquo;{{ friend.description }}&rdquo;</span>
-                      <a href="#" v-on:click="showBio = false" class="keepblue">Hide bio</a>
-                    </span>
-                  </p>
-                  <p>
-                    Do the tweets still spark joy or feel important to you?
-                  </p>
-                </span>
+        <div id="bottom">
+          <div id="ctrl" v-bind:class="{showBio:showBio}">
+            <div id="avvy"></div>
+            <div id="info">
+              <div v-if="loadedProgress">
+                <p>
+                  Welcome back! I've loaded your progress from last time, when you 
+                  kept {{ kept.length }} accounts that were important to you.
+                </p>
+                <strong>Let's get started on the {{ friends.length }} accounts left!</strong>
+
                 <div id="btns">
-  <!--                 <a href="#" v-on:click="prev" class="button dib"><-</a> -->
-                  <div v-if="!showAddToListMenu" class="dib">
-                    <button v-on:click="unfollow" class="button dib">Unfollow</button>
-                    <button v-on:click="showAddToListMenu = true" class="button dib">Add to List</button>
-                    <button v-on:click="keep" class="button dib">Keep</button>
-                  </div>
-                  <add-to-list-menu
-                    v-if="showAddToListMenu"
-                    v-on:add-to-list="addToList($event)"
-                    v-on:create-list="createList($event)"
-                    v-on:close-menu="showAddToListMenu = false"
-                    v-bind:lists="lists"></add-to-list-menu>
-  <!--                 <a href="#" v-on:click="next" class="button dib">-></a> -->
+                  <a href="#" v-on:click="loadedProgress = false" class="button dib">Start</a>
                 </div>
-              </span>
+              </div>
+              <div v-else-if="selFriendIsUnfollowed">
+                <p>
+                  Great, unfollowed! Let's thank
+                  <strong>{{ friend.name }}</strong>
+                  for all the tweets you've enjoyed before.
+                </p>
+                <div id="btns">
+                  <a href="#" v-on:click="follow" class="button dib">Undo</a>
+                  <a href="#" v-on:click="next" class="button dib">Next</a>
+                </div>
+              </div>
+              <div v-else-if="selFriendIsKept">
+                <p>
+                  Glad to hear
+                  <strong>{{ friend.name }}</strong>'s
+                  tweets are still important to you. 
+                </p>
+                <div id="btns">
+                  <a href="#" v-on:click="unkeep" class="button dib">Undo</a>
+                  <a href="#" v-on:click="next" class="button dib">Next</a>
+                </div>
+              </div>
+              <div v-else-if="finished">
+                Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
+                If you ever feel like it's getting out of control again, you know where to go!
+              </div>
+              <div v-else>
+                <span v-if="loadingSelFriend">Loading next follow...</span>
+                <span v-else>
+                  <span v-if="selFriendIsAddedToList">
+                    <p>
+                      Added
+                      <strong>{{ friend.name }}</strong>
+                      to <strong>{{ lastAddedToList }}!</strong>
+                    </p>
+                    <p>
+                      Did you know? You can still view someone's tweets in a list even if you don't follow them.
+                    </p>
+                  </span>
+                  <span v-else>
+                    <p>
+                      <span v-if="sel == 0">First up,</span>
+                      <span v-else-if="sel < (friends.length - 1)">#{{sel + 1}}:</span>
+                      <span v-else>Last but not least,</span>
+                      <strong>{{ friend.name }}</strong>, a.k.a.
+                      <span class="gray">@{{ friend.screen_name }}</span>!
+                      <span v-if="showBio==false">
+                        <a href="#" v-on:click="showBio = true" class="keepblue">Show bio</a>
+                      </span>
+                      <span v-else id="bio">
+                        <span class="">&ldquo;{{ friend.description }}&rdquo;</span>
+                        <a href="#" v-on:click="showBio = false" class="keepblue">Hide bio</a>
+                      </span>
+                    </p>
+                    <p>
+                      Do the tweets still spark joy or feel important to you?
+                    </p>
+                  </span>
+                  <div id="btns">
+    <!--                 <a href="#" v-on:click="prev" class="button dib"><-</a> -->
+                    <div v-if="!showAddToListMenu" class="dib">
+                      <button v-on:click="unfollow" class="button dib">Unfollow</button>
+                      <button v-on:click="showAddToListMenu = true" class="button dib">Add to List</button>
+                      <button v-on:click="keep" class="button dib">Keep</button>
+                    </div>
+                    <add-to-list-menu
+                      v-if="showAddToListMenu"
+                      v-on:add-to-list="addToList($event)"
+                      v-on:create-list="createList($event)"
+                      v-on:close-menu="showAddToListMenu = false"
+                      v-bind:lists="lists"></add-to-list-menu>
+    <!--                 <a href="#" v-on:click="next" class="button dib">-></a> -->
+                  </div>
+                </span>
+              </div>
             </div>
           </div>
         </div>

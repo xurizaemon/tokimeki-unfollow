@@ -55,15 +55,21 @@ img {
   max-width: 100%;
 }
 
+.flex-parent {
+  display: flex;
+  max-height: 100vh;
+  flex-direction: column;
+}
+
 #twttr-widget {
   background: white;
-  position: absolute;
+/*   position: absolute;
   bottom: 11.2em;
   top: 1em;
-  left: 50%;
+  left: 50%; */
   width: 400px;
   text-align: center;
-  margin-left: -200px;
+/*   margin-left: -200px; */
   overflow: hidden;
 /*   border: 2px solid black; */
 /*     border-radius: 2em; */
@@ -138,12 +144,14 @@ img {
 
 #ctrl {
   padding: 1.2em;
-  position: absolute;
-  bottom: 2em;
-  height: 8em;
-  left: 50%;
+/*   position: absolute;
+  bottom: 2em; */
+  /*   left: 50%; */
+  min-height: 8em;
+  max-height: 50vh;
+
   width: 640px;
-  margin-left: -320px;
+/*   margin-left: -320px; */
   background: white;
 /*   border: 2px solid black; */
 }
