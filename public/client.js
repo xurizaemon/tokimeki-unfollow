@@ -202,6 +202,7 @@ function render(res) {
         Progress.saveList(this.kept, this.unfollowed, store);
       },
       loadProgressQuick: function() {
+        return;
         this.kept = Progress.loadQuick(store).kept || this.kept;
         this.unfollowed = Progress.loadQuick(store).unfollowed || this.unfollowed;
         this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
@@ -211,9 +212,10 @@ function render(res) {
         if (this.prefs.saveProgressAsList == false) return;
         Progress.loadList(store)
           .then(res => {
-            if (res.user_ids) {
+            if (res.data.user_ids) {
+              console.log('loaded', res.data.user_ids);
               // Combine in case the quick load and twitter list are different
-              this.kept = this.kept.concat(res.user_ids.filter((id, i) => this.kept.indexOf(id) < 0));
+              this.kept = this.kept.concat(res.data.user_ids.filter((id, i) => this.kept.indexOf(id) < 0));
               this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
               this.loadedProgress = (this.kept.length > 0);
             }
