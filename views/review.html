@@ -5,16 +5,20 @@
   </head>
   <body>
     <div id="app" v-cloak>
-      <div v-if="finished">
+      <div id="intro" v-if="finished">
         <h1>
           Tokimeki Complete!
         </h1>
+        <h2>
+          
+        
         <br>
         <strong>{{ unfollowed.length }}</strong> unfollowed
         <br>
         <strong>{{ addedToList.length }}</strong> added to lists
         <br>
         <strong>{{ kept.length }}</strong> follows kept
+          </h2>
       </div>
       <intro
         v-else-if="introFinished == false"
@@ -31,7 +35,6 @@
           v-bind:class="{
             loading:loadingSelFriend,
             faded:loadedProgress,
-            showBio:showBio,
             unfollowed:selFriendIsUnfollowed,
             kept:selFriendIsKept
           }">
@@ -41,7 +44,7 @@
             v-bind:private="friend.protected"></twttr-widget>
         </div>
         <div class="flex-bottom">
-          <div id="ctrl" v-bind:class="{showBio:showBio}">
+          <div id="ctrl">
             <div id="avvy"></div>
             <div id="info">
               <div v-if="loadedProgress">

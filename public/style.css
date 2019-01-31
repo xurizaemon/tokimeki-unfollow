@@ -70,6 +70,8 @@ img {
   flex-grow: 1;
 }
 
+/* Top tweet panel */
+
 #twttr-widget {
   background: white;
   width: 400px;
@@ -153,6 +155,7 @@ img {
   max-height: 50vh;
   width: 640px;
   background: white;
+  margin: 1em;
 }
 
 #ctrl h3 {
