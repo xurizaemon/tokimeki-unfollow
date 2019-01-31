@@ -286,7 +286,8 @@ img {
   width: 160px;
   height: 160px;
   bottom: 0;
-  right: -80px;
+  left: 50%;
+  margin-left: 240px;
 }
 
 #alert {

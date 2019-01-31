@@ -1,0 +1,32 @@
+@media (max-width: 800px) {
+  #avvy-intro {
+    right: 0;
+    left:auto;
+    margin:0
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    margin: .5em;
+  }
+  
+  h1 {
+    font-size: 1.4em;
+  }
+  
+  #intro {
+    padding: 1em;
+    margin-bottom: 160px;
+  }
+  
+  #ctrl{
+    width: auto;
+    margin: 0;
+    margin-top:.5em;
+  }
+  
+  #btns {
+    bottom: 0;
+  }
+}
