@@ -6,7 +6,17 @@
   }
 }
 
+@media (min-width: 600px) {
+  .lt600 {
+    display: none;
+  }
+}
+
 @media (max-width: 600px) {
+  .gt600 {
+    display: none;
+  }
+
   body {
     margin: .5em;
     font-size: 1.3em;
@@ -44,6 +54,7 @@
     width: 100%;
     margin: 0;
     padding: .6em;
+    max-height: 80vh;
   }
   
   #ctrl p {
@@ -60,20 +71,19 @@
     bottom: 0;
     width: 100%;
     margin-top: .6em;
-    margin-bottom: -.6em;
     display: flex;
   }
   
   #btns div {
-    width: 100%;
-    display: flex;
+
   }
   
   #btns .button {
     flex-grow: 1;
-    margin-bottom: 0;
-    box-shadow: none;
-    border-top: 1px solid #eee;
+/*     margin-bottom: 0; */
+/*     box-shadow: none; */
+/*     border-top: 1px solid #eee; */
+    min-width: 0;
   }
   
   .button-menu {

@@ -139,7 +139,10 @@
     <!--                 <a href="#" v-on:click="prev" class="button dib"><-</a> -->
                     <div v-if="!showAddToListMenu">
                       <button v-on:click="unfollow" class="button dib">Unfollow</button>
-                      <button v-on:click="showAddToListMenu = true" class="button dib mob-shrink">Add to List</button>
+                      <button v-on:click="showAddToListMenu = true" class="button dib">
+                        <span class="lt600">+ List</span>
+                        <span class="gt600">Add to List</span>
+                      </button>
                       <button v-on:click="keep" class="button dib">Keep</button>
                     </div>
                     <add-to-list-menu
