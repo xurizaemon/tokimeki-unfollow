@@ -27,7 +27,7 @@
         v-bind:initialshowbio="prefs.showBio">
       </intro>
       <div v-else class="flex-parent">
-        <div id="twttr-widget"
+        <div id="twttr-widget" class="flex-top"
           v-bind:class="{
             loading:loadingSelFriend,
             faded:loadedProgress,
@@ -40,7 +40,7 @@
             v-bind:id="selFriendId"
             v-bind:private="friend.protected"></twttr-widget>
         </div>
-        <div id="bottom">
+        <div class="flex-bottom">
           <div id="ctrl" v-bind:class="{showBio:showBio}">
             <div id="avvy"></div>
             <div id="info">
