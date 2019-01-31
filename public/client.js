@@ -105,8 +105,8 @@ function render(res) {
       lastAddedToList: '',
       loadedProgress: false,
       savedProgress: false,
-      introFinished: true || false, // RESET
-      finished: true || false, // RESET
+      introFinished: false, // RESET
+      finished: false, // RESET
       showAddToListMenu: false
     },
     methods: {
