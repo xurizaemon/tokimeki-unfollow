@@ -91,7 +91,6 @@ function render(res) {
       friendsFiltered: dataDefaults.friends,
       friend: dataDefaults.friend,
       lists: dataDefaults.lists,
-      introFinished: true || false,
       showBio: false,
       prefs: {
         order: store.getItem('prefsOrder') || 'oldest',
@@ -106,7 +105,8 @@ function render(res) {
       lastAddedToList: '',
       loadedProgress: false,
       savedProgress: false,
-      finished: true || false,
+      introFinished: true || false, // RESET
+      finished: true || false, // RESET
       showAddToListMenu: false
     },
     methods: {

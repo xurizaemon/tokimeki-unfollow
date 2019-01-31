@@ -5,20 +5,41 @@
   </head>
   <body>
     <div id="app" v-cloak>
-      <div id="intro" v-if="finished">
-        <h1>
+      <div v-if="finished" class="flex-parent">
+        <div id="intro" class="flex-top">
+          <h1>
           Tokimeki Complete!
         </h1>
+          <br><br>
         <h2>
-          
-        
-        <br>
+        <center>
+        <p>
         <strong>{{ unfollowed.length }}</strong> unfollowed
-        <br>
+        </p>
+          <span v-if="addedToList.length > 0">
+          <p>
         <strong>{{ addedToList.length }}</strong> added to lists
-        <br>
+        </p>
+            </span>
+          <hr>
+          <br>
+          <p>
         <strong>{{ kept.length }}</strong> follows kept
-          </h2>
+          </p>
+          </center></h2>  
+        </div>
+        <div>
+          <div id="ctrl">
+            <div id="avvy"></div>
+            <div id="info">
+            Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
+            If you ever feel like it's getting out of control again, you know where to go!
+            </div>
+            <div id="btns">
+              <button class="button dib">Tweet</button>
+            </div>
+          </div>
+        </div>
       </div>
       <intro
         v-else-if="introFinished == false"
@@ -79,10 +100,6 @@
                   <a href="#" v-on:click="unkeep" class="button dib">Undo</a>
                   <a href="#" v-on:click="next" class="button dib">Next</a>
                 </div>
-              </div>
-              <div v-else-if="finished">
-                Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
-                If you ever feel like it's getting out of control again, you know where to go!
               </div>
               <div v-else>
                 <span v-if="loadingSelFriend">Loading next follow...</span>
