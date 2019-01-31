@@ -32,7 +32,7 @@
   }
   
   #twttr-widget {
-    width: auto;
+    width: 100%;
   }
   
   #twttr-widget div div {
@@ -41,9 +41,8 @@
   }
   
   #ctrl{
-    width: auto;
+    width: 100%;
     margin: 0;
-    margin-top:.5em;
     padding: .6em;
   }
   
