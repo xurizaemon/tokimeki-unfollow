@@ -12,7 +12,11 @@
   }
   
   h1 {
-    font-size: 1.4em;
+    font-size: 1.5em;
+  }
+  
+  form, label {
+    font-size: inherit;
   }
   
   #intro {
@@ -20,13 +24,42 @@
     margin-bottom: 160px;
   }
   
+  
+  .flex-parent {
+    padding: 0;
+    margin: -.5em;
+  }
+  
+  #twttr-widget {
+    width: auto;
+  }
+  
   #ctrl{
     width: auto;
     margin: 0;
     margin-top:.5em;
+    padding: .6em;
+  }
+  
+  #ctrl p {
+    padding-right: 0;
+  }
+  
+  #avvy {
+    bottom: 100%;
+    right: 0;
   }
   
   #btns {
+    position: static;
     bottom: 0;
+    display: flex;
+  }
+  
+  #btns .button {
+    flex-grow: 1;
+/*     margin-bottom: 0; */
+/*     box-shadow: none; */
+/*     border-top: 1px solid #eee; */
   }
 }
