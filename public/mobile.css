@@ -58,14 +58,22 @@
   #btns {
     position: static;
     bottom: 0;
+    width: 100%;
+    margin-top: .6em;
+    margin-bottom: -.6em;
+    display: flex;
+  }
+  
+  #btns div {
+    width: 100%;
     display: flex;
   }
   
   #btns .button {
     flex-grow: 1;
-/*     margin-bottom: 0; */
-/*     box-shadow: none; */
-/*     border-top: 1px solid #eee; */
+    margin-bottom: 0;
+    box-shadow: none;
+    border-top: 1px solid #eee;
   }
   
   .button-menu {
@@ -73,6 +81,6 @@
     left: 0;
     margin-left: 0;
     bottom: 0;
-    box-shadow: 0 -.5em
+    box-shadow: 0 -.5em .5em 0 rgba(0,0,0,.1);
   }
 }
