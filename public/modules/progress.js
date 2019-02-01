@@ -1,10 +1,13 @@
-function saveQuick(kept_ids, unfollowed_ids, store) {
+function saveQuick(kept_ids, unfollowed_ids, start_count, store) {
   store.setItem('kept_ids', JSON.stringify(kept_ids));
   store.setItem('unfollowed_ids', JSON.stringify(unfollowed_ids));
-  console.log('saved', JSON.parse(store.getItem('kept_ids')), JSON.parse(store.getItem('unfollowed_ids')));
+  store.setItem('start_count', JSON.stringify(start_count));
+  console.log('saved', JSON.parse(store.getItem('kept_ids')),
+              JSON.parse(store.getItem('unfollowed_ids')),
+             JSON.parse(store.getItem('start_count')));
 }
 
-function saveList(kept_ids, unfollowed_ids) {
+function saveList(kept_ids, unfollowed_ids, start_count) {
   return fetch('https://tokimeki-unfollow.glitch.me/data/save_progress', {
     method: 'POST',
     headers: {
@@ -13,7 +16,7 @@ function saveList(kept_ids, unfollowed_ids) {
     },
     body: JSON.stringify({
       user_ids: kept_ids.reverse().slice(0,100), // Endpoint only takes max 100, so save the latest 100
-      unfollowed_count: unfollowed_ids.length
+      start_count: start_count
     })
   }).catch(e => console.log('error', e))
     .then(res => res.json())
@@ -27,10 +30,12 @@ function saveList(kept_ids, unfollowed_ids) {
 function loadQuick(store) {
   let kept = JSON.parse(store.getItem('kept_ids'));
   let unfollowed = JSON.parse(store.getItem('unfollowed_ids'));
+  let start_count = JSON.parse(store.getItem('start_count'));
   console.log('loaded', kept, unfollowed);
   return {
     kept: kept,
-    unfollowed: unfollowed
+    unfollowed: unfollowed,
+    start_count: start_count
   };
 }
 

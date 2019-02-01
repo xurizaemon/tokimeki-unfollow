@@ -197,9 +197,9 @@ function render(res) {
       filterKeptFriends: function() {
       },
       saveProgressList: function() {
-        Progress.saveQuick(this.kept, this.unfollowed, store);
+        Progress.saveQuick(this.kept, this.unfollowed, this.user.friends_count, store);
         if (this.prefs.saveProgressAsList == false) return;
-        Progress.saveList(this.kept, this.unfollowed, store);
+        Progress.saveList(this.kept, this.unfollowed, this.user.friends_count, store);
       },
       loadProgressQuick: function() {
         return;
@@ -207,6 +207,7 @@ function render(res) {
         this.unfollowed = Progress.loadQuick(store).unfollowed || this.unfollowed;
         this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
         this.loadedProgress = (this.kept.length > 0);
+        this.start_count = Progress.loadQuick(store).unfollowed || this.unfollowed;
       },
       loadProgressList: function() {
         if (this.prefs.saveProgressAsList == false) return;
