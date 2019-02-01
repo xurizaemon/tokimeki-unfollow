@@ -99,7 +99,6 @@ router.post('/data/lists/create', (req, res) => {
 });
 
 router.post('/data/lists/members/create', (req, res) => {
-  console.log('adding to list', req.body);
   twit.post('lists/members/create', {
     list_id: req.body.list_id,
     user_id: req.body.user_id
@@ -112,8 +111,7 @@ router.post('/data/lists/members/create', (req, res) => {
 /* Saving/Loading Progress as a List */
 router.post('/data/save_progress', (req, res) => {
   if (!req.body.user_ids) res.send({ status: 500, error: 'No user ids provided.' });
-  console.log('saving', req.body.user_ids);
-
+  
   // SUPPORT MATCHING BY NAME? PULL ALL LISTS AND .FILTER FOR THE ONE WE WANT?
   twit.get('lists/show', {
     slug: PROGRESS_LIST_SLUG,
@@ -129,7 +127,7 @@ router.post('/data/save_progress', (req, res) => {
     }
   }).then((result) => {
     if (result.data.slug && result.data.slug == PROGRESS_LIST_SLUG) {
-      console.log('got list for progress saving, adding members...', result.data)
+      console.log('got list for progress saving, adding members...');
       return twit.post('lists/members/create_all', {
         slug: PROGRESS_LIST_SLUG,
         owner_id: req.session.userId,
@@ -180,7 +178,6 @@ router.get('/data/ratelimit', (req, res) => {
     resources: "friendships, user, statuses"
   }).catch(e => apiCatch(res, e))
     .then(result => {
-    console.log(result);
     res.send(result);
   })
 });

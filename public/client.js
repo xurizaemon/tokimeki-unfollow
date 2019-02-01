@@ -107,7 +107,7 @@ function render(res) {
       loadedProgress: false,
       savedProgress: false,
       introFinished: false, // RESET
-      finished: false, // RESET
+      finished: true ||false, // RESET
       showAddToListMenu: false
     },
     methods: {

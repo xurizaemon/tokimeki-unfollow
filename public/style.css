@@ -322,6 +322,11 @@ iframe.twitter-timeline {
   position: fixed;
 }
 
+.card {
+  
+  box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1);
+}
+
 .flex { display: flex }
 .flex-col { flex-direction: column }
 .fixed { position: fixed }
@@ -330,6 +335,8 @@ iframe.twitter-timeline {
 .w100 { width: 100% }
 .h100 { height: 100% }
 .overflow-hidden { overflow: hidden }
+.flt-r { float: right }
+.just-cent { justify-content: center }
 
 .bold { font-weight: bold }
 .notbold { font-weight: normal }
