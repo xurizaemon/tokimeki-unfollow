@@ -1,3 +1,10 @@
+@supports (-webkit-overflow-scrolling: touch) {
+  #twttr-widget div div {
+    overflow-y:scroll;
+    -webkit-overflow-scrolling:touch;
+  }
+}
+
 @media (min-width: 700px) {
   .lt600 {
     display: none;
@@ -35,8 +42,9 @@
     width: 100%;
   }
   
-  #twttr-widget div div {
-    -webkit-overflow-scrolling:touch;
+  #twttr-widget iframe {
+    width: 100% !important;
+    height: 100% !important;
   }
   
   .twitter-timeline {
