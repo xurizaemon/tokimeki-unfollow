@@ -9,8 +9,8 @@ body {
   font-family: monospace;
   font-size: 1.2em;
   line-height: 1.2em;
-  margin: 1em;
   background: #eee;
+  margin: 0;
 }
 
 h1, h2, h3, h4, h5, h6, p { margin-top: 0 }
@@ -39,7 +39,7 @@ button, input {
 #intro {
   background: white;
   padding: 2em;
-  margin: 0 auto;
+  margin: 1em auto;
   max-width: 640px;
   position: relative;
 }
@@ -58,10 +58,13 @@ img {
 
 .flex-parent {
   display: flex;
-  height: 100vh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   flex-direction: column;
   align-items: center;
-  margin: -1em; /* cancel body margin */
   padding: 1em;
 }
 
