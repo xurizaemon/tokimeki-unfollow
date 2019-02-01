@@ -3,7 +3,8 @@ let wdgt = Vue.component('intro', {
     return {
       order: this.initialorder,
       saveProgressAsList: this.initialsaveprogressaslist,
-      showBio: this.initialshowbio
+      showBio: this.initialshowbio,
+      showIntroText: true
     }
   },
   props: [
@@ -17,6 +18,11 @@ let wdgt = Vue.component('intro', {
   methods: {
     start: function(e) {
       this.$emit('intro-finished', [this.order, this.saveProgressAsList, this.showBio]);
+    }
+  },
+  watch: {
+    loadedprogress() {
+      this.showIntroText = !this.loadedprogress;
     }
   },
   computed: {
@@ -35,17 +41,22 @@ let wdgt = Vue.component('intro', {
       <p>
         Do you think your feed sucks because you follow too many accounts?
         You're in the right place!
+        <a href='#' @click='showIntroText = true' v-if='loadedprogress && !showIntroText' class='keepblue'>
+          Read full intro...
+        </a>
       </p>
-      <p>
-        If you're like me, you've followed a bajillion accounts over your years on Twitter dot com.
-        Some of them date back to your first days as an egg — when you were probably an entirely different human being.
-        You have some socially-obliged follow-backs sprinkled among some thought leaders you've outgrown,
-        but you've never found the energy to go through and clean up your follows.
-      </p>
-      <p>
-        Take a deep breath! Let's walk through our follows, one by one, and think about if each one still sparks joy, intrigue, inspiration,
-        or is in any way still important to you. <b>If not, hit that Unfollow button!</b>
-      </p>
+      <span v-if='showIntroText'>
+        <p>
+          If you're like me, you've followed a bajillion accounts over your years on Twitter dot com.
+          Some of them date back to your first days as an egg — when you were probably an entirely different human being.
+          You have some socially-obliged follow-backs sprinkled among some thought leaders you've outgrown,
+          but you've never found the energy to go through and clean up your follows.
+        </p>
+        <p>
+          Take a deep breath! Let's walk through our follows, one by one, and think about if each one still sparks joy, intrigue, inspiration,
+          or is in any way still important to you. <b>If not, hit that Unfollow button!</b>
+        </p>
+      </span>
       <p>
         It's hard to do this all in one go, so don't feel bad if you need to take a break.
         I'll save your progress as you go so you can pick it up again another time.
@@ -78,7 +89,8 @@ let wdgt = Vue.component('intro', {
         </p>
       </form>
       <br>
-      <button class='button block w100' v-on:click="start">Start</button>
+      <button class='button block w100 gt600' v-on:click="start">Start</button>
+      <button class='button dib lt600' v-on:click="start">Start</button>
   </div>
   `
 });

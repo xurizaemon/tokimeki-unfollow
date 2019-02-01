@@ -67,6 +67,9 @@
   #avvy {
     bottom: 100%;
     right: 0;
+  }
+  
+  #avvy, #avvy-intro {
     width: 120px;
     height: 120px;
   }
