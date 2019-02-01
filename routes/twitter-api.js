@@ -128,8 +128,8 @@ router.post('/data/save_progress', (req, res) => {
         mode: 'private',
         description: `
           DON'T DELETE! Progress for tokimeki-unfollow.glitch.me |
-          Started with: ${req.body.unfollowed_count || 0}
-        `;
+          Start count: ${req.body.start_count || 0}
+        `
       }).catch(e => apiCatch(res, e))
       .then(res => {
         if (res.status = 200) { didCreateList = true }
@@ -153,16 +153,6 @@ router.post('/data/save_progress', (req, res) => {
     }
   }).catch(e => apiCatch(res, e))
     .then((result) => {
-    if (!didCreateList && result.data.id_str) {
-      twit.post('lists/update', {
-        list_id: result.data.id_str,
-        description: listDescription
-      }).catch(e => apiCatch(res, e))
-        .then(res => {
-          if (res == 200) console.log('updated description')
-      });
-    }
-    
     apiSend(res, result, {
       list_id: result.data.id_str
     });
@@ -170,16 +160,26 @@ router.post('/data/save_progress', (req, res) => {
 });
 
 router.get('/data/load_progress', (req, res) => {
-  twit.get('lists/members', {
-    slug: PROGRESS_LIST_SLUG,
-    owner_id: req.session.userId,
-    include_entities: false,
-    count: 5000
-  }).catch(e => apiCatch(res, e)).then(result => {
-    apiSend(res, result, {
-      user_ids: result.data.users ? 
-        result.data.users.map(user => user.id_str) : []
-    });
+  Promise.all([
+    twit.get('lists/members', {
+      slug: PROGRESS_LIST_SLUG,
+      owner_id: req.session.userId,
+      include_entities: false,
+      count: 5000
+    }),
+    twit.get('lists/show', {
+      slug: PROGRESS_LIST_SLUG,
+      owner_id: req.session.userId
+    })
+  ]).catch(e => apiCatch(res, e))
+    .then(result => {
+    try {
+      apiSend(res, result[0], {
+        user_ids: result[0].data.users ? 
+          result[0].data.users.map(user => user.id_str) : [],
+        start_count: 
+      });
+    } console.log
   });
 });
 
