@@ -133,7 +133,7 @@ router.post('/data/save_progress', (req, res) => {
         description: listDescription
       }).catch(e => apiCatch(res, e))
       .then(res => {
-        if (res.status = 200) { didCreateList = true }
+        if (res.statusCode = 200) { didCreateList = true }
         return res;
       });
     }
@@ -160,7 +160,7 @@ router.post('/data/save_progress', (req, res) => {
         description: listDescription
       }).catch(e => console.log('list update error', e))
         .then(result => {
-          if (result.status == 200) console.log('updated description!')
+          if (result.statusCode == 200) console.log('updated description!')
       });
     }
     
@@ -171,20 +171,30 @@ router.post('/data/save_progress', (req, res) => {
 });
 
 router.get('/data/load_progress', (req, res) => {
-  twit.get('lists/members', {
-    slug: PROGRESS_LIST_SLUG,
-    owner_id: req.session.userId,
-    include_entities: false,
-    count: 5000
-  }).catch(e => apiCatch(res, e))
+  console.log('loading')
+  Promise.all([
+    twit.get('lists/members', {
+      slug: PROGRESS_LIST_SLUG,
+      owner_id: req.session.userId,
+      include_entities: false,
+      count: 5000
+    }),
+    twit.get('lists/show', {
+      slug: PROGRESS_LIST_SLUG,
+      owner_id: req.session.userId
+    })
+  ]).catch(e => apiCatch(res, e))
     .then(result => {
-    
-    return result;
-  }).then(result => {
-    apiSend(res, result, {
-      user_ids: result.data.users ? 
-        result.data.users.map(user => user.id_str) : []
-    });
+      console.log('got response')
+      console.log(result[1]);
+      let unfollow_count = result[1].data.description ?
+          Number(result[1].data.description.split('Unfollowed:')[1].trim()) : 0;
+
+      apiSend(res, result, {
+        unfollow_count: unfollow_count,
+        user_ids: result[0].data.users ? 
+          result[0].data.users.map(user => user.id_str) : []
+      });
   });
 });
 
