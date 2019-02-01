@@ -108,6 +108,16 @@ img {
 
 }
 
+#iframe-container {
+  overflow-y: scroll;
+  height: 100%;
+  -webkit-overflow-scrolling:touch;
+}
+
+iframe.twitter-timeline {
+  overflow: hidden;
+}
+
 /* Backup tweet rendering */
 #backup-tweets {
   padding: 0;
