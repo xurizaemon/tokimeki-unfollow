@@ -116,7 +116,7 @@ router.post('/data/save_progress', (req, res) => {
   
   let didCreateList = false,
       listDescription = `
-        Do not delete! Tracks progress on tokimeki-unfollow.glitch.me |
+        DON'T DELETE! Progress for tokimeki-unfollow.glitch.me |
         Unfollowed: ${req.body.unfollowed_count || 0}
       `;
 
@@ -155,12 +155,12 @@ router.post('/data/save_progress', (req, res) => {
   }).catch(e => apiCatch(res, e))
     .then((result) => {
     if (!didCreateList && result.data.id_str) {
-      twit.post('lists/members/create_all', {
+      twit.post('lists/update', {
         list_id: result.data.id_str,
         description: listDescription
-      }).catch(e => apiCatch(res, e))
-        .then(res => {
-          if (res == 200) console.log('updated description')
+      }).catch(e => console.log('list update error', e))
+        .then(result => {
+          if (result.status == 200) console.log('updated description!')
       });
     }
     
@@ -176,7 +176,11 @@ router.get('/data/load_progress', (req, res) => {
     owner_id: req.session.userId,
     include_entities: false,
     count: 5000
-  }).catch(e => apiCatch(res, e)).then(result => {
+  }).catch(e => apiCatch(res, e))
+    .then(result => {
+    
+    return result;
+  }).then(result => {
     apiSend(res, result, {
       user_ids: result.data.users ? 
         result.data.users.map(user => user.id_str) : []
