@@ -36,8 +36,11 @@
   }
   
   #twttr-widget div div {
-    overflow: auto;
     -webkit-overflow-scrolling:touch;
+  }
+  
+  .twitter-timeline {
+    width: 100%
   }
   
   #ctrl{
