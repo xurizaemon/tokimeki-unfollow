@@ -41,6 +41,10 @@
     margin: -.5em;
   }
   
+  .flex-bottom {
+    width: 100%;
+  }
+  
   #twttr-widget {
     width: 100%;
   }
@@ -71,18 +75,9 @@
     bottom: 0;
     width: 100%;
     margin-top: .6em;
-    display: flex;
-  }
-  
-  #btns div {
-
   }
   
   #btns .button {
-    flex-grow: 1;
-/*     margin-bottom: 0; */
-/*     box-shadow: none; */
-/*     border-top: 1px solid #eee; */
     min-width: 0;
   }
   
