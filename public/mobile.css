@@ -1,9 +1,19 @@
 @supports (-webkit-overflow-scrolling: touch) {
-  #twttr-widget div div {
-    overflow-y:scroll;
+  #twttr-widget iframe {
+    height: 9999px !important;
+  }
+  
+  #iframe-container {
+    overflow-y: scroll;
+    height: 100%;
     -webkit-overflow-scrolling:touch;
   }
 }
+
+  #twttr-widget div div {
+/*     overflow-y:scroll;
+    -webkit-overflow-scrolling:touch; */
+  }
 
 @media (min-width: 700px) {
   .lt600 {
