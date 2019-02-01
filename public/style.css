@@ -75,12 +75,13 @@ img {
   background: white;
   width: 400px;
   text-align: center;
-  overflow-y: scroll;
+/*   overflow-y: scroll; */
 /*   border: 2px solid black; */
 /*     border-radius: 2em; */
   box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1);
   transform: scale(1);
   -webkit-overflow-scrolling:touch;
+  position: relative;
 }
 
 #twttr-widget.showBio {
@@ -110,7 +111,12 @@ img {
 }
 
 #iframe-container {
-/*   overflow-y: scroll; */
+  position:absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right:0;
+  overflow-y: scroll;
 /*   height: 100%; */
 /*   -webkit-overflow-scrolling:touch; */
 }

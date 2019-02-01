@@ -36,16 +36,24 @@ let wdgt = Vue.component('twttr-widget', {
   },
   created: function() {
     this.getData(this.id);
+    
+    let updateIframeHeight = (iframe) => {
+    }
+    
     twttr.events.bind(
       'rendered',
       function (event) {
         console.log("Created widget", event.target.id);
         console.log(event.target);
         let iframe = event.target;
-        var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+        updateIframeHeight(iframe);
         let height = iframe.contentDocument.documentElement.getElementsByClassName("timeline-TweetList")[0].offsetHeight
-        iframe.style.height = height + 200;
-        iframe.scrolling = 'no';
+        iframe.style.height = height + 64;
+        // iframe.scrolling = 'no';
+        // iframe.style.overflow = 'hidden';
+        iframe.contentDocument.addEventListener('touchstart', function(e) {
+          iframe.style.height = 300
+                                                         }); // in iframe
         console.log('height', height);
       }
     );
@@ -68,8 +76,8 @@ let wdgt = Vue.component('twttr-widget', {
     this.reloadTwttrWidget();
   },
   template: `
-    <div :key='username' v-cloak class="flex flex-col">
-      <div v-if="shouldUseTwttrWidget" id="iframe-container" class="flex flex-col">
+    <div :key='username' v-cloak>
+      <div v-if="shouldUseTwttrWidget" id="iframe-container">
         <a class="twitter-timeline"
           data-width="400"
           data-height="100%"
