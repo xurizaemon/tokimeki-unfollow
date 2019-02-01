@@ -38,25 +38,35 @@ let wdgt = Vue.component('twttr-widget', {
     this.getData(this.id);
     
     let updateIframeHeight = (iframe) => {
+      let viewport = iframe.contentDocument.documentElement.getElementsByClassName("timeline-Viewport")[0];
+      viewport.style.overflow = "hidden";
+      let timeline = iframe.contentDocument.documentElement.getElementsByClassName("timeline-TweetList")[0];
+      iframe.style.height = timeline.offsetHeight + 64; // Load button height
     }
-    
     twttr.events.bind(
-      'rendered',
+      'loaded',
       function (event) {
-        console.log("Created widget", event.target.id);
-        console.log(event.target);
-        let iframe = event.target;
-        updateIframeHeight(iframe);
-        let height = iframe.contentDocument.documentElement.getElementsByClassName("timeline-TweetList")[0].offsetHeight
-        iframe.style.height = height + 64;
-        // iframe.scrolling = 'no';
-        // iframe.style.overflow = 'hidden';
-        iframe.contentDocument.addEventListener('touchstart', function(e) {
-          iframe.style.height = 300
-                                                         }); // in iframe
-        console.log('height', height);
+        event.widgets.forEach(function (widget) {
+          let iframe = widget;
+          updateIframeHeight(iframe);
+          iframe.contentDocument.addEventListener('touchend', function(e) {
+            setTimeout(() => updateIframeHeight(iframe), 1000);
+          });
+        });
       }
     );
+    
+    // twttr.events.bind(
+    //   'rendered',
+    //   function (event) {
+    //     console.log("two")
+    //     let iframe = event.target;
+    //     updateIframeHeight(iframe);
+    //     iframe.contentDocument.addEventListener('touchend', function(e) {
+    //       setTimeout(() => updateIframeHeight(iframe), 1000);
+    //     });
+    //   }
+    // );
   },
   computed: {
     href: function() {
