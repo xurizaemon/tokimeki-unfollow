@@ -43,22 +43,36 @@ let wdgt = Vue.component('twttr-widget', {
         console.log(event.target);
         let iframe = event.target;
         var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-        if (iframeWin.document.body) {
-          iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-        }
-        console.log(iframe.height)
-        console.log(iframeWin)
-        console.log(iframeWin.document.documentElement.scrollHeight)
+        // if (iframeWin.document.body) {
+        //   iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+        // }
+        // console.log(iframe.height)
+        // console.log(iframeWin)
+        // console.log(iframeWin.document.documentElement.scrollHeight)
       }
     );
     
+    
+      twttr.events.bind(
+        'click',
+        function (event) {
+          console.log('click');
+          console.log(event.target);
+          
+        }
+      );
       twttr.events.bind(
         'loaded',
         function (event) {
           event.widgets.forEach(function (widget) {
             console.log("Created widget", widget.id);
-            console.log(widget.height)    
-            console.log(widget)
+            console.log(widget.contentWindow.document.body.offsetHeight)
+            console.log(widget.contentWindow.document.body)
+            setTimeout(()=> {
+              console.log('delayed')
+              console.log(widget.contentWindow.document.body.offsetHeight)
+              console.log(widget.contentWindow.document.body)
+            }, 1000);
           });
         }
       );
