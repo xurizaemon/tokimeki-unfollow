@@ -68,8 +68,8 @@ let wdgt = Vue.component('twttr-widget', {
     this.reloadTwttrWidget();
   },
   template: `
-    <div :key='username' v-cloak class="flex">
-      <div v-if="shouldUseTwttrWidget" id="iframe-container" class="flex">
+    <div :key='username' v-cloak class="flex flex-col">
+      <div v-if="shouldUseTwttrWidget" id="iframe-container" class="flex flex-col">
         <a class="twitter-timeline"
           data-width="400"
           data-height="100%"
