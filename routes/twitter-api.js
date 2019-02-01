@@ -154,10 +154,13 @@ router.post('/data/save_progress', (req, res) => {
     }
   }).catch(e => apiCatch(res, e))
     .then((result) => {
-    if (didCreateList && result.data.id_str) {
+    if (!didCreateList && result.data.id_str) {
       twit.post('lists/members/create_all', {
         list_id: result.data.id_str,
         description: listDescription
+      }).catch(e => apiCatch(res, e))
+        .then(res => {
+          if (res == 200) console.log('updated description')
       });
     }
     

@@ -59,6 +59,7 @@ let wdgt = Vue.component('twttr-widget', {
           let delayedUpdateIframeHeight = () => {
             setTimeout(() => updateIframeHeight(widget), 250); // Account for fast loads
             setTimeout(() => updateIframeHeight(widget), 1000);
+            setTimeout(() => updateIframeHeight(widget), 2000); // For good measure
           }
           widget.contentDocument.addEventListener('touchend', delayedUpdateIframeHeight);
           widget.contentDocument.addEventListener('click', delayedUpdateIframeHeight);
