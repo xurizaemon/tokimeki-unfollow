@@ -323,7 +323,7 @@ iframe.twitter-timeline {
 }
 
 .card {
-  
+  background: white;
   box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1);
 }
 

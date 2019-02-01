@@ -55,9 +55,14 @@ function createList(name, isPrivate) {
   });
 }
 
-
 function getLists(userId) {
   return fetch('https://tokimeki-unfollow.glitch.me/data/lists/ownerships')
+    .catch(e => showUserError(e))
+    .then(res => res.json());
+}
+
+function getKeptPics() {
+  return fetch('https://tokimeki-unfollow.glitch.me/data/lists/load_progress_pics')
     .catch(e => showUserError(e))
     .then(res => res.json());
 }
@@ -71,4 +76,4 @@ function showUserError(e) {
   }
 }
 
-export { addToList, createList, getLists, unfollow, follow };
+export { addToList, createList, getLists, unfollow, follow, getKeptPics };

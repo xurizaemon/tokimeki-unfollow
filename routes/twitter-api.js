@@ -173,6 +173,22 @@ router.get('/data/load_progress', (req, res) => {
   });
 });
 
+
+router.get('/data/load_progress_pics', (req, res) => {
+  twit.get('lists/members', {
+    slug: PROGRESS_LIST_SLUG,
+    owner_id: req.session.userId,
+    include_entities: false,
+    count: 5000
+  }).catch(e => apiCatch(res, e))
+    .then(result => {
+    apiSend(res, result, {
+      pics: result.data.users ? 
+        result.data.users.map(user => user.profile_image_url_https) : []
+    });
+  });
+});
+
 router.get('/data/ratelimit', (req, res) => {
   twit.get('application/rate_limit_status', {
     resources: "friendships, user, statuses"
