@@ -2,7 +2,8 @@ import { getKeptPics } from '../modules/data.js';
 let finish = Vue.component('finish', {
   data: function() {
     return {
-      kept_pics: []
+      kept_pics: [],
+      
     }
   },
   props: [
@@ -20,8 +21,8 @@ let finish = Vue.component('finish', {
     }
   },
   watch: {
-    loadedprogress() {
-      this.showIntroText = !this.loadedprogress;
+    kept_pics() {
+      // this.kept_pics_x_pos = ;
     }
   },
   created() {
@@ -29,9 +30,9 @@ let finish = Vue.component('finish', {
   },
   template: ` 
     <div class="flex-parent">
-      <div v-for="pic in kept_pics">
-        <img src={{ pic }}>
-Poop
+      <div v-for="pic, i in kept_pics" class="snowflake card circle"
+        :style="kept_pics_styles[i]">
+        <img :src="pic">
       </div>
       <div class="flex-top flex flex-col just-cent">
         <div id="intro" class="card">

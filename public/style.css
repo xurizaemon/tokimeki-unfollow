@@ -327,6 +327,11 @@ iframe.twitter-timeline {
   box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1);
 }
 
+.circle {
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
 .flex { display: flex }
 .flex-col { flex-direction: column }
 .fixed { position: fixed }
@@ -355,3 +360,35 @@ a.keepblue:visited { color: blue }
 a:hover { text-decoration: none }
 .nodec { text-decoration: none }
 a.nodec:hover { text-decoration: underline }
+
+/* animations */
+
+/* snowfall: http://pajasevi.github.io/CSSnowflakes/ */
+@keyframes snowflakes-fall {
+  0% {
+    top: -10%
+  }
+  100% {
+    top: 100%
+  }
+}
+@keyframes snowflakes-shake {
+  0%, 100%{
+    transform: translateX(0)
+  }
+  50%{
+    transform: translateX(80px)
+  }
+}
+
+.snowflake {
+  position:fixed;
+  top:-10%;
+  z-index:9999;
+  user-select:none;
+  animation-name: snowflakes-fall, snowflakes-shake;
+  animation-duration:10s,3s;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  animation-play-state: running, running
+}
