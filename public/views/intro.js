@@ -41,7 +41,7 @@ let wdgt = Vue.component('intro', {
       <p>
         Do you think your feed sucks because you follow too many accounts?
         You're in the right place!
-        <a href='#' @click='showIntroText = true' v-if='loadedprogress && !showIntroText' class='keepblue'>
+        <a href='#' @click='showIntroText = true' v-if='loadedprogress && !showIntroText' class='gray'>
           Read full intro...
         </a>
       </p>
@@ -89,7 +89,7 @@ let wdgt = Vue.component('intro', {
         </p>
       </form>
       <br>
-      <button class='button block w100 gt600' v-on:click="start">Start</button>
+      <button class='button w100 gt600' v-on:click="start">Start</button>
       <button class='button dib lt600' v-on:click="start">Start</button>
   </div>
   `
