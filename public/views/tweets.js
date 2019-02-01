@@ -44,7 +44,7 @@ let wdgt = Vue.component('twttr-widget', {
         let iframe = event.target;
         var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
         let height = iframe.contentDocument.documentElement.getElementsByClassName("timeline-TweetList")[0].offsetHeight
-        iframe.style.height = height + 64;
+        iframe.style.height = height + 200;
         iframe.scrolling = 'no';
         console.log('height', height);
       }
@@ -68,8 +68,8 @@ let wdgt = Vue.component('twttr-widget', {
     this.reloadTwttrWidget();
   },
   template: `
-    <div :key='username' v-cloak>
-      <div v-if="shouldUseTwttrWidget" id="iframe-container">
+    <div :key='username' v-cloak class="flex">
+      <div v-if="shouldUseTwttrWidget" id="iframe-container" class="flex">
         <a class="twitter-timeline"
           data-width="400"
           data-height="100%"

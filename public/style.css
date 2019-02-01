@@ -110,7 +110,7 @@ img {
 
 #iframe-container {
   overflow-y: scroll;
-  height: 100%;
+/*   height: 100%; */
   -webkit-overflow-scrolling:touch;
 }
 
@@ -315,6 +315,7 @@ iframe.twitter-timeline {
 .dib { display: inline-block }
 .block { display: block }
 .w100 { width: 100% }
+.h100 { height: 100% }
 
 .bold { font-weight: bold }
 .notbold { font-weight: normal }
