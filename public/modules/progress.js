@@ -1,7 +1,9 @@
 function saveQuick(kept_ids, unfollowed_ids, start_count, store) {
   store.setItem('kept_ids', JSON.stringify(kept_ids));
   store.setItem('unfollowed_ids', JSON.stringify(unfollowed_ids));
-  store.setItem('start_count', JSON.stringify(start_count));
+  if (start_count > JSON.parse(store.getItem('start_count'))){
+    store.setItem('start_count', JSON.stringify(start_count));
+  }
   console.log('saved', JSON.parse(store.getItem('kept_ids')),
               JSON.parse(store.getItem('unfollowed_ids')),
              JSON.parse(store.getItem('start_count')));

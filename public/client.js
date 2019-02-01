@@ -87,6 +87,7 @@ function render(res) {
     data: {
       sel: 0,
       user: dataDefaults.user,
+      start_count: dataDefaults.user.friends_count,
       friends: dataDefaults.friends,
       friendsFiltered: dataDefaults.friends,
       friend: dataDefaults.friend,
@@ -194,20 +195,20 @@ function render(res) {
         this.kept.pop(); // this seems risky since we are not verifiying if it's there or not
         console.log('unkept', this.kept);
       },
-      filterKeptFriends: function() {
-      },
       saveProgressList: function() {
-        Progress.saveQuick(this.kept, this.unfollowed, this.user.friends_count, store);
+        Progress.saveQuick(this.kept, this.unfollowed, this.start_count, store);
         if (this.prefs.saveProgressAsList == false) return;
-        Progress.saveList(this.kept, this.unfollowed, this.user.friends_count, store);
+        Progress.saveList(this.kept, this.unfollowed, this.start_count, store);
       },
       loadProgressQuick: function() {
-        return;
-        this.kept = Progress.loadQuick(store).kept || this.kept;
-        this.unfollowed = Progress.loadQuick(store).unfollowed || this.unfollowed;
+        let load = Progress.loadQuick(store);
+        this.kept = load.kept || this.kept;
+        this.unfollowed = load.unfollowed || this.unfollowed;
         this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
         this.loadedProgress = (this.kept.length > 0);
-        this.start_count = Progress.loadQuick(store).unfollowed || this.unfollowed;
+        if (load.start_count > this.start_count) {
+          this.start_count = load.start_count || this.start_count;
+        }
       },
       loadProgressList: function() {
         if (this.prefs.saveProgressAsList == false) return;
@@ -219,6 +220,7 @@ function render(res) {
               this.kept = this.kept.concat(res.data.user_ids.filter((id, i) => this.kept.indexOf(id) < 0));
               this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
               this.loadedProgress = (this.kept.length > 0);
+              this.start_count = res.data.start_count || this.start_count;
             }
         });
       },

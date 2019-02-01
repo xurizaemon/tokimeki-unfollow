@@ -113,8 +113,6 @@ router.post('/data/lists/members/create', (req, res) => {
 router.post('/data/save_progress', (req, res) => {
   if (!req.body.user_ids) res.send({ status: 500, error: 'No user ids provided.' });
   console.log('saving', req.body.user_ids);
-  
-  let didCreateList = false;
 
   // SUPPORT MATCHING BY NAME? PULL ALL LISTS AND .FILTER FOR THE ONE WE WANT?
   twit.get('lists/show', {
@@ -126,15 +124,8 @@ router.post('/data/save_progress', (req, res) => {
       return twit.post('lists/create', {
         name: PROGRESS_LIST_SLUG,
         mode: 'private',
-        description: `
-          DON'T DELETE! Progress for tokimeki-unfollow.glitch.me |
-          Start count: ${req.body.start_count || 0}
-        `
-      }).catch(e => apiCatch(res, e))
-      .then(res => {
-        if (res.status = 200) { didCreateList = true }
-        return res;
-      });
+        description: `DON'T DELETE! Progress for tokimeki-unfollow.glitch.me | Starting follows: ${req.body.start_count || 0}`
+      }).catch(e => apiCatch(res, e));
     }
   }).then((result) => {
     if (result.data.slug && result.data.slug == PROGRESS_LIST_SLUG) {
