@@ -36,7 +36,7 @@ let wdgt = Vue.component('twttr-widget', {
   },
   created: function() {
     if (this.private) this.fetchTweets(this.id);
-    return;
+
     // A Huge Hack to "support" iframes for iOS devices
     // On widget load, set iframe height manually to timeline height
     // To support [Load More] button, adjust height on every touch/click event
