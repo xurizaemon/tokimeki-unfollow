@@ -15,8 +15,9 @@
           <br><br>
         <h2>
         <center>
+          You started with {{ start_count }} follows!
         <p>
-        <strong>{{ unfollowed.length }}</strong> unfollowed
+        <strong>{{ start_count - kept.length }}</strong> unfollowed
         </p>
           <span v-if="addedToList.length > 0">
           <p>

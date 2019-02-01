@@ -16,6 +16,15 @@ app.set('view engine', 'pug');
 app.use(require('./routes/twitter-api'));
 app.use(require('./routes/twitter-login'));
 
+// Force HTTPS so fetches work
+app.enable('trust proxy');
+app.use((req, res, next) => {
+  if (req.secure) {
+    return next();
+  }
+  res.redirect('https://' + req.headers.host + req.url);
+});
+
 // Main page
 app.get('/', function(req, res) {
   if (validateSession(req.session)) {
