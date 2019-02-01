@@ -36,6 +36,32 @@ let wdgt = Vue.component('twttr-widget', {
   },
   created: function() {
     this.getData(this.id);
+    twttr.events.bind(
+      'rendered',
+      function (event) {
+        console.log("Created widget", event.target.id);
+        console.log(event.target);
+        let iframe = event.target;
+        var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+        if (iframeWin.document.body) {
+          iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+        }
+        console.log(iframe.height)
+        console.log(iframeWin)
+        console.log(iframeWin.document.documentElement.scrollHeight)
+      }
+    );
+    
+      twttr.events.bind(
+        'loaded',
+        function (event) {
+          event.widgets.forEach(function (widget) {
+            console.log("Created widget", widget.id);
+            console.log(widget.height)    
+            console.log(widget)
+          });
+        }
+      );
   },
   computed: {
     href: function() {
