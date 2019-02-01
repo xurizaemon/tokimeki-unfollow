@@ -3,7 +3,7 @@ let express = require('express');
 let router = express.Router();
 
 let twit;
-const PROGRESS_LIST_SLUG = 'tokimekitest3'; // TODO update this back to tokimekiunfollow
+const PROGRESS_LIST_SLUG = 'tokimekitest2'; // TODO update this back to tokimekiunfollow
 
 // Middleware restore session for all /data calls
 router.use('/data', restoreSession);

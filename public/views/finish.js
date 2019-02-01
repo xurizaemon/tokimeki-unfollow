@@ -3,7 +3,7 @@ let finish = Vue.component('finish', {
   data: function() {
     return {
       kept_pics: [],
-      
+      kept_pics_styles: []
     }
   },
   props: [
@@ -22,7 +22,13 @@ let finish = Vue.component('finish', {
   },
   watch: {
     kept_pics() {
-      // this.kept_pics_x_pos = ;
+      this.kept_pics_styles = [];
+      for (let i = 0; i < this.kept_pics.length; i++) {
+        this.kept_pics_styles.push({
+          left: Math.random() * 100,
+          'animation-delay': `${Math.random() * 10}s, ${Math.random() * 10}s`
+        });
+      }
     }
   },
   created() {
@@ -30,8 +36,8 @@ let finish = Vue.component('finish', {
   },
   template: ` 
     <div class="flex-parent">
-      <div v-for="pic, i in kept_pics" class="snowflake card circle"
-        :style="kept_pics_styles[i]">
+      <div v-for="pic, i in kept_pics"
+        class="snowflake card circle" :style="kept_pics_styles[i]">
         <img :src="pic">
       </div>
       <div class="flex-top flex flex-col just-cent">
