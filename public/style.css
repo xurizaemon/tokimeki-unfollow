@@ -83,7 +83,7 @@ img {
 /*     border-radius: 2em; */
   box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1);
   transform: scale(1);
-  -webkit-overflow-scrolling:touch;
+/*   -webkit-overflow-scrolling:touch; */
   position: relative;
 }
 
