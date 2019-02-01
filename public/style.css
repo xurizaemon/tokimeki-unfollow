@@ -93,6 +93,7 @@ img {
 
 #twttr-widget.faded {
   opacity: 0;
+  pointer-events: none;
 }
 
 #twttr-widget.unfollowed {
