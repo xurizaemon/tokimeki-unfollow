@@ -24,9 +24,10 @@ let finish = Vue.component('finish', {
     kept_pics() {
       this.kept_pics_styles = [];
       for (let i = 0; i < this.kept_pics.length; i++) {
+        let delay = Math.random() * 10;
         this.kept_pics_styles.push({
-          left: Math.random() * 100,
-          'animation-delay': `${Math.random() * 10}s, ${Math.random() * 10}s`
+          left: `${Math.random() * 100}%`,
+          'animation-delay': `${delay}s, ${delay - Math.random() * 3}s`
         });
       }
     }
@@ -67,7 +68,7 @@ let finish = Vue.component('finish', {
           <br>
           <p>
             <strong class="flt-r">{{ keptcount }}</strong>
-            Follows Today
+            Now Following
           </p>
             </h3>
         </div>
