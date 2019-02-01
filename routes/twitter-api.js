@@ -112,8 +112,13 @@ router.post('/data/lists/members/create', (req, res) => {
 /* Saving/Loading Progress as a List */
 router.post('/data/save_progress', (req, res) => {
   if (!req.body.user_ids) res.send({ status: 500, error: 'No user ids provided.' });
-  let prevMemberCount = 0;
   console.log('saving', req.body.user_ids);
+  
+  let didCreateList = false,
+      listDescription = `
+        Do not delete! Tracks progress on tokimeki-unfollow.glitch.me |
+        Unfollowed: ${req.body.unfollowed_count || 0}
+      `;
 
   // SUPPORT MATCHING BY NAME? PULL ALL LISTS AND .FILTER FOR THE ONE WE WANT?
   twit.get('lists/show', {
@@ -125,8 +130,12 @@ router.post('/data/save_progress', (req, res) => {
       return twit.post('lists/create', {
         name: PROGRESS_LIST_SLUG,
         mode: 'private',
-        description: 'Tracks progress on Tokimeki Unfollow. These are the accounts marked to be kept.'
+        description: listDescription
       }).catch(e => apiCatch(res, e))
+      .then(res => {
+        if (res.status = 200) { didCreateList = true }
+        return res;
+      });
     }
   }).then((result) => {
     if (result.data.slug && result.data.slug == PROGRESS_LIST_SLUG) {
@@ -145,6 +154,13 @@ router.post('/data/save_progress', (req, res) => {
     }
   }).catch(e => apiCatch(res, e))
     .then((result) => {
+    if (didCreateList && result.data.id_str) {
+      twit.post('lists/members/create_all', {
+        list_id: result.data.id_str,
+        description: listDescription
+      });
+    }
+    
     apiSend(res, result, {
       list_id: result.data.id_str
     });
