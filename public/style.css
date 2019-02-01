@@ -117,8 +117,7 @@ img {
   left: 0;
   right:0;
   overflow-y: scroll;
-/*   height: 100%; */
-/*   -webkit-overflow-scrolling:touch; */
+  -webkit-overflow-scrolling:touch;
 }
 
 iframe.twitter-timeline {
@@ -129,8 +128,12 @@ iframe.twitter-timeline {
 #backup-tweets {
   padding: 0;
   margin: 0;
-/*   height: 100%;
-  overflow-y: scroll; */
+  position:absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right:0;
+  overflow-y: scroll;
 }
 .backup-tweet {
   text-align: left;
