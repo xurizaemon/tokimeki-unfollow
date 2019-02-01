@@ -7,7 +7,11 @@
   </head>
   <body>
     <div id="app" v-cloak>
-      <finish v-if="finished"></finish>
+      <finish v-if="finished"
+        v-bind:startcount="start_count"
+        v-bind:keptcount="kept.length"
+        v-bind:listcount="addedToList.length"
+        ></finish>
       <intro
         v-else-if="introFinished == false"
         v-on:intro-finished="introFinished = true; updatePrefs($event)"

@@ -25,11 +25,6 @@ let wdgt = Vue.component('intro', {
       this.showIntroText = !this.loadedprogress;
     }
   },
-  computed: {
-    href: function() {
-      return ''
-    }
-  },
   template: ` 
     <div id='intro' v-cloak>
       <div id="avvy-intro" class="fixed"></div>

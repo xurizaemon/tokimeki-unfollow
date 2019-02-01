@@ -1,21 +1,20 @@
-let wdgt = Vue.component('intro', {
+import { getKeptPics } from '../modules/data.js';
+let finish = Vue.component('finish', {
   data: function() {
     return {
       kept_pics: []
     }
   },
   props: [
-    'username',
-    'followingcount',
-    'loadedprogress',
-    'initialorder',
-    'initialsaveprogressaslist',
-    'initialshowbio'
+    'startcount',
+    'keptcount',
+    'listcount'
   ],
   methods: {
-    fetchPics: function(e) {
-      Data.getKeptPics()
+    fetchPics: function() {
+      getKeptPics()
         .then(res => {
+        console.log(res)
         this.kept_pics = res.data.pics;
       });
     }
@@ -25,23 +24,23 @@ let wdgt = Vue.component('intro', {
       this.showIntroText = !this.loadedprogress;
     }
   },
-  computed: {
-    href: function() {
-      return ''
-    }
+  created() {
+    this.fetchPics();
   },
   template: ` 
     <div class="flex-parent">
+      <div v-for="pic in kept_pics">
+        <img src={{ pic }}>
+Poop
+      </div>
       <div class="flex-top flex flex-col just-cent">
         <div id="intro" class="card">
           <h1>
             Tokimeki Complete!
           </h1>
           <h3>
-
-
           <p>
-            You started with <strong>{{ start_count }}</strong> follows...
+            You started with <strong>{{ startcount }}</strong> follows...
           </p>
           <br>
           <p class="gray">
@@ -49,18 +48,18 @@ let wdgt = Vue.component('intro', {
             </p>
           <p>
             Unfollowed
-            <strong class="flt-r">{{ start_count - kept.length }}</strong>
+            <strong class="flt-r">{{ startcount - keptcount }}</strong>
           </p>
-          <span v-if="addedToList.length > 0">
+          <span v-if="listcount > 0">
             <p>
-              <strong class="flt-r">{{ addedToList.length }}</strong>
+              <strong class="flt-r">{{ listcount }}</strong>
               Added to list
             </p>
           </span>
           <hr>
           <br>
           <p>
-            <strong class="flt-r">{{ kept.length }}</strong>
+            <strong class="flt-r">{{ keptcount }}</strong>
             Follows Today
           </p>
             </h3>

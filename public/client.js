@@ -1,6 +1,7 @@
 import * as Intro from './views/intro.js';
 import * as Tweets from './views/tweets.js';
 import * as Tweet from './views/tweet.js';
+import * as Finish from './views/finish.js';
 import * as AddToList from './views/addToList.js';
 import * as Data from './modules/data.js';
 import * as Progress from './modules/progress.js';
