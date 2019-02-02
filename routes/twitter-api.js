@@ -3,7 +3,7 @@ let express = require('express');
 let router = express.Router();
 
 let twit;
-const PROGRESS_LIST_SLUG = 'tokimeki_progress';
+const PROGRESS_LIST_SLUG = 'tokimeki-test4';
 
 // Middleware restore session for all /data calls
 router.use('/data', restoreSession);
@@ -126,8 +126,9 @@ router.post('/data/save_progress', (req, res) => {
       }).catch(e => apiCatch(res, e));
     }
   }).then((result) => {
+    console.log(result.data.id_str);
     if (result.data.slug && result.data.slug == PROGRESS_LIST_SLUG) {
-      console.log('got list for progress saving, adding members...');
+      console.log('got list for progress saving, adding members...', req.body.user_ids.join(','));
       return twit.post('lists/members/create_all', {
         slug: PROGRESS_LIST_SLUG,
         owner_id: req.session.userId,
