@@ -78,10 +78,12 @@ img {
   box-shadow: .5em .5em 1em 0 rgba(0,0,0,.1);
   transform: scale(1);
   position: relative;
+  transition: transform .25s ease, opacity .25s;
 }
 
 #twttr-widget.loading {
   transform: scale(0);
+  transition: none;
 }
 
 #twttr-widget.faded {

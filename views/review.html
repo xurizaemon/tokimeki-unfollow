@@ -44,7 +44,7 @@
                   Welcome back! I've loaded your progress from last time, when you 
                   kept {{ kept.length }} accounts that were important to you.
                 </p>
-                <p class="small-screen-pad-r">
+                <p>
                   <strong>Let's get started on the {{ friends.length }} accounts left!</strong>
                 </p>
                 <div id="btns">
@@ -57,7 +57,6 @@
                   <strong>{{ friend.name }}</strong>
                   for all the tweets you've enjoyed before.
                 </p>
-                <br>
                 <div id="btns">
                   <a href="#" v-on:click="follow" class="button dib">Undo</a>
                   <a href="#" v-on:click="next" class="button dib">Next</a>
@@ -69,7 +68,6 @@
                   <strong>{{ friend.name }}</strong>'s
                   tweets are still important to you. 
                 </p>
-                <br>
                 <div id="btns">
                   <a href="#" v-on:click="unkeep" class="button dib">Undo</a>
                   <a href="#" v-on:click="next" class="button dib">Next</a>
@@ -84,7 +82,7 @@
                       <strong>{{ friend.name }}</strong>
                       to <strong>{{ lastAddedToList }}!</strong>
                     </p>
-                    <p class="small-screen-pad-r">
+                    <p>
                       Did you know? You can still view someone's tweets in a list even if you don't follow them.
                     </p>
                   </span>
@@ -103,7 +101,7 @@
                         <a href="#" v-on:click="showBio = false" class="keepblue">Hide bio</a>
                       </span>
                     </p>
-                    <p class="small-screen-pad-r">
+                    <p>
                       Do the tweets still spark joy or feel important to you?
                     </p>
                   </span>

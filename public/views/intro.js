@@ -34,13 +34,13 @@ let wdgt = Vue.component('intro', {
         <span v-else>Hello,</span>
         @{{ username }}! Let's konmari those {{followingcount}} accounts you're following ~_~
       </h1>
-      <p v-if='loadedprogress'>
+      <!--<p v-if='loadedprogress'>
         <center>
         <a href='#' @click='showIntroText = true' v-if='loadedprogress && !showIntroText' class='gray'>
           Read intro again ▼
         </a>
         </center>
-      </p>
+      </p>-->
       <span v-if='showIntroText'>
         <p>
           Do you think your feed sucks because you follow too many accounts?
