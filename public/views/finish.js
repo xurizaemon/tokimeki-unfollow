@@ -26,7 +26,7 @@ let finish = Vue.component('finish', {
       for (let i = 0; i < this.kept_pics.length; i++) {
         let delay = Math.random() * 10;
         this.kept_pics_styles.push({
-          left: `${Math.random() * 100}%`,
+          left: `${(Math.random() * 110) - 10}%`,
           'animation-delay': `${delay}s, ${delay - Math.random() * 3}s`,
           'z-index': `${Math.random() > .5 ? 1 : -1}`
         });
@@ -43,7 +43,7 @@ let finish = Vue.component('finish', {
         <img :src="pic">
       </div>
       <div class="flex-top flex flex-col just-cent">
-        <div id="intro" class="card">
+        <div id="intro" class="card" style="min-width: 320px">
           <h1>
 <center>
             Tokimeki Complete!

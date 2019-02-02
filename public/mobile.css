@@ -50,7 +50,8 @@
   }
   
   #avvy {
-    bottom: 100%;
+/*     bottom: 100%; */
+    bottom: 0;
     right: 0;
   }
   
