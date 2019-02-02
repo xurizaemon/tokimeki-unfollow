@@ -134,11 +134,11 @@ router.post('/data/save_progress', (req, res) => {
         user_id: req.body.user_ids[0]
       });
     } else {
-      // throw {
-      //   status: 404,
-      //   errorCode: 69,
-      //   error: `Couldn't get list matching slug ${PROGRESS_LIST_SLUG}, got ${result.data.slug} instead.`
-      // };
+      throw {
+        status: 404,
+        errorCode: 69,
+        error: `Couldn't get list matching slug ${PROGRESS_LIST_SLUG}, got ${result.data.slug} instead.`
+      };
     }
   }).catch(e => apiCatch(res, e))
     .then((result) => {
