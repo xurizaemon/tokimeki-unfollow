@@ -108,7 +108,7 @@
                     </p>
                   </span>
                   <div id="btns">
-                <a href="#" v-on:click="prev" class="button dib"><-</a>
+<!--                 <a href="#" v-on:click="prev" class="button dib"><-</a> -->
                     <div v-if="!showAddToListMenu">
                       <button v-on:click="unfollow" class="button dib">Unfollow</button>
                       <button v-on:click="showAddToListMenu = true" class="button dib">
@@ -123,7 +123,7 @@
                       v-on:create-list="createList($event)"
                       v-on:close-menu="showAddToListMenu = false"
                       v-bind:lists="lists"></add-to-list-menu>
-                <a href="#" v-on:click="next" class="button dib">-></a>
+<!--                 <a href="#" v-on:click="next" class="button dib">-></a> -->
                   </div>
                 </span>
               </div>
