@@ -4,7 +4,7 @@ let wdgt = Vue.component('intro', {
       order: this.initialorder,
       saveProgressAsList: this.initialsaveprogressaslist,
       showBio: this.initialshowbio,
-      showIntroText: true
+      showIntroText: false
     }
   },
   props: [
@@ -34,13 +34,15 @@ let wdgt = Vue.component('intro', {
         @{{ username }}! Let's konmari those {{followingcount}} accounts you're following ~_~
       </h1>
       <p>
-        Do you think your feed sucks because you follow too many accounts?
-        You're in the right place!
         <a href='#' @click='showIntroText = true' v-if='loadedprogress && !showIntroText' class='gray'>
-          Read full intro...
+          ▼ Read introduction again
         </a>
       </p>
-      <span v-if='showIntroText'>
+      <p v-if='showIntroText'>
+        <p>
+          Do you think your feed sucks because you follow too many accounts?
+          You're in the right place!
+        </p>
         <p>
           If you're like me, you've followed a bajillion accounts over your years on Twitter dot com.
           Some of them date back to your first days as an egg — when you were probably an entirely different human being.
@@ -51,7 +53,11 @@ let wdgt = Vue.component('intro', {
           Take a deep breath! Let's walk through our follows, one by one, and think about if each one still sparks joy, intrigue, inspiration,
           or is in any way still important to you. <b>If not, hit that Unfollow button!</b>
         </p>
-      </span>
+        <hr>
+      </p>
+      <div>
+        <p v-for="type in followTypes" class="card">{{type}}</p>
+</div>
       <p>
         It's hard to do this all in one go, so don't feel bad if you need to take a break.
         I'll save your progress as you go so you can pick it up again another time.
@@ -84,8 +90,8 @@ let wdgt = Vue.component('intro', {
         </p>
       </form>
       <br>
-      <button class='button w100 gt600' v-on:click="start">Start</button>
-      <button class='button dib lt600' v-on:click="start">Start</button>
+      <button class='button w100 big-screen' v-on:click="start">Start</button>
+      <button class='button dib small-screen' v-on:click="start">Start</button>
   </div>
   `
 });
