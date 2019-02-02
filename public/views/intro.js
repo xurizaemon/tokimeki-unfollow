@@ -57,11 +57,8 @@ let wdgt = Vue.component('intro', {
           or is in any way still important to you. <b>If not, hit that Unfollow button!</b>
         </p>
         <hr>
-        <br>Z
+        <br>
       </span>
-      <div>
-        <p v-for="type in followTypes" class="card">{{type}}</p>
-</div>
       <p>
         It's hard to do this all in one go, so don't feel bad if you need to take a break.
         I'll save your progress as you go so you can pick it up again another time.

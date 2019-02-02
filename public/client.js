@@ -61,7 +61,7 @@ function invalidateStore(store) {
   let updated = store.getItem('updated');
   if (updated === null) { return true }
   if (new Date() - new Date(updated) >
-      5 * 60 * 1000) { 
+      5 * 60 * 1000) {
     console.log('More than 5 minutes since last update');
     return true;
   }
@@ -210,6 +210,7 @@ function render(res) {
         if (load.start_count > this.start_count) {
           this.start_count = load.start_count || this.start_count;
         }
+        if (this.friendsFiltered.length == 0) this.finished = true;
       },
       loadProgressList: function() {
         if (this.prefs.saveProgressAsList == false) return;
@@ -222,6 +223,7 @@ function render(res) {
               this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
               this.loadedProgress = (this.kept.length > 0);
               this.start_count = res.data.start_count || this.start_count;
+              if (this.friendsFiltered.length == 0) this.finished = true;
             }
         });
       },

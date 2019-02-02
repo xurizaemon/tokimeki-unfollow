@@ -52,7 +52,7 @@ let finish = Vue.component('finish', {
         <img :src="pic">
       </div>
       <div class="flex-top flex flex-col just-cent">
-        <div id="intro" class="card" style="min-width: 320px; margin: 1.2em;">
+        <div id="intro" class="card" style="min-width: 320px; margin: 2em auto; padding: 1.6em;">
           <h1>
             <center>
             Tokimeki Complete!
@@ -95,7 +95,7 @@ let finish = Vue.component('finish', {
               Come back if you ever feel like it's getting out of control again.
             </p>
             <p>
-              If this tool was useful, please share it & consider donating to
+              If this tool was useful, please share it with your friends & consider donating to
               <a href="http://susiesseniordogs.com/" target="_blank" class="keepblue">
                 Susie's Senior Dogs</a>!
             </p>
