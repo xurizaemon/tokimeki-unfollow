@@ -20,6 +20,20 @@ let wdgt = Vue.component('twttr-widget', {
           }
         });
     },
+    createTwitterWidget() {
+      twttr.widgets.createTimeline({
+        sourceType: 'profile',
+        screenName: this.username
+      },
+      document.getElementById('iframe-container'),
+      {
+        width: '400',
+        height: '100%',
+        chrome: 'noheader noscrollbar nofooter noborders'
+      }).then(function (el) {
+        console.log('Embedded a timeline.')
+    });
+    },
     reloadTwttrWidget() {
       if (twttr) twttr.widgets.load();
     },
@@ -34,7 +48,16 @@ let wdgt = Vue.component('twttr-widget', {
       if (this.private) this.fetchTweets(this.id);
     }
   },
+  mounted: function() {
+    // this.reloadTwttrWidget();
+    // this.createTwitterWidget();
+  },
+  updated: function() {
+    // this.reloadTwttrWidget();
+    if (!this.private) this.createTwitterWidget();
+  },
   created: function() {
+    // this.createTwitterWidget();
     if (this.private) this.fetchTweets(this.id);
 
     // A Huge Hack to "support" iframes for iOS devices
@@ -78,25 +101,20 @@ let wdgt = Vue.component('twttr-widget', {
       return this.twttrScriptLoaded && this.private === false;
     }
   },
-  mounted: function() {
-    this.reloadTwttrWidget();
-  },
-  updated: function() {
-    this.reloadTwttrWidget();
-  },
   template: `
     <div :key='username' v-cloak>
       <div v-if="shouldUseTwttrWidget" id="iframe-container">
-        <a class="twitter-timeline"
+        <!--<a class="twitter-timeline"
           data-width="400"
           data-height="100%"
           data-dnt="true"
           data-theme="light"
           data-chrome="nofooter noheader"
-          v-bind:href="href">Loading tweets by {{ username }}...</a>
+          v-bind:href="href">Loading tweets by {{ username }}...</a>-->
       </div>
       <div v-else>
         <ol id="backup-tweets">
+          <div class="backup-tweets-banner">Private user, using backup rendering</div>
           <div v-if="tweets.length == 0">Loading tweets by @{{ username }}...</div>
           <li v-for='t in tweets' :key="t.id_str">
             <tweet v-bind:tweet="tweetOrRT(t)">
