@@ -17,6 +17,7 @@ let wdgt = Vue.component('intro', {
   ],
   methods: {
     start: function(e) {
+      window.scrollTo(0,0);
       this.$emit('intro-finished', [this.order, this.saveProgressAsList, this.showBio]);
     }
   },

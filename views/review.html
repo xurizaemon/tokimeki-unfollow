@@ -131,6 +131,7 @@
       <div id="logout">
         <a v-if="!introFinished || finished" href="/logout" class="gray">Log Out</a>
         <a v-else href="#" v-on:click="introFinished=false" class="gray">Options</a>
+        <a href="#" v-on:click="finished=!finished" class="gray">Finish?</a>
       </div>
       <div id="alert" v-if="savedProgress">
           Saved progress!

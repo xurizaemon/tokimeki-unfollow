@@ -181,6 +181,7 @@ iframe.twitter-timeline {
   width: 640px;
   background: white;
   margin: 1em;
+  padding-bottom: 2.4em; 
 }
 
 #ctrl h3 {
