@@ -349,14 +349,8 @@ iframe.twitter-timeline {
 .notbold { font-weight: normal }
 .gray { color:#888 }
 .black { color: black }
-
-.logored {
-  color: #fc583b;
-}
-.logoredbg {
-  background: #fc583b;
-}
-
+.logored { color: #ea6347 }
+.logoredbg { background: #ea6347 }
 .keepblue { color:blue }
 a.keepblue:visited { color: blue }
 a:hover { text-decoration: none }
@@ -396,8 +390,9 @@ hr {
   animation-duration:10s,3s;
   animation-timing-function: linear, ease-in-out;
   animation-iteration-count: infinite, infinite;
-  animation-play-state: running, running
+  animation-play-state: running, running;
 }
 .snowflake img {
-  size: 50%;
+  width: 36px;
+  height: 36px;
 }
