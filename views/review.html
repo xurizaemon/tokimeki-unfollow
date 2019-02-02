@@ -38,7 +38,7 @@
         <div class="flex-bottom">
           <div id="ctrl">
             <div id="avvy"
-              :class="{smile: (selFriendIsUnfollowed || selFriendIsKept || finished);
+              :class="{smile: (selFriendIsUnfollowed || selFriendIsKept || finished),
                       reading: !(loadedProgress || selFriendIsUnfollowed || selFriendIsKept || finished) }"></div>
             <div id="info">
               <div v-if="loadedProgress">

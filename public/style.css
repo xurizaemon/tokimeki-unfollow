@@ -298,6 +298,11 @@ img {
   background-image: url('https://cdn.glitch.com/74263575-5bd6-41c7-8958-90c644fd4514%2Ftokimeki-avvy-smile.png?1549100197716');
 }
 
+#avvy.reading {
+  background-image: url('https://cdn.glitch.com/74263575-5bd6-41c7-8958-90c644fd4514%2Ftokimeki-avvy-read.gif?1549101201271');
+}
+
+
 #avvy-intro {
   background-image: url('https://cdn.glitch.com/74263575-5bd6-41c7-8958-90c644fd4514%2Ftokimeki-avvy.gif?1549099436001');
   background-size: 100%;
