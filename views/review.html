@@ -38,7 +38,7 @@
         <div class="flex-bottom">
           <div id="ctrl">
             <div id="avvy"
-              :class="{smile: (selFriendIsUnfollowed || selFriendIsKept || finished),
+              :class="{smile: (selFriendIsUnfollowed || selFriendIsKept),
                       reading: !(loadedProgress || selFriendIsUnfollowed || selFriendIsKept || finished) }"></div>
             <div id="info">
               <div v-if="loadedProgress">
@@ -135,6 +135,13 @@
         <a v-if="!introFinished || finished" href="/logout" class="gray">Log Out</a>
         <a v-else href="#" v-on:click="introFinished=false" class="gray">Options</a>
         <a href="#" v-on:click="finished=!finished" class="gray">Finish?</a>
+      </div>
+      <div id="preload">
+        <div id="avvy" class="smile">
+          <div id="avvy" class="read">
+          
+          </div>
+        </div>
       </div>
     </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

@@ -88,7 +88,7 @@ let finish = Vue.component('finish', {
       </div>
       <div>
         <div id="ctrl">
-          <div id="avvy" class="finish"></div>
+          <div id="avvy" class="smile"></div>
           <div id="info">
             <p>
               Wow, you finished — that's amazing! I hope you enjoy your new feed.
