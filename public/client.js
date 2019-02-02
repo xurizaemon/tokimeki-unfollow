@@ -106,7 +106,6 @@ function render(res) {
       addedToList: [],
       lastAddedToList: '',
       loadedProgress: false,
-      savedProgress: false,
       introFinished: false, // RESET
       finished: false, // RESET
       showAddToListMenu: false
@@ -206,7 +205,7 @@ function render(res) {
         this.kept = load.kept || this.kept;
         this.unfollowed = load.unfollowed || this.unfollowed;
         this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
-        this.loadedProgress = (this.kept.length > 0);
+        this.loadedProgress = (this.kept.length > 0 || this.unfollowed.length > 0);
         if (load.start_count > this.start_count) {
           this.start_count = load.start_count || this.start_count;
         }
