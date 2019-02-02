@@ -56,10 +56,17 @@
     padding-right: 0;
   }
   
+  #ctrl p.small-screen-pad-r {
+    padding-right: 60px;
+  }
+  
   #avvy {
-/*     bottom: 100%; */
-    bottom: 0;
+    bottom: 100%;
     right: 0;
+  }
+  
+  #avvy.finish {
+    bottom: 0;
   }
   
   #avvy, #avvy-intro {

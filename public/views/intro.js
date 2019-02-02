@@ -37,7 +37,7 @@ let wdgt = Vue.component('intro', {
       <p v-if='loadedprogress'>
         <center>
         <a href='#' @click='showIntroText = true' v-if='loadedprogress && !showIntroText' class='gray'>
-          Read introduction again ▼ 
+          Read intro again ▼
         </a>
         </center>
       </p>

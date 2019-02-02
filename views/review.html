@@ -44,8 +44,9 @@
                   Welcome back! I've loaded your progress from last time, when you 
                   kept {{ kept.length }} accounts that were important to you.
                 </p>
-                <strong>Let's get started on the {{ friends.length }} accounts left!</strong>
-
+                <p class="small-screen-pad-r">
+                  <strong>Let's get started on the {{ friends.length }} accounts left!</strong>
+                </p>
                 <div id="btns">
                   <a href="#" v-on:click="loadedProgress = false" class="button dib">Start</a>
                 </div>
@@ -56,6 +57,7 @@
                   <strong>{{ friend.name }}</strong>
                   for all the tweets you've enjoyed before.
                 </p>
+                <br>
                 <div id="btns">
                   <a href="#" v-on:click="follow" class="button dib">Undo</a>
                   <a href="#" v-on:click="next" class="button dib">Next</a>
@@ -67,6 +69,7 @@
                   <strong>{{ friend.name }}</strong>'s
                   tweets are still important to you. 
                 </p>
+                <br>
                 <div id="btns">
                   <a href="#" v-on:click="unkeep" class="button dib">Undo</a>
                   <a href="#" v-on:click="next" class="button dib">Next</a>
@@ -81,7 +84,7 @@
                       <strong>{{ friend.name }}</strong>
                       to <strong>{{ lastAddedToList }}!</strong>
                     </p>
-                    <p>
+                    <p class="small-screen-pad-r">
                       Did you know? You can still view someone's tweets in a list even if you don't follow them.
                     </p>
                   </span>
@@ -100,7 +103,7 @@
                         <a href="#" v-on:click="showBio = false" class="keepblue">Hide bio</a>
                       </span>
                     </p>
-                    <p>
+                    <p class="small-screen-pad-r">
                       Do the tweets still spark joy or feel important to you?
                     </p>
                   </span>

@@ -88,7 +88,7 @@ let finish = Vue.component('finish', {
       </div>
       <div>
         <div id="ctrl">
-          <div id="avvy"></div>
+          <div id="avvy" class="finish"></div>
           <div id="info">
             <p>
               Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
@@ -99,6 +99,9 @@ let finish = Vue.component('finish', {
               If you have the means, please consider donating to
               <a href="http://susiesseniordogs.com/" target="_blank" class="keepblue">
                 Susie's Senior Dogs</a>.
+            </p>
+            <p>
+              — Julius Tarng (<a href='@tarngerine)
             </p>
           </div>
           <div id="btns">
