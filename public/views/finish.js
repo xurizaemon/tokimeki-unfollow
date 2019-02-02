@@ -11,6 +11,15 @@ let finish = Vue.component('finish', {
     'keptcount',
     'listcount'
   ],
+  computed: {
+    tweetLink() {
+      let text = "I just konmari'd my Twitter!" +
+        `Started with ${this.startcount} follows and unfollowed ${this.startcount-this.keptcount}` +
+        " using tokimeki-unfollow.glitch.me~";
+      return 'https://twitter.com/intent/tweet?text=' +
+        encodeURI(text);
+    }
+  },
   methods: {
     fetchPics: function() {
       getKeptPics()
@@ -94,7 +103,7 @@ Starting follows
 </p>
           </div>
           <div id="btns">
-            <button class="button dib">Tweet</button>
+            <a :href='tweetLink' target="_blank" class="button dib">Tweet</button>
           </div>
         </div>
       </div>
