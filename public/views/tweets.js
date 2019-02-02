@@ -1,12 +1,14 @@
 let wdgt = Vue.component('twttr-widget', {
   data: function() {
     return {
-      tweets: []
+      tweets: [],
+      widgetLoaded: false
     }
   },
   props: ['username', 'id', 'private'],
   methods: {
     fetchTweets(id) {
+      this.widgetLoaded = false;
       console.log('fetching tweets');
       window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + id)
         .catch(e => console.log('error getting tweets', e))
@@ -15,6 +17,7 @@ let wdgt = Vue.component('twttr-widget', {
         console.log('got tweets', res.data);
           if (res.status == 200) {
             this.tweets = res.data;
+            this.widgetLoaded = true;
           } else {
             this.tweets = [{
               text: `Unable to load tweets. Error ${res.errorCode}: ${res.error} Try again.`
@@ -23,6 +26,7 @@ let wdgt = Vue.component('twttr-widget', {
         });
     },
     createTwitterWidget() {
+      console.log('hello', this.username)
       twttr.widgets.createTimeline({
         sourceType: 'profile',
         screenName: this.username
@@ -46,22 +50,34 @@ let wdgt = Vue.component('twttr-widget', {
   },
   watch: {
     id() {
+      console.log('watch')
       this.tweets = [];
       if (this.private) this.fetchTweets(this.id);
     }
   },
   mounted: function() {
     // this.reloadTwttrWidget();
-    // this.createTwitterWidget();
-  },
-  updated: function() {
-    // this.reloadTwttrWidget();
+    console.log('mount')
+    
+    if (this.private) {
+      this.tweets = [];
+      this.fetchTweets(this.id);
+    }
     if (!this.private) this.createTwitterWidget();
   },
+  beforeUpdate() {
+    console.log('beforeupdate')
+    if (!this.private) this.createTwitterWidget();
+    
+  },
+  updated: function() {
+    console.log('updated')
+    // this.reloadTwttrWidget();
+    // if (!this.private) this.createTwitterWidget();
+  },
   created: function() {
-    // this.createTwitterWidget();
-    console.log(this.private)
-    if (this.private) this.fetchTweets(this.id);
+    // if (!this.private) this.createTwitterWidget();
+    // if (this.private) this.fetchTweets(this.id);
 
     // A Huge Hack to "support" iframes for iOS devices
     // On widget load, set iframe height manually to timeline height
@@ -101,12 +117,16 @@ let wdgt = Vue.component('twttr-widget', {
       return twttr && twttr !== undefined;
     },
     shouldUseTwttrWidget() {
+      console.log('private', this.private)
       return this.twttrScriptLoaded && this.private != true;
     }
   },
   template: `
     <div :key='username' v-cloak>
       <div v-if="shouldUseTwttrWidget" id="iframe-container">
+        <div v-if="widgetLoaded">
+        <p>Loading tweets by @{{ username }}...</p>
+        Not loading? <a href="#" :click="createTwitterWidget">Try again</a></div>
         <!--<a class="twitter-timeline"
           data-width="400"
           data-height="100%"
