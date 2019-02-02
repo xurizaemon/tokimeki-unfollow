@@ -27,7 +27,8 @@ let finish = Vue.component('finish', {
         let delay = Math.random() * 10;
         this.kept_pics_styles.push({
           left: `${Math.random() * 100}%`,
-          'animation-delay': `${delay}s, ${delay - Math.random() * 3}s`
+          'animation-delay': `${delay}s, ${delay - Math.random() * 3}s`,
+          'z-index': `${Math.random() > .5 ? 1 : -1}`
         });
       }
     }
@@ -44,24 +45,22 @@ let finish = Vue.component('finish', {
       <div class="flex-top flex flex-col just-cent">
         <div id="intro" class="card">
           <h1>
+<center>
             Tokimeki Complete!
+</center>
           </h1>
-
-            <p>
-              Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
-              If you ever feel like it's getting out of control again, you know where to go!
-            </p>
-
-          <p>
-            You started with <strong>{{ startcount }}</strong> follows...
-          </p>
-          <h3>
+<br>
+          <h3 class="notbold">
           <p class="gray">
             Results
             </p>
+<p>
+<strong class="flt-r">{{ startcount }}</strong>
+Starting follows
+</p>
           <p>
             Unfollowed
-            <strong class="flt-r">{{ startcount - keptcount }}</strong>
+            <strong class="flt-r logored">-{{ startcount - keptcount }}</strong>
           </p>
           <span v-if="listcount > 0">
             <p>
@@ -72,7 +71,7 @@ let finish = Vue.component('finish', {
           <hr>
           <br>
           <p>
-            <strong class="flt-r">{{ keptcount }}</strong>
+            <strong class="flt-r keepblue">{{ keptcount }}</strong>
             Now Following
           </p>
             </h3>
@@ -82,6 +81,11 @@ let finish = Vue.component('finish', {
         <div id="ctrl">
           <div id="avvy"></div>
           <div id="info">
+
+          <p>
+            Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
+            If you ever feel like it's getting out of control again, you know where to go!
+          </p>
 <p>
   If this tool sparked joy, please share it with your friends!
   If you have the means, please consider donating to
