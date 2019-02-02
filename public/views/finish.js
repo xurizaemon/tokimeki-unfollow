@@ -52,7 +52,7 @@ let finish = Vue.component('finish', {
         <img :src="pic">
       </div>
       <div class="flex-top flex flex-col just-cent">
-        <div id="intro" class="card" style="min-width: 320px">
+        <div id="intro" class="card" style="min-width: 320px; margin: 1.2em;">
           <h1>
             <center>
             Tokimeki Complete!
@@ -91,21 +91,22 @@ let finish = Vue.component('finish', {
           <div id="avvy" class="finish"></div>
           <div id="info">
             <p>
-              Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
-              If you ever feel like it's getting out of control again, you know where to go!
+              Wow, you finished — that's amazing! I hope you enjoy your new feed.
+              Come back if you ever feel like it's getting out of control again.
             </p>
             <p>
-              If this tool sparked joy, please share it with your friends!
-              If you have the means, please consider donating to
+              If this tool was useful, please share it & consider donating to
               <a href="http://susiesseniordogs.com/" target="_blank" class="keepblue">
-                Susie's Senior Dogs</a>.
+                Susie's Senior Dogs</a>!
             </p>
-            <p>
-              — Julius Tarng (<a href='@tarngerine)
+            <p class="small-screen-pad-r">
+              Thanks!<br>
+              — Julius Tarng
             </p>
           </div>
           <div id="btns">
             <a :href='tweetLink' target="_blank" class="button dib">Tweet</a>
+            <a href='https://twitter.com/tarngerine' target="_blank" class="button dib">@tarngerine</a>
           </div>
         </div>
       </div>
