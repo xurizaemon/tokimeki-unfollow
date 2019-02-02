@@ -46,11 +46,16 @@ let finish = Vue.component('finish', {
           <h1>
             Tokimeki Complete!
           </h1>
-          <h3>
+
+            <p>
+              Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
+              If you ever feel like it's getting out of control again, you know where to go!
+            </p>
+
           <p>
             You started with <strong>{{ startcount }}</strong> follows...
           </p>
-          <br>
+          <h3>
           <p class="gray">
             Results
             </p>
@@ -77,10 +82,12 @@ let finish = Vue.component('finish', {
         <div id="ctrl">
           <div id="avvy"></div>
           <div id="info">
-            <p>
-              Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
-              If you ever feel like it's getting out of control again, you know where to go!
-            </p>
+<p>
+  If this tool sparked joy, please share it with your friends!
+  If you have the means, please consider donating to
+  <a href="http://susiesseniordogs.com/donate/" target="_blank" class="keepblue">
+    Susie's Senior Dogs</a>.
+</p>
           </div>
           <div id="btns">
             <button class="button dib">Tweet</button>
