@@ -54,19 +54,19 @@ let finish = Vue.component('finish', {
       <div class="flex-top flex flex-col just-cent">
         <div id="intro" class="card" style="min-width: 320px">
           <h1>
-<center>
+            <center>
             Tokimeki Complete!
-</center>
+            </center>
           </h1>
-<br>
+          <br>
           <h3 class="notbold">
           <p class="gray">
             Results
+          </p>
+          <p>
+            <strong class="flt-r">{{ startcount }}</strong>
+            Starting follows
             </p>
-<p>
-<strong class="flt-r">{{ startcount }}</strong>
-Starting follows
-</p>
           <p>
             Unfollowed
             <strong class="flt-r logored">-{{ startcount - keptcount }}</strong>
@@ -90,23 +90,22 @@ Starting follows
         <div id="ctrl">
           <div id="avvy"></div>
           <div id="info">
-
-          <p>
-            Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
-            If you ever feel like it's getting out of control again, you know where to go!
-          </p>
-          <p>
-            If this tool sparked joy, please share it with your friends!
-            If you have the means, please consider donating to
-            <a href="http://susiesseniordogs.com/donate/" target="_blank" class="keepblue">
-              Susie's Senior Dogs</a>.
-          </p>
+            <p>
+              Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
+              If you ever feel like it's getting out of control again, you know where to go!
+            </p>
+            <p>
+              If this tool sparked joy, please share it with your friends!
+              If you have the means, please consider donating to
+              <a href="http://susiesseniordogs.com/" target="_blank" class="keepblue">
+                Susie's Senior Dogs</a>.
+            </p>
           </div>
           <div id="btns">
             <a :href='tweetLink' target="_blank" class="button dib">Tweet</a>
           </div>
         </div>
       </div>
-  </div>
+    </div>
   `
 });

@@ -398,3 +398,6 @@ hr {
   animation-iteration-count: infinite, infinite;
   animation-play-state: running, running
 }
+.snowflake img {
+  size: 50%;
+}
