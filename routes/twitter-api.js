@@ -128,21 +128,21 @@ router.post('/data/save_progress', (req, res) => {
   }).then((result) => {
     console.log(result.data.id_str);
     if (result.data.slug && result.data.slug == PROGRESS_LIST_SLUG) {
-      console.log('got list for progress saving, adding members...', req.body.user_ids.join(','));
-      return twit.post('lists/members/create_all', {
-        slug: PROGRESS_LIST_SLUG,
-        owner_id: req.session.userId,
-        user_id: req.body.user_ids.join(',')
+      console.log('got list for progress saving, adding members...', req.body.user_ids[0]);
+      return twit.post('lists/members/create', {
+        list_id: result.data.id_str,
+        user_id: req.body.user_ids[0]
       });
     } else {
-      throw {
-        status: 404,
-        errorCode: 69,
-        error: `Couldn't get list matching slug ${PROGRESS_LIST_SLUG}, got ${result.data.slug} instead.`
-      };
+      // throw {
+      //   status: 404,
+      //   errorCode: 69,
+      //   error: `Couldn't get list matching slug ${PROGRESS_LIST_SLUG}, got ${result.data.slug} instead.`
+      // };
     }
   }).catch(e => apiCatch(res, e))
     .then((result) => {
+    console.log(result.resp.toJSON())
     apiSend(res, result, {
       list_id: result.data.id_str
     });
