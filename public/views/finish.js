@@ -13,9 +13,9 @@ let finish = Vue.component('finish', {
   ],
   computed: {
     tweetLink() {
-      let text = "I just konmari'd my Twitter!" +
+      let text = "✨I just konmari'd my Twitter!✨\n\n" +
         `Started with ${this.startcount} follows and unfollowed ${this.startcount-this.keptcount}` +
-        " using tokimeki-unfollow.glitch.me~";
+        " using Tokimeki Unfollow\nhttps://tokimeki-unfollow.glitch.me";
       return 'https://twitter.com/intent/tweet?text=' +
         encodeURI(text);
     }
@@ -95,15 +95,15 @@ Starting follows
             Wow, you finished! I'm super proud of you, and I hope you enjoy your timeline more now.
             If you ever feel like it's getting out of control again, you know where to go!
           </p>
-<p>
-  If this tool sparked joy, please share it with your friends!
-  If you have the means, please consider donating to
-  <a href="http://susiesseniordogs.com/donate/" target="_blank" class="keepblue">
-    Susie's Senior Dogs</a>.
-</p>
+          <p>
+            If this tool sparked joy, please share it with your friends!
+            If you have the means, please consider donating to
+            <a href="http://susiesseniordogs.com/donate/" target="_blank" class="keepblue">
+              Susie's Senior Dogs</a>.
+          </p>
           </div>
           <div id="btns">
-            <a :href='tweetLink' target="_blank" class="button dib">Tweet</button>
+            <a :href='tweetLink' target="_blank" class="button dib">Tweet</a>
           </div>
         </div>
       </div>
