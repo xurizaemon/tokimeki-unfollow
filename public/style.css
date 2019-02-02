@@ -135,6 +135,11 @@ iframe.twitter-timeline {
   right:0;
   overflow-y: scroll;
 }
+.backup-tweets-banner {
+  background: gray;
+  color: white;
+  text-align: center;
+}
 .backup-tweet {
   text-align: left;
   padding: 1em; 
