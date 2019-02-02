@@ -7,10 +7,12 @@ let wdgt = Vue.component('twttr-widget', {
   props: ['username', 'id', 'private'],
   methods: {
     fetchTweets(id) {
+      console.log('fetching tweets');
       window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + id)
         .catch(e => console.log('error getting tweets', e))
         .then(res => res.json())
         .then(res => {
+        console.log('got tweets', res.data);
           if (res.status == 200) {
             this.tweets = res.data;
           } else {
@@ -58,6 +60,7 @@ let wdgt = Vue.component('twttr-widget', {
   },
   created: function() {
     // this.createTwitterWidget();
+    console.log(this.private)
     if (this.private) this.fetchTweets(this.id);
 
     // A Huge Hack to "support" iframes for iOS devices
@@ -98,7 +101,7 @@ let wdgt = Vue.component('twttr-widget', {
       return twttr && twttr !== undefined;
     },
     shouldUseTwttrWidget() {
-      return this.twttrScriptLoaded && this.private === false;
+      return this.twttrScriptLoaded && this.private != true;
     }
   },
   template: `
@@ -115,7 +118,9 @@ let wdgt = Vue.component('twttr-widget', {
       <div v-else>
         <ol id="backup-tweets">
           <div class="backup-tweets-banner">Private user, using backup rendering</div>
-          <div v-if="tweets.length == 0">Loading tweets by @{{ username }}...</div>
+          <div v-if="tweets.length == 0">
+            <p>Loading tweets by @{{ username }}...</p>
+            Not loading? <a href="#" :click="fetchTweets(id)">Try again</a></div>
           <li v-for='t in tweets' :key="t.id_str">
             <tweet v-bind:tweet="tweetOrRT(t)">
             </tweet>
