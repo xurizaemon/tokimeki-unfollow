@@ -8,12 +8,10 @@ function post(url, obj, callback) {
     body: JSON.stringify(obj)
   }).catch(e => showUserError(e)) // do i need two catches?
     .then(res => {
-    if (res.status == 200) {
-      return res.json();
-    } else { throw res }
-  })
-    .then(res => {
-      console.log('response', res);
+      if (res.status == 200) {
+        return res.json();
+      } else { throw res }
+  }).then(res => {
       if (res.status == 200) {
         return res;
       } else {
