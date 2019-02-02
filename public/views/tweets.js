@@ -42,10 +42,10 @@ let wdgt = Vue.component('twttr-widget', {
     // To support [Load More] button, adjust height on every touch/click event
     // Using this on desktop as well to minimize areas to debug
     let updateIframeHeight = (iframe) => {
-      let viewport = iframe.contentDocument.documentElement.getElementsByClassName("timeline-Viewport")[0];
-      viewport.style.overflow = "hidden";
       let timeline = iframe.contentDocument.documentElement.getElementsByClassName("timeline-TweetList")[0];
       iframe.style.height = timeline.offsetHeight + 64; // Load button height
+      let viewport = iframe.contentDocument.documentElement.getElementsByClassName("timeline-Viewport")[0];
+      viewport.style.overflow = "hidden"; // Hide scrollbar inside iframe
     }
 
     // There are two Twitter widget events: 'loaded' and 'rendered'.

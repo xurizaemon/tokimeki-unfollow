@@ -1,11 +1,11 @@
 @media (min-width: 700px) {
-  .lt600 {
+  .small-screen {
     display: none;
   }
 }
 
 @media (max-width: 700px) {
-  .gt600 {
+  .big-screen {
     display: none;
   }
 
@@ -36,10 +36,6 @@
   
   #twttr-widget iframe {
     width: 100% !important;
-  }
-  
-  .twitter-timeline {
-    width: 100%
   }
   
   #ctrl{

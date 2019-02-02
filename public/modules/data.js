@@ -62,7 +62,6 @@ function getLists(userId) {
 }
 
 function getKeptPics() {
-  console.log('hallo')
   return fetch('https://tokimeki-unfollow.glitch.me/data/load_progress_pics')
     .catch(e => showUserError(e))
     .then(res => res.json());
@@ -72,8 +71,10 @@ function showUserError(e) {
   console.log('error', e)
   if (e.url) {
     alert('Error: ' + e.status + ' ' + e.statusText + ', ' + e.url);
-  } else {
+  } else if (e.status) {
     alert('Error: ' + e.status + ', ' + e.error);
+  } else {
+    alert('Error: ' + e);
   }
 }
 
