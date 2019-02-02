@@ -338,8 +338,8 @@ img {
 .notbold { font-weight: normal }
 .gray { color:#888 }
 .black { color: black }
-.logored { color: #ea6347 }
-.logoredbg { background: #ea6347 }
+.logored { color: #f35535 }
+.logoredbg { background: #f35535 }
 .keepblue { color:blue }
 a.keepblue:visited { color: blue }
 a:hover { text-decoration: none }
