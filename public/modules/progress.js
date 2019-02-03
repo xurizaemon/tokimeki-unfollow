@@ -5,7 +5,7 @@ function saveQuick(kept_ids, unfollowed_ids, start_count, current_session_count,
     store.setItem('start_count', JSON.stringify(start_count));
   }
   store.setItem('current_session_count', JSON.stringify(current_session_count));
-  console.log('saved', JSON.parse(store.getItem('kept_ids')),
+  console.log('saved to localStorage', JSON.parse(store.getItem('kept_ids')),
               JSON.parse(store.getItem('unfollowed_ids')),
              JSON.parse(store.getItem('start_count')));
 }
@@ -25,9 +25,9 @@ function saveList(kept_ids, unfollowed_ids, start_count) {
     .then(res => res.json())
     .then(res => {
       if (res.status == 200) {
-        console.log('save list success', res.data.list_id);
+        console.log('saved to twitter list', res.data.list_id);
       } else {
-        console.log('error saving list to twitter', res.status, res.errorCode, res.error)
+        console.log('error saving to twitter list', res.status, res.errorCode, res.error);
       }
   });
 }
