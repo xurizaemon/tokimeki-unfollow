@@ -93,7 +93,6 @@ function render(res) {
       sel: 0,
       user: dataDefaults.user,
       start_count: dataDefaults.user.friends_count,
-      current_session_count: dataDefaults.current_session_count,
       friends: dataDefaults.friends,
       friendsFiltered: dataDefaults.friends,
       friend: dataDefaults.friend,
@@ -119,8 +118,10 @@ function render(res) {
       showPrefs() {
         // Since we allow users to go back to options, we need to reset the filtered list
         // every time they press 'start' again
+        this.filterFriends();
         this.sel = 0;
         
+        this.loadedProgress = (this.kept.length > 0 || this.unfollowed.length > 0);
         this.introFinished = false;
       },
       updatePrefs: function(e) {
