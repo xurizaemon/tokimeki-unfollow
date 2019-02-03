@@ -12,7 +12,7 @@ function saveQuick(kept_ids, unfollowed_ids, start_count, current_session_count,
 
 function saveList(kept_ids, unfollowed_ids, start_count) {
   return;
-  fetch('https://tokimeki-unfollow.glitch.me/data/keeps/save', {
+  fetch('https://tokimeki-unfollow.glitch.me/data/progress/save', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

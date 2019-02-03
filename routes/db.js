@@ -34,7 +34,7 @@ sequelize.authenticate()
       user_id: {
         type: Sequelize.STRING
       },
-      unfollow_id: {
+      unfollowed_id: {
         type: Sequelize.STRING
       }
     });
@@ -80,22 +80,24 @@ router.get("/data/unfollows/", (req, res) => {
   })
 });
 
-// Expects kept_ids = [STR, ...], unfollowed_ids = [STR, ...]
+router.get("/data/progress", (req, res) => {
+  
+});
+
+// Expects kept_ids = [STR, ...], unfollowed_ids = [STR, ...], start_count = INT
 router.post("/data/progress/save_all", (req, res) => {
-  let kept_ids = req.body.kept_ids,
-      unfollowed_ids = req.body.unfollowed_ids;
+  let user_id = req.session.userId,
+      kept_ids = req.body.kept_ids,
+      unfollowed_ids = req.body.unfollowed_ids,
+      start_count = req.body.start_count;
 
   console.log('saving', kept_ids, unfollowed_ids);
 
-  let kept_promises = new Promise((resolve, reject) => {
-    kept_ids.map(id => {
+  let kept_promises = kept_ids.map(id => {
+    return new Promise((resolve, reject) => {
       Keeps.findOrCreate({
-        where: {
-          user_id: req.session.userId
-        },
-        defaults: {
-          kept_id: id
-        }
+        where: { user_id: user_id },
+        defaults: { kept_id: id }
       }).spread((result, created) => {
         if (created) console.log('saved keep', id)
         resolve(result);
@@ -103,8 +105,8 @@ router.post("/data/progress/save_all", (req, res) => {
     });
   });
   
-  let unfollowed_promises = new Promise((resolve, reject) => {
-    unfollowed_ids.map(id => {
+  let unfollowed_promises = unfollowed_ids.map(id => {
+    return new Promise((resolve, reject) => {
       Unfollows.findOrCreate({
         where: {
           user_id: req.session.userId
@@ -119,43 +121,20 @@ router.post("/data/progress/save_all", (req, res) => {
     });
   });
   
-  Promise.all(kept_promises.concat(unfollowed_promises)).then(results => {
+  let start_promise = new Promise((resolve, reject) => {
+    resolve(saveStartCount(res.session.userId, Number(start_count)));
+  });
+  
+  Promise.all(
+    kept_promises.concat(unfollowed_promises).concat(start_promise)
+  ).then(results => {
     console.log('saved', results);
     res.send({
-      status: 200,
-      kept_ids: results.map(r => r.kept_id)
+      status: 200
     });
   });
 });
 
-// Expects unfollow_ids = [STR, ...]
-router.post("/data/keeps/save_all", (req, res) => {
-  let ids = req.body.unfollowed_ids;
-  console.log('saving', ids);
-  let promises = new Promise((resolve, reject) => {
-    ids.map(id => {
-      Keeps.findOrCreate({
-        where: {
-          user_id: req.session.userId
-        },
-        defaults: {
-          kept_id: id
-        }
-      }).spread((result, created) => {
-        if (created) console.log('saved', id)
-        resolve(result);
-      });
-    });
-  });
-  
-  Promise.all(promises).then(results => {
-    console.log('saved', results);
-    res.send({
-      status: 200,
-      kept_ids: results.map(r => r.kept_id)
-    });
-  });
-});
 
 router.get("/data/starts", (req, res) => {
   Starts.findOne({
@@ -173,22 +152,14 @@ router.get("/data/starts", (req, res) => {
   })
 });
 
-// Expects start_count = INT
-router.post("/data/starts/save", (req, res) =>{
+let saveStartCount = (user_id, start_count) => {
   Keeps.findOrCreate({
-    where: {
-      user_id: req.session.userId
-    },
-    defaults: {
-      start_count: Number(req.body.start_count)
-    }
+    where: { user_id: user_id },
+    defaults: { start_count: start_count }
   }).spread((result, created) => {
-    console.log('start count saved', result, created);
-    res.send({
-      status: 200,
-      start_count: result.start_count
-    });
+    console.log('saved start count', result, created);
+    return result.start_count;
   });
-});
+};
 
 module.exports = router;
