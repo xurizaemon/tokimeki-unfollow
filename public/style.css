@@ -31,6 +31,7 @@ button, input, label {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
+  text-size-adjust: 150%;
 }
 
 #intro {
