@@ -132,8 +132,8 @@ let saveStartCount = (user_id, start_count) => {
     where: { user_id: user_id },
     defaults: { start_count: start_count }
   }).spread((result, created) => {
-    console.log('saved start count', result, created);
-    return result.start_count;
+    console.log('saved start count');
+    return result.get({plain:true}).start_count;
   });
 };
 
@@ -158,8 +158,11 @@ router.post("/data/progress/save", (req, res) => {
           }
         });
       Keeps.bulkCreate(new_ids)
+        .then(() => getKeeps(user_id))
+        .then(ids => resolve(ids));
     });
-  let unfollow_promise = new Promise((resolve) => {
+  });
+  let unfollowed_promise = new Promise((resolve) => {
     getUnfollows(user_id).then(r => {
       let new_ids = unfollowed_ids
         .filter(id => !r.includes(id))
@@ -170,48 +173,22 @@ router.post("/data/progress/save", (req, res) => {
           }
         });
       Unfollows.bulkCreate(new_ids)
-        .then(() => resolve());
+        .then(() => getUnfollows(user_id))
+        .then(ids => resolve(ids));
     });
   });
-  // let kept_promises = kept_ids.map(id => {
-  //   return new Promise((resolve, reject) => {
-  //     Keeps.findCreateFind({
-  //       where: { user_id: user_id },
-  //       defaults: { kept_id: id }
-  //     }).spread((result, created) => {
-  //       if (created) console.log('saved keep', id)
-  //       resolve(result);
-  //     });
-  //   });
-  // });
-  
-  // let unfollowed_promises = unfollowed_ids.map(id => {
-  //   return new Promise((resolve, reject) => {
-  //     Unfollows.findCreateFind({
-  //       where: {
-  //         user_id: user_id
-  //       },
-  //       defaults: {
-  //         unfollowed_id: id
-  //       }
-  //     }).spread((result, created) => {
-  //       if (created) console.log('saved unfollow', id)
-  //       resolve(result);
-  //     });
-  //   });
-  // });
-  
-  let start_promise = new Promise((resolve, reject) => {
-    resolve(saveStartCount(user_id, Number(start_count)));
+
+  let start_count_promise = new Promise((resolve, reject) => {
+    saveStartCount(user_id, Number(start_count))
+      .then(result => resolve(result));
   });
   
-  Promise.all(
-    kept_promises.concat(unfollowed_promises).concat(start_promise)
-  ).then(results => {
-    console.log('saved');
+  Promise.all([
+    kept_promise, unfollowed_promise, start_count_promise
+  ]).then(results => {
+    console.log('saved', results);
     res.send({
-      status: 200,
-      results: results
+      status: 200
     });
   });
 });
