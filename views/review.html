@@ -20,7 +20,7 @@
         v-bind:followingcount="user.friends_count - current_session_count"
         v-bind:leftcount="friendsFiltered.length"
         v-bind:initialorder="prefs.order"
-        v-bind:initialsaveprogressaslist="prefs.saveProgressAsList"
+        v-bind:initialsaveprogressonserver="prefs.saveProgressOnServer"
         v-bind:initialshowbio="prefs.showBio">
       </intro>
       <div v-else class="flex-parent">

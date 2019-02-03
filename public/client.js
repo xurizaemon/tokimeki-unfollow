@@ -100,7 +100,7 @@ function render(res) {
       showBio: false,
       prefs: {
         order: store.getItem('prefsOrder') || 'oldest',
-        prefsSaveProgressOnServer: store.getItem('prefsSaveProgressOnServer') ?
+        saveProgressOnServer: store.getItem('prefsSaveProgressOnServer') ?
           JSON.parse(store.getItem('prefsSaveProgressOnServer')) : true,
         showBio: store.getItem('prefsShowBio') ?
           JSON.parse(store.getItem('prefsShowBio')) : false
@@ -125,7 +125,7 @@ function render(res) {
         this.introFinished = false;
       },
       updatePrefs: function(e) {
-        [this.prefs.order, this.prefs.prefsSaveProgressOnServer, this.prefs.showBio] = e;
+        [this.prefs.order, this.prefs.saveProgressOnServer, this.prefs.showBio] = e;
         switch (this.prefs.order) {
           case 'oldest':
             this.friends = this.friendsFiltered.slice().reverse();
@@ -140,7 +140,7 @@ function render(res) {
         }
         this.showBio = this.prefs.showBio;
         store.setItem('prefsOrder', this.prefs.order);
-        store.setItem('prefsSaveProgressOnServer', this.prefs.prefsSaveProgressOnServer);
+        store.setItem('prefsSaveProgressOnServer', this.prefs.saveProgressOnServer);
         store.setItem('prefsShowBio', this.prefs.showBio);
       },
       next: function() {
@@ -211,7 +211,7 @@ function render(res) {
       },
       saveProgressServer: function() {
         Progress.saveQuick(this.kept, this.unfollowed, this.start_count, this.current_session_count, store);
-        if (this.prefs.prefsSaveProgressOnServer == false) return;
+        if (this.prefs.saveProgressOnServer == false) return;
         Progress.saveServer(this.kept, this.unfollowed, this.start_count, store);
       },
       filterFriends() {
@@ -232,7 +232,7 @@ function render(res) {
         if (this.friendsFiltered.length == 0) this.finished = true;
       },
       loadProgressServer: function() {
-        if (this.prefs.prefsSaveProgressOnServer == false) return;
+        if (this.prefs.saveProgressOnServer == false) return;
         Progress.loadServer(store)
           .then(res => {
             if (res.status == 200) {

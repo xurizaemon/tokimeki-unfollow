@@ -53,4 +53,4 @@ function loadServer() {
     .then(res => res.json());
 }
 
-export { saveQuick, saveList, loadQuick, loadList };
+export { saveQuick, saveServer, loadQuick, loadServer };

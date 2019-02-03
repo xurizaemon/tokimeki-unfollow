@@ -2,7 +2,7 @@ let wdgt = Vue.component('intro', {
   data: function() {
     return {
       order: this.initialorder,
-      saveProgressAsList: this.initialsaveprogressaslist,
+      saveProgressOnServer: this.initialsaveprogressonserver,
       showBio: this.initialshowbio,
       showIntroText: false
     }
@@ -13,13 +13,13 @@ let wdgt = Vue.component('intro', {
     'leftcount',
     'loadedprogress',
     'initialorder',
-    'initialsaveprogressaslist',
+    'initialsaveprogressonserver',
     'initialshowbio'
   ],
   methods: {
     start: function(e) {
       window.scrollTo(0,0);
-      this.$emit('intro-finished', [this.order, this.saveProgressAsList, this.showBio]);
+      this.$emit('intro-finished', [this.order, this.saveProgressOnServer, this.showBio]);
     }
   },
   watch: {
@@ -76,8 +76,8 @@ let wdgt = Vue.component('intro', {
             Hide their bio's so you can evaluate based on content only.</label>
         </p>
         <p>
-          <input type="checkbox" id="saveList" value="saveList" v-model="saveProgressAsList">
-          <label for="saveList"><b>Save progress as a private Twitter list</b> (Recommended: on)<br>
+          <input type="checkbox" id="saveServer" value="saveServer" v-model="saveProgressOnServer">
+          <label for="saveServer"><b>Save progress on the server</b> (Recommended: on)<br>
             Turn this on so you can resume this process from any device.
             If this is off, I'll still save your progress to this browser's local storage.</label>
         </p>
@@ -95,6 +95,11 @@ let wdgt = Vue.component('intro', {
       <br>
       <button class='button w100 big-screen' v-on:click="start">Start</button>
       <button class='button dib small-screen' v-on:click="start">Start</button>
+      <br><br>
+      <span class='gray small-screen-pad-r'>
+        Made by <a href='https://tarng.com' class='gray'> Julius Tarng</a>.
+        Follow <a href='https://twitter.com/tarngerine' class='gray'> @tarngerine</a> for more tools, games, and art!
+      </span>
   </div>
   `
 });
