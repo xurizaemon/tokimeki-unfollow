@@ -37,10 +37,10 @@ function apiCatch(res, e) {
     error: e.message
   });
 }
-
 function apiSend(res, result, customData) {
   if (result === undefined) return;
   let resp = result.resp.toJSON();
+  if (resp.statusCode != 200) return;
   res.send({
     status: resp.statusCode,
     errorCode: resp.errorCode,
