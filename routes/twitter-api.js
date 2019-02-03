@@ -108,97 +108,11 @@ router.post('/data/lists/members/create', (req, res) => {
   });
 });
 
-/* Saving/Loading Progress as a List */
-router.post('/data/save_progress', (req, res) => {
-  // STOP USING LISTS
-  console.log('saving attempted')
-  return;
-  if (!req.body.user_ids) res.send({ status: 500, error: 'No user ids provided.' });
-  
-  // SUPPORT MATCHING BY NAME? PULL ALL LISTS AND .FILTER FOR THE ONE WE WANT?
-  twit.get('lists/show', {
-    slug: PROGRESS_LIST_SLUG,
-    owner_id: req.session.userId
-  }).catch((e) => {
-    if (e.code == 34) {
-      console.log('progress list does not exist, creating a new one');
-      return twit.post('lists/create', {
-        name: PROGRESS_LIST_SLUG,
-        mode: 'private',
-        description: `DON'T DELETE! Progress for tokimeki-unfollow.glitch.me | Starting follows: ${req.body.start_count || 0}`
-      }).catch(e => apiCatch(res, e));
-    }
-  }).then((result) => {
-    console.log(result)
-    if (result.data.slug && result.data.slug == PROGRESS_LIST_SLUG) {
-      // console.log(result.data.full_name)
-      // // Todo this seems like it is running every time...
-      // // Dirty hack because I 'shipped' this without updating PROGRESS_LIST_SLUG
-      // // This changes the user-facing list name from 'tokimeki-test4' to something better
-      // if (result.data.name == PROGRESS_LIST_SLUG) {
-      //   twit.post('lists/update', {
-      //     list_id: result.data.id_str,
-      //     name: 'Tokimeki Unfollow'
-      //   }).catch(e => apiCatch(res, e))
-      //     .then(result => {
-      //       if (result.resp.toJSON().statusCode == 200) console.log('renamed progress list', result.data.name);
-      //   });
-      // }
-      console.log('got list for progress saving, adding members...', req.body.user_ids[0]);
-      return twit.post('lists/members/create', {
-        list_id: result.data.id_str,
-        user_id: req.body.user_ids[0]
-      });
-    } else {
-      throw {
-        status: 404,
-        errorCode: 69,
-        error: `Couldn't get list matching slug ${PROGRESS_LIST_SLUG}, got ${result.data.slug} instead.`
-      };
-    }
-  }).catch(e => apiCatch(res, e))
-    .then((result) => {
-    if (result.data) {
-      apiSend(res, result, {
-        list_id: result.data.id_str
-      });
-    }
-  }).catch(e => apiCatch(res, e));
-});
-
-router.get('/data/load_progress', (req, res) => {
-  return;
-  Promise.all([
-    twit.get('lists/members', {
-      slug: PROGRESS_LIST_SLUG,
-      owner_id: req.session.userId,
-      include_entities: false,
-      count: 5000
-    }),
-    twit.get('lists/show', {
-      slug: PROGRESS_LIST_SLUG,
-      owner_id: req.session.userId
-    })
-  ]).catch(e => apiCatch(res, e))
-    .then(result => {
-    let matches = result[1].data.description.split('Start count:');
-
-    apiSend(res, result[0], {
-      user_ids: result[0].data.users ? 
-        result[0].data.users.map(user => user.id_str) : [],
-      start_count: matches.length == 2 ?
-        Number([1].trim()) : null
-    });
-  });
-});
-
-
-router.get('/data/load_progress_pics', (req, res) => {
-  twit.get('lists/members', {
-    slug: PROGRESS_LIST_SLUG,
-    owner_id: req.session.userId,
-    include_entities: false,
-    count: 5000
+router.get('/data/user/pics', (req, res) => {
+  console.log('getting pics', 
+  twit.post('users/lookup', {
+    user_id: req.body.user_ids.reverse().slice(0,100).join(','),
+    include_entities: false
   }).catch(e => apiCatch(res, e))
     .then(result => {
     apiSend(res, result, {

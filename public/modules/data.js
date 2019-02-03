@@ -59,10 +59,10 @@ function getLists(userId) {
     .then(res => res.json());
 }
 
-function getKeptPics() {
-  return fetch('https://tokimeki-unfollow.glitch.me/data/load_progress_pics')
-    .catch(e => showUserError(e))
-    .then(res => res.json());
+function getKeptPics(kept_ids) {
+  return post('https://tokimeki-unfollow.glitch.me/data/user/pics', {
+    user_ids: kept_ids
+  });
 }
 
 function showUserError(e) {
