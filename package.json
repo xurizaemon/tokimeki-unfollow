@@ -13,6 +13,7 @@
     "login-with-twitter": "^1.2.0",
     "pug": "^2.0.3",
     "sequelize": "^4.42.0",
+    "sqlite3": "^4.0.6",
     "twit": "^2.2.11"
   },
   "engines": {

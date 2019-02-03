@@ -15,6 +15,7 @@ app.set('view engine', 'pug');
 // Routes
 app.use(require('./routes/twitter-api'));
 app.use(require('./routes/twitter-login'));
+app.use(require('./routes/db'));
 
 // Force HTTPS so fetches work
 app.enable('trust proxy');

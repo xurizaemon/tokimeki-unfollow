@@ -46,39 +46,44 @@ sequelize.authenticate()
     console.log('Unable to connect to the database: ', err);
   });
 
-// router.get("/data/keeps", (req, res) => {
-//   var dbKeeps=[];
-//   Keeps.findAll().then((rows) => {
-//     res.send(rows.map(r => [r.user_id,r.kept_id]));
-//   });
-// });
-
-router.get("/data/keeps/:user_id", (req, res) => {
+router.get("/data/keeps/", (req, res) => {
   Keeps.findAll({
     where: {
-      user_id: req.params.user_id
+      user_id: req.session.userId
     }
   }).then(results => {
     res.send(results.map(r => r.kept_id));
   })
 });
 
-router.post("/data/keeps", (req, res) {
-  Keeps.create({ user_id: req.query.user_id, kept_id: req.query.kept_id});
-  response.sendStatus(200);
+// Expects kept_ids = [STR, ...]
+router.post("/data/keeps/save_all", (req, res) => {
+  req.body.kept_ids.forEach(id => {
+    Keeps.create({
+      user_id: req.session.userId,
+      kept_id: id
+    });
+  });
+  res.sendStatus(200);
 });
 
-router.get("/data/starts/:user_id", (req, res) => {
-  Starts.findAll({
+router.get("/data/starts", (req, res) => {
+  Starts.findOne({
     where: {
-      user_id: req.params.user_id
+      user_id: req.session.userId
     }
-  }).then(results => {
-    res.send(results.map(r => r.start_count));
+  }).then(result => {
+    res.send(result);
   })
 });
 
-router.post("/data/starts", function (request, response) {
-  Keeps.create({ user_id: request.query.user_id, start_count: request.query.start_count});
-  response.sendStatus(200);
+// Expects start_count = INT
+router.post("/data/starts/save", (req, res) =>{
+  Keeps.create({
+    user_id: req.session.userId,
+    start_count: Number(req.body.start_count)
+  });
+  res.sendStatus(200);
 });
+
+module.exports = router;

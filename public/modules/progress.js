@@ -11,15 +11,15 @@ function saveQuick(kept_ids, unfollowed_ids, start_count, current_session_count,
 }
 
 function saveList(kept_ids, unfollowed_ids, start_count) {
-  return fetch('https://tokimeki-unfollow.glitch.me/data/save_progress', {
+  return;
+  return fetch('https://tokimeki-unfollow.glitch.me/data/keeps/save', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      user_ids: kept_ids.reverse().slice(0,100), // Endpoint only takes max 100, so save the latest 100
-      start_count: start_count
+      kept_ids: kept_ids.reverse().slice(0,100), // Endpoint only takes max 100, so save the latest 100
     })
   }).catch(e => console.log('error', e))
     .then(res => res.json())
