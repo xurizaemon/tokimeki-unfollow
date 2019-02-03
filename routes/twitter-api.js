@@ -222,10 +222,26 @@ router.get('/data/delete_progress_lists', (req, res) => {
     count: 1000
   }).catch(e => apiCatch(res, e))
     .then(result => {
-    result.data.lists.forEach(list => {
-      let id = list.id_str;
-      if (list.slug.
-    });
+      let toDelete = result.data.lists.filter(list =>  {
+        return list.slug.indexOf('tokimeki') > -1
+      }).map(list => {
+        return twit.post('lists/destroy', {
+          list_id: list.id_str,
+          slug: list.slug
+        });
+      });
+    
+      console.log('deleting', toDelete.length, 'lists:', toDelete);
+
+      Promise.all(toDelete).catch(e => apiCatch(e))
+        .then(result => {
+          if (result.resp.toJSON().statusCode == 200 || result.status == 200) {
+            console.log('deleted', result.data.slug, result.data.id_str, result.data.name);
+            apiSend(res, result);
+          } else {
+            console.log('error deleting', result.resp.toJSON().statusCode)
+          }
+        });
   });
 });
 
