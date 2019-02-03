@@ -108,16 +108,20 @@ router.post('/data/lists/members/create', (req, res) => {
   });
 });
 
-router.get('/data/user/pics', (req, res) => {
-  console.log('getting pics', 
+router.post('/data/pics', (req, res) => {
+  console.log('pics')
+  if (!req.body.user_ids) res.sendStatus(404);
+  console.log(req.body.user_ids);
+  console.log('getting pics', req.body.user_ids.reverse().slice(0,100).join(','));
   twit.post('users/lookup', {
     user_id: req.body.user_ids.reverse().slice(0,100).join(','),
     include_entities: false
   }).catch(e => apiCatch(res, e))
     .then(result => {
+    console.log(result.data)
     apiSend(res, result, {
-      pics: result.data.users ? 
-        result.data.users.map(user => user.profile_image_url_https) : []
+      pics: result.data ? 
+        result.data.map(user => user.profile_image_url_https) : []
     });
   });
 });

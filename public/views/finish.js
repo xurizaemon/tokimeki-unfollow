@@ -10,7 +10,7 @@ let finish = Vue.component('finish', {
     'startcount',
     'keptcount',
     'listcount',
-    'keeps'
+    'kept'
   ],
   computed: {
     tweetLink() {
@@ -23,7 +23,8 @@ let finish = Vue.component('finish', {
   },
   methods: {
     fetchPics: function() {
-      getKeptPics(this.keeps)
+      console.log(this.kept)
+      getKeptPics(this.kept)
         .then(res => {
         console.log(res)
         this.kept_pics = res.data.pics;

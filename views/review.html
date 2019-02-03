@@ -11,6 +11,7 @@
         v-bind:startcount="start_count"
         v-bind:keptcount="kept.length"
         v-bind:listcount="addedToList.length"
+              :kept = "kept"
         ></finish>
       <intro
         v-else-if="introFinished == false"
