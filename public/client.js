@@ -116,6 +116,13 @@ function render(res) {
       showAddToListMenu: false
     },
     methods: {
+      showPrefs() {
+        // Since we allow users to go back to options, we need to reset the filtered list
+        // every time they press 'start' again
+        this.sel = 0;
+        
+        this.introFinished = false;
+      },
       updatePrefs: function(e) {
         [this.prefs.order, this.prefs.saveProgressAsList, this.prefs.showBio] = e;
         switch (this.prefs.order) {
@@ -139,7 +146,6 @@ function render(res) {
         if (this.sel == this.friends.length - 1) this.finished = true;
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
         if (this.prefs.showBio == false) this.showBio = false;
-        this.current_session_count += 1;
         this.saveProgressList();
       },
       prev: function() {
@@ -167,6 +173,7 @@ function render(res) {
           this.unfollowed.push(userId);
           console.log('unfollowed', userId);
           console.log(this.unfollowed);
+          this.current_session_count += 1;
         });
       },
       addToList(e) {
@@ -206,11 +213,16 @@ function render(res) {
         if (this.prefs.saveProgressAsList == false) return;
         Progress.saveList(this.kept, this.unfollowed, this.start_count, store);
       },
+      filterFriends() {
+        this.friendsFiltered = this.friendsFiltered.filter(id => {
+          return !(this.kept.includes(id) || this.unfollowed.includes(id))
+        });
+      },
       loadProgressQuick: function() {
         let load = Progress.loadQuick(store);
         this.kept = load.kept || this.kept;
         this.unfollowed = load.unfollowed || this.unfollowed;
-        this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
+        this.filterFriends();
         this.loadedProgress = (this.kept.length > 0 || this.unfollowed.length > 0);
         if (load.start_count > this.start_count) {
           this.start_count = load.start_count || this.start_count;
@@ -226,7 +238,7 @@ function render(res) {
               console.log('loaded', res.data.user_ids);
               // Combine in case the quick load and twitter list are different
               this.kept = this.kept.concat(res.data.user_ids.filter((id, i) => this.kept.indexOf(id) < 0));
-              this.friendsFiltered = this.friendsFiltered.filter(id => !this.kept.includes(id));
+              this.filterFriends();
               this.loadedProgress = (this.kept.length > 0);
               this.start_count = res.data.start_count || this.start_count;
               if (this.friendsFiltered.length == 0) this.finished = true;

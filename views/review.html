@@ -17,7 +17,7 @@
         v-on:intro-finished="introFinished = true; updatePrefs($event)"
         v-bind:username="user.screen_name"
         v-bind:loadedprogress="loadedProgress"
-        v-bind:followingcount="friends.length"
+        v-bind:followingcount="friends.length - current_session_count"
         v-bind:leftcount="friendsFiltered.length"
         v-bind:initialorder="prefs.order"
         v-bind:initialsaveprogressaslist="prefs.saveProgressAsList"
@@ -134,7 +134,7 @@
       </div>
       <div id="logout">
         <a v-if="!introFinished || finished" href="/logout" class="gray">Log Out</a>
-        <a v-else href="#" v-on:click="introFinished=false" class="gray">Options</a>
+        <a v-else href="#" v-on:click="showPrefs" class="gray">Options</a>
         <!--<a href="#" v-on:click="finished=!finished" class="gray">Finish?</a>-->
       </div>
       <div id="preload">
