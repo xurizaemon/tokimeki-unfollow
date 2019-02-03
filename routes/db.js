@@ -56,33 +56,32 @@ sequelize.authenticate()
   });
 
 let getKeeps = (user_id) => {
-  Keeps.findAll({
+  return Keeps.findAll({
     where: {
       user_id: user_id
     }
   }).then(results => {
-    return results.map(r => JSON.stringify(r).kept_id);
+    return results.map(r => r.get({plain:true}).kept_id);
   })
 };
 
 let getUnfollows = (user_id) => {
-  Unfollows.findAll({
+  return Unfollows.findAll({
     where: {
       user_id: user_id
     }
   }).then(results => {
-    console.log(results.map(r => r.get({plain:true}).unfollowed_id))
     return results.map(r => r.get({plain:true}).unfollowed_id);
   })
 };
 
 let getStartCount = (user_id) => {
-  Starts.findOne({
+  return Starts.findOne({
     where: {
       user_id: user_id
     }
   }).then(result => {
-    return result ? JSON.stringify(result).start_count : null;
+    return result ? result.get({plain:true}).start_count : null;
   })
 };
 
@@ -90,21 +89,27 @@ let getStartCount = (user_id) => {
 router.get("/data/progress", (req, res) => {
   console.log('loading progress')
   let kept_promise = new Promise((resolve) =>  {
-    resolve(getKeeps(req.session.userId));
+    getKeeps(req.session.userId).then(r => {
+      resolve(r);
+    });
   });
 
   let unfollowed_promise = new Promise((resolve) =>  {
-    resolve(getUnfollows(req.session.userId));
+    getUnfollows(req.session.userId).then(r => {
+      resolve(r);
+    });
   });
   
   let start_count_promise = new Promise((resolve) =>  {
-    resolve(getStartCount(req.session.userId));
+    getStartCount(req.session.userId).then(r => {
+      resolve(r);
+    });
   });
   
   Promise.all([
     kept_promise, unfollowed_promise, start_count_promise
   ]).then(result => {
-    // console.log(result)
+    console.log(result)
     if (result[0] == undefined &&
         result[1] == undefined &&
         result[2] == undefined) {
@@ -140,34 +145,61 @@ router.post("/data/progress/save", (req, res) => {
       start_count = req.body.start_count;
 
   console.log('saving', kept_ids, unfollowed_ids, start_count);
-
-  let kept_promises = kept_ids.map(id => {
-    return new Promise((resolve, reject) => {
-      Keeps.findCreateFind({
-        where: { user_id: user_id },
-        defaults: { kept_id: id }
-      }).spread((result, created) => {
-        if (created) console.log('saved keep', id)
-        resolve(result);
-      });
-    });
-  });
   
-  let unfollowed_promises = unfollowed_ids.map(id => {
-    return new Promise((resolve, reject) => {
-      Unfollows.findCreateFind({
-        where: {
-          user_id: user_id
-        },
-        defaults: {
-          unfollowed_id: id
-        }
-      }).spread((result, created) => {
-        if (created) console.log('saved unfollow', id)
-        resolve(result);
-      });
+  // Find all in db, then remove the dupes, then bulkCreate
+  let kept_promise = new Promise((resolve) => {
+    getKeeps(user_id).then(r => {
+      let new_ids = kept_ids
+        .filter(id => !r.includes(id))
+        .map(id => {
+          return {
+            user_id: user_id,
+            kept_id: id
+          }
+        });
+      Keeps.bulkCreate(new_ids)
+    });
+  let unfollow_promise = new Promise((resolve) => {
+    getUnfollows(user_id).then(r => {
+      let new_ids = unfollowed_ids
+        .filter(id => !r.includes(id))
+        .map(id => {
+          return {
+            user_id: user_id,
+            kept_id: id
+          }
+        });
+      Unfollows.bulkCreate(new_ids)
+        .then(() => resolve());
     });
   });
+  // let kept_promises = kept_ids.map(id => {
+  //   return new Promise((resolve, reject) => {
+  //     Keeps.findCreateFind({
+  //       where: { user_id: user_id },
+  //       defaults: { kept_id: id }
+  //     }).spread((result, created) => {
+  //       if (created) console.log('saved keep', id)
+  //       resolve(result);
+  //     });
+  //   });
+  // });
+  
+  // let unfollowed_promises = unfollowed_ids.map(id => {
+  //   return new Promise((resolve, reject) => {
+  //     Unfollows.findCreateFind({
+  //       where: {
+  //         user_id: user_id
+  //       },
+  //       defaults: {
+  //         unfollowed_id: id
+  //       }
+  //     }).spread((result, created) => {
+  //       if (created) console.log('saved unfollow', id)
+  //       resolve(result);
+  //     });
+  //   });
+  // });
   
   let start_promise = new Promise((resolve, reject) => {
     resolve(saveStartCount(user_id, Number(start_count)));
