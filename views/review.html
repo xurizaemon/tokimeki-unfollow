@@ -94,8 +94,8 @@
                       <span v-if="sel == 0">First up,</span>
                       <span v-else-if="sel < (friends.length - 1)">#{{sel + 1}}:</span>
                       <span v-else>Last but not least,</span>
-                      <strong>{{ friend.name }}</strong>, a.k.a.
-                      <span class="gray">@{{ friend.screen_name }}</span>!
+                      <strong><a :href="'https://twitter.com/'+friend.screen_name" target="_blank" class="black nodec">{{ friend.name }}</a></strong>, a.k.a.
+                      <a :href="'https://twitter.com/'+friend.screen_name" target="_blank" class="gray nodec">@{{ friend.screen_name }}</a>!
                       <span v-if="showBio==false">
                         <a href="#" v-on:click="showBio = true" class="keepblue">Show bio</a>
                       </span>

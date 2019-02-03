@@ -31,6 +31,10 @@ function genTwit(token, secret) {
 
 function apiCatch(res, e) {
   console.log('Error caught:', e.statusCode, e.code, e.message);
+  if (res.headerSent) {
+    console.log('headers sent already, aborting apiCatch');
+    return;
+  }
   res.send({
     status: e.statusCode || 500,
     errorCode: e.code,
