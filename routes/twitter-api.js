@@ -167,6 +167,7 @@ router.post('/data/save_progress', (req, res) => {
 });
 
 router.get('/data/load_progress', (req, res) => {
+  return;
   Promise.all([
     twit.get('lists/members', {
       slug: PROGRESS_LIST_SLUG,

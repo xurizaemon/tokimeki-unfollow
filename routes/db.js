@@ -64,7 +64,11 @@ router.post("/data/keeps/save_all", (req, res) => {
       kept_id: id
     });
   });
-  res.sendStatus(200);
+  res.send({
+    status: 200,
+    kept_ids: req.body.kept_ids
+  });
+
 });
 
 router.get("/data/starts", (req, res) => {
@@ -79,11 +83,23 @@ router.get("/data/starts", (req, res) => {
 
 // Expects start_count = INT
 router.post("/data/starts/save", (req, res) =>{
-  Keeps.create({
-    user_id: req.session.userId,
-    start_count: Number(req.body.start_count)
+  Keeps.findOrCreate({
+    where: {
+      user_id: req.session.userId
+    },
+    defaults: {
+      user_id: req.session.userId,
+      start_count: Number(req.body.start_count)
+    }
+  }).then(result => {
+    console.log('start count saved', result);
+    res.send({
+      status: 200,
+      start_count: Number(req.body.start_count),
+      result: result
+    });
   });
-  res.sendStatus(200);
+  
 });
 
 module.exports = router;

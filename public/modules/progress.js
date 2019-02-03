@@ -25,7 +25,7 @@ function saveList(kept_ids, unfollowed_ids, start_count) {
     .then(res => res.json())
     .then(res => {
       if (res.status == 200) {
-        console.log('saved to twitter list', res.data.list_id);
+        console.log('saved to server');
       } else {
         console.log('error saving to twitter list', res.status, res.errorCode, res.error);
       }
