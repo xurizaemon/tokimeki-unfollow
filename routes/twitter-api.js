@@ -127,6 +127,18 @@ router.post('/data/save_progress', (req, res) => {
     }
   }).then((result) => {
     if (result.data.slug && result.data.slug == PROGRESS_LIST_SLUG) {
+      // Todo this seems like it is running every time...
+      // Dirty hack because I 'shipped' this without updating PROGRESS_LIST_SLUG
+      // This changes the user-facing list name from 'tokimeki-test4' to something better
+      if (result.data.name == PROGRESS_LIST_SLUG) {
+        twit.post('lists/update', {
+          list_id: result.data.id_str,
+          name: 'Tokimeki Unfollow'
+        }).catch(e => apiCatch(res, e))
+          .then(result => {
+            if (result.resp.toJSON().statusCode == 200) console.log('renamed progress list', result.data.name);
+        });
+      }
       console.log('got list for progress saving, adding members...', req.body.user_ids[0]);
       return twit.post('lists/members/create', {
         list_id: result.data.id_str,
@@ -144,18 +156,6 @@ router.post('/data/save_progress', (req, res) => {
     apiSend(res, result, {
       list_id: result.data.id_str
     });
-    
-    // Dirty hack because I 'shipped' this without updating PROGRESS_LIST_SLUG
-    // This changes the user-facing list name from 'tokimeki-test4' to something better
-    if (result.data.name == PROGRESS_LIST_SLUG) {
-      return twit.post('lists/update', {
-        list_id: result.data.id_str,
-        name: 'Tokimeki Unfollow'
-      }).catch(e => apiCatch(res, e))
-        .then(result => {
-          if (result.resp.toJSON().statusCode == 200) console.log('renamed progress list');
-      });
-    }
   }).catch(e => apiCatch(res, e));
 });
 
