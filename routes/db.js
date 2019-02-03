@@ -2,7 +2,7 @@ let express = require('express');
 let router = express.Router();
 
 let Sequelize = require('sequelize');
-var Keeps, Starts;
+var Keeps, Unfollows, Starts;
 
 var sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_PASS, {
   host: '0.0.0.0',
@@ -27,6 +27,14 @@ sequelize.authenticate()
         type: Sequelize.STRING
       },
       kept_id: {
+        type: Sequelize.STRING
+      }
+    });
+    Unfollows = sequelize.define('unfollows', {
+      user_id: {
+        type: Sequelize.STRING
+      },
+      unfollow_id: {
         type: Sequelize.STRING
       }
     });
@@ -61,7 +69,8 @@ router.get("/data/keeps/", (req, res) => {
 
 // Expects kept_ids = [STR, ...]
 router.post("/data/keeps/save_all", (req, res) => {
-  let ids = JSON.parse(req.body.kept_ids);
+  let ids = req.body.kept_ids;
+  console.log('saving', ids);
   Keeps.bulkCreate(ids.map(id => {
     return {
       user_id: req.session.userId,
@@ -74,6 +83,44 @@ router.post("/data/keeps/save_all", (req, res) => {
       }
     });
   }).then(results => {
+    console.log('saved', results)
+    res.send({
+      status: 200,
+      kept_ids: results.map(r => r.kept_id)
+    });
+  });
+});
+
+router.get("/data/keeps/", (req, res) => {
+  Keeps.findAll({
+    where: {
+      user_id: req.session.userId
+    }
+  }).then(results => {
+    res.send({
+      status: 200,
+      kept_ids:results.map(r => r.kept_id)
+    });
+  })
+});
+
+// Expects unfollow_ids = [STR, ...]
+router.post("/data/keeps/save_all", (req, res) => {
+  let ids = req.body.kept_ids;
+  console.log('saving', ids);
+  Keeps.bulkCreate(ids.map(id => {
+    return {
+      user_id: req.session.userId,
+      kept_id: id
+    };
+  })).then(() => {
+    return Keeps.findAll({
+      where: {
+        user_id: req.session.userId
+      }
+    });
+  }).then(results => {
+    console.log('saved', results)
     res.send({
       status: 200,
       kept_ids: results.map(r => r.kept_id)
@@ -104,14 +151,13 @@ router.post("/data/starts/save", (req, res) =>{
       user_id: req.session.userId
     },
     defaults: {
-      user_id: req.session.userId,
       start_count: Number(req.body.start_count)
     }
-  }).then(result => {
-    console.log('start count saved', result);
+  }).spread((row, created) => {
+    console.log('start count saved', row, created);
     res.send({
       status: 200,
-      start_count: Number(req.body.start_count),
+      start_count: result.start_count,
       result: result
     });
   });

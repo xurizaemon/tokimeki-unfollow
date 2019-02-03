@@ -12,7 +12,7 @@ function saveQuick(kept_ids, unfollowed_ids, start_count, current_session_count,
 
 function saveList(kept_ids, unfollowed_ids, start_count) {
   return;
-  return fetch('https://tokimeki-unfollow.glitch.me/data/keeps/save', {
+  fetch('https://tokimeki-unfollow.glitch.me/data/keeps/save', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -25,9 +25,28 @@ function saveList(kept_ids, unfollowed_ids, start_count) {
     .then(res => res.json())
     .then(res => {
       if (res.status == 200) {
-        console.log('saved to server');
+        console.log('Saved kept ids to server', res.kept_ids);
       } else {
-        console.log('error saving to twitter list', res.status, res.errorCode, res.error);
+        console.log('Error saving kept ids to server');
+      }
+  });
+  
+  fetch('https://tokimeki-unfollow.glitch.me/data/starts/save', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      start_count: start_count
+    })
+  }).catch(e => console.log('error', e))
+    .then(res => res.json())
+    .then(res => {
+      if (res.status == 200) {
+        console.log('Saved start count to server', res.start_count);
+      } else {
+        console.log('Error saving start count to server');
       }
   });
 }
