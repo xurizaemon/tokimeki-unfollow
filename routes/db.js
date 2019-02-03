@@ -48,41 +48,77 @@ sequelize.authenticate()
     });
     
     Keeps.sync()
+    Unfollows.sync()
     Starts.sync()
   })
   .catch(function (err) {
     console.log('Unable to connect to the database: ', err);
   });
 
-router.get("/data/keeps/", (req, res) => {
+let getKeeps = (user_id) => {
   Keeps.findAll({
     where: {
-      user_id: req.session.userId
+      user_id: user_id
     }
   }).then(results => {
-    res.send({
-      status: 200,
-      kept_ids:results.map(r => r.kept_id)
-    });
+    return results.map(r => r.kept_id);
   })
-});
+};
 
-router.get("/data/unfollows/", (req, res) => {
+let getUnfollows = (user_id) => {
   Unfollows.findAll({
     where: {
-      user_id: req.session.userId
+      user_id: user_id
     }
   }).then(results => {
-    res.send({
-      status: 200,
-      unfollowed_ids:results.map(r => r.unfollowed_id)
-    });
+    return results.map(r => r.unfollowed_id);
   })
-});
+};
+
+let getStartCount = (user_id) => {
+  Starts.findOne({
+    where: {
+      user_id: user_id
+    }
+  }).then(result => {
+    return result ? result.start_count : null;
+  })
+};
 
 router.get("/data/progress", (req, res) => {
+  let kept_promise = new Promise((resolve) =>  {
+    resolve(getKeeps(req.session.userId));
+  });
+
+  let unfollowed_promise = new Promise((resolve) =>  {
+    resolve(getUnfollows(req.session.userId));
+  });
   
+  let start_count_promise = new Promise((resolve) =>  {
+    resolve(getStartCount(req.session.userId));
+  });
+  
+  Promise.all([
+    kept_promise, unfollowed_promise, start_count_promise
+  ]).then(result => {
+    res.send({
+      status: 200,
+      kept_ids: result[0],
+      unfollowed_ids: result[1],
+      start_count: result[2]
+    });
+  });
 });
+
+let saveStartCount = (user_id, start_count) => {
+  Starts.findOrCreate({
+    where: { user_id: user_id },
+    defaults: { start_count: start_count }
+  }).spread((result, created) => {
+    console.log('saved start count', result, created);
+    return result.start_count;
+  });
+};
 
 // Expects kept_ids = [STR, ...], unfollowed_ids = [STR, ...], start_count = INT
 router.post("/data/progress/save_all", (req, res) => {
@@ -134,32 +170,5 @@ router.post("/data/progress/save_all", (req, res) => {
     });
   });
 });
-
-
-router.get("/data/starts", (req, res) => {
-  Starts.findOne({
-    where: {
-      user_id: req.session.userId
-    }
-  }).then(result => {
-    if (result == null) {
-      return res.send({status: 404})
-    }
-    res.send({
-      status: 200,
-      start_count: result.start_count
-    });
-  })
-});
-
-let saveStartCount = (user_id, start_count) => {
-  Keeps.findOrCreate({
-    where: { user_id: user_id },
-    defaults: { start_count: start_count }
-  }).spread((result, created) => {
-    console.log('saved start count', result, created);
-    return result.start_count;
-  });
-};
 
 module.exports = router;
