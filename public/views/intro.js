@@ -71,6 +71,7 @@ let wdgt = Vue.component('intro', {
       <button class='button w100 big-screen' v-on:click="start">Start</button>
       <button class='button dib small-screen' v-on:click="start">Start</button>
       <br><br>
+
       <div class='gray small-screen-pad-r'>
         Made by <a href='https://tarng.com' class='gray'> Julius Tarng</a>.
         Follow <a href='https://twitter.com/tarngerine' class='gray'> @tarngerine</a> for more tools, games, and art!
