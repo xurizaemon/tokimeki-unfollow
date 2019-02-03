@@ -100,8 +100,8 @@ function render(res) {
       showBio: false,
       prefs: {
         order: store.getItem('prefsOrder') || 'oldest',
-        saveProgressAsList: store.getItem('prefsSaveProgressAsList') ?
-          JSON.parse(store.getItem('prefsSaveProgressAsList')) : true,
+        prefsSaveProgressOnServer: store.getItem('prefsSaveProgressOnServer') ?
+          JSON.parse(store.getItem('prefsSaveProgressOnServer')) : true,
         showBio: store.getItem('prefsShowBio') ?
           JSON.parse(store.getItem('prefsShowBio')) : false
       },
@@ -125,7 +125,7 @@ function render(res) {
         this.introFinished = false;
       },
       updatePrefs: function(e) {
-        [this.prefs.order, this.prefs.saveProgressAsList, this.prefs.showBio] = e;
+        [this.prefs.order, this.prefs.prefsSaveProgressOnServer, this.prefs.showBio] = e;
         switch (this.prefs.order) {
           case 'oldest':
             this.friends = this.friendsFiltered.slice().reverse();
@@ -140,14 +140,14 @@ function render(res) {
         }
         this.showBio = this.prefs.showBio;
         store.setItem('prefsOrder', this.prefs.order);
-        store.setItem('prefsSaveProgressAsList', this.prefs.saveProgressAsList);
+        store.setItem('prefsSaveProgressOnServer', this.prefs.prefsSaveProgressOnServer);
         store.setItem('prefsShowBio', this.prefs.showBio);
       },
       next: function() {
         if (this.sel == this.friends.length - 1) this.finished = true;
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
         if (this.prefs.showBio == false) this.showBio = false;
-        this.saveProgressList();
+        this.saveProgressServer();
       },
       prev: function() {
         this.sel = Math.max(this.sel - 1, 0);
@@ -209,10 +209,10 @@ function render(res) {
         this.kept.pop(); // this seems risky since we are not verifiying if it's there or not
         console.log('unkept', this.kept);
       },
-      saveProgressList: function() {
+      saveProgressServer: function() {
         Progress.saveQuick(this.kept, this.unfollowed, this.start_count, this.current_session_count, store);
-        if (this.prefs.saveProgressAsList == false) return;
-        Progress.saveList(this.kept, this.unfollowed, this.start_count, store);
+        if (this.prefs.prefsSaveProgressOnServer == false) return;
+        Progress.saveServer(this.kept, this.unfollowed, this.start_count, store);
       },
       filterFriends() {
         this.friendsFiltered = this.friendsFiltered.filter(id => {
@@ -231,9 +231,9 @@ function render(res) {
         this.current_session_count = load.current_session_count;
         if (this.friendsFiltered.length == 0) this.finished = true;
       },
-      loadProgressList: function() {
-        if (this.prefs.saveProgressAsList == false) return;
-        Progress.loadList(store)
+      loadProgressServer: function() {
+        if (this.prefs.prefsSaveProgressOnServer == false) return;
+        Progress.loadServer(store)
           .then(res => {
             if (res.status == 200) {
               console.log('loaded', res);
@@ -265,7 +265,7 @@ function render(res) {
     },
     created: function() {
       this.loadProgressQuick();
-      this.loadProgressList();
+      this.loadProgressServer();
     },
     watch: {
       selFriendId: {

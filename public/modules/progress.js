@@ -10,7 +10,7 @@ function saveQuick(kept_ids, unfollowed_ids, start_count, current_session_count,
              JSON.parse(store.getItem('start_count')));
 }
 
-function saveList(kept_ids, unfollowed_ids, start_count) {
+function saveServer(kept_ids, unfollowed_ids, start_count) {
   fetch('https://tokimeki-unfollow.glitch.me/data/progress/save', {
     method: 'POST',
     headers: {
@@ -47,7 +47,7 @@ function loadQuick(store) {
   };
 }
 
-function loadList() {
+function loadServer() {
   return fetch('https://tokimeki-unfollow.glitch.me/data/progress')
     .catch(e => console.log('error', e))
     .then(res => res.json());

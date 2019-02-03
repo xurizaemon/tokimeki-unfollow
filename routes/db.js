@@ -20,7 +20,7 @@ var sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_PA
 // authenticate with the database
 sequelize.authenticate()
   .then(function(err) {
-    console.log('Connection has been established successfully.');
+    // console.log('Connection has been established successfully.');
     // define a new table 'users'
     Keeps = sequelize.define('keeps', {
       user_id: {
@@ -61,7 +61,8 @@ let getKeeps = (user_id) => {
       user_id: user_id
     }
   }).then(results => {
-    return results.map(r => r.get({plain:true}).kept_id);
+    return results.map(r => r.get({plain:true}).kept_id)
+      .filter(id => id != null);
   })
 };
 
@@ -71,7 +72,8 @@ let getUnfollows = (user_id) => {
       user_id: user_id
     }
   }).then(results => {
-    return results.map(r => r.get({plain:true}).unfollowed_id);
+    return results.map(r => r.get({plain:true}).unfollowed_id)
+      .filter(id => id != null);
   })
 };
 
@@ -87,7 +89,7 @@ let getStartCount = (user_id) => {
 
 // Load progress
 router.get("/data/progress", (req, res) => {
-  console.log('loading progress')
+  // console.log('loading progress')
   let kept_promise = new Promise((resolve) =>  {
     getKeeps(req.session.userId).then(r => {
       resolve(r);
@@ -109,7 +111,6 @@ router.get("/data/progress", (req, res) => {
   Promise.all([
     kept_promise, unfollowed_promise, start_count_promise
   ]).then(result => {
-    console.log(result)
     if (result[0] == undefined &&
         result[1] == undefined &&
         result[2] == undefined) {
@@ -128,11 +129,10 @@ router.get("/data/progress", (req, res) => {
 });
 
 let saveStartCount = (user_id, start_count) => {
-  Starts.findCreateFind({
+  return Starts.findCreateFind({
     where: { user_id: user_id },
     defaults: { start_count: start_count }
   }).spread((result, created) => {
-    console.log('saved start count');
     return result.get({plain:true}).start_count;
   });
 };
@@ -144,7 +144,7 @@ router.post("/data/progress/save", (req, res) => {
       unfollowed_ids = req.body.unfollowed_ids,
       start_count = req.body.start_count;
 
-  console.log('saving', kept_ids, unfollowed_ids, start_count);
+  // console.log('saving', kept_ids, unfollowed_ids, start_count);
   
   // Find all in db, then remove the dupes, then bulkCreate
   let kept_promise = new Promise((resolve) => {
@@ -169,7 +169,7 @@ router.post("/data/progress/save", (req, res) => {
         .map(id => {
           return {
             user_id: user_id,
-            kept_id: id
+            unfollowed_id: id
           }
         });
       Unfollows.bulkCreate(new_ids)
@@ -186,7 +186,6 @@ router.post("/data/progress/save", (req, res) => {
   Promise.all([
     kept_promise, unfollowed_promise, start_count_promise
   ]).then(results => {
-    console.log('saved', results);
     res.send({
       status: 200
     });
