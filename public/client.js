@@ -235,13 +235,14 @@ function render(res) {
         if (this.prefs.saveProgressAsList == false) return;
         Progress.loadList(store)
           .then(res => {
-            if (res.data.user_ids) {
-              console.log('loaded', res.data.user_ids);
+            if (res.status == 200) {
+              console.log('loaded', res);
               // Combine in case the quick load and twitter list are different
-              this.kept = this.kept.concat(res.data.user_ids.filter((id, i) => this.kept.indexOf(id) < 0));
+              this.kept = this.kept.concat(res.kept_ids.filter((id, i) => this.kept.indexOf(id) < 0));
+              this.unfollowed = this.unfollowed.concat(res.unfollowed_ids.filter((id, i) => this.unfollowed.indexOf(id) < 0));
               this.filterFriends();
-              this.loadedProgress = (this.kept.length > 0);
-              this.start_count = res.data.start_count || this.start_count;
+              this.loadedProgress = (this.kept.length > 0 || this.unfollowed.length > 0);
+              this.start_count = res.start_count || this.start_count;
               if (this.friendsFiltered.length == 0) this.finished = true;
             }
         });

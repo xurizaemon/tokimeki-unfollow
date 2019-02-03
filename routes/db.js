@@ -85,7 +85,9 @@ let getStartCount = (user_id) => {
   })
 };
 
+// Load progress
 router.get("/data/progress", (req, res) => {
+  console.log('loading progress')
   let kept_promise = new Promise((resolve) =>  {
     resolve(getKeeps(req.session.userId));
   });
@@ -101,12 +103,21 @@ router.get("/data/progress", (req, res) => {
   Promise.all([
     kept_promise, unfollowed_promise, start_count_promise
   ]).then(result => {
-    res.send({
-      status: 200,
-      kept_ids: result[0],
-      unfollowed_ids: result[1],
-      start_count: result[2]
-    });
+    console.log(result)
+    if (result[0] == undefined &&
+        result[1] == undefined &&
+        result[2] == undefined) {
+      res.send({
+        status: 404
+      });
+    } else {
+      res.send({
+        status: 200,
+        kept_ids: result[0] || [],
+        unfollowed_ids: result[1] || [],
+        start_count: result[2] || null
+      });
+    }
   });
 });
 
@@ -121,13 +132,13 @@ let saveStartCount = (user_id, start_count) => {
 };
 
 // Expects kept_ids = [STR, ...], unfollowed_ids = [STR, ...], start_count = INT
-router.post("/data/progress/save_all", (req, res) => {
+router.post("/data/progress/save", (req, res) => {
   let user_id = req.session.userId,
       kept_ids = req.body.kept_ids,
       unfollowed_ids = req.body.unfollowed_ids,
       start_count = req.body.start_count;
 
-  console.log('saving', kept_ids, unfollowed_ids);
+  console.log('saving', kept_ids, unfollowed_ids, start_count);
 
   let kept_promises = kept_ids.map(id => {
     return new Promise((resolve, reject) => {

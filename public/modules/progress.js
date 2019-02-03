@@ -11,7 +11,6 @@ function saveQuick(kept_ids, unfollowed_ids, start_count, current_session_count,
 }
 
 function saveList(kept_ids, unfollowed_ids, start_count) {
-  return;
   fetch('https://tokimeki-unfollow.glitch.me/data/progress/save', {
     method: 'POST',
     headers: {
@@ -19,34 +18,17 @@ function saveList(kept_ids, unfollowed_ids, start_count) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      kept_ids: kept_ids
-    })
-  }).catch(e => console.log('error', e))
-    .then(res => res.json())
-    .then(res => {
-      if (res.status == 200) {
-        console.log('Saved kept ids to server', res.kept_ids);
-      } else {
-        console.log('Error saving kept ids to server');
-      }
-  });
-  
-  fetch('https://tokimeki-unfollow.glitch.me/data/starts/save', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
+      kept_ids: kept_ids,
+      unfollowed_ids: unfollowed_ids,
       start_count: start_count
     })
   }).catch(e => console.log('error', e))
     .then(res => res.json())
     .then(res => {
       if (res.status == 200) {
-        console.log('Saved start count to server', res.start_count);
+        console.log('Saved to server');
       } else {
-        console.log('Error saving start count to server');
+        console.log('Error saving to server');
       }
   });
 }
@@ -66,7 +48,7 @@ function loadQuick(store) {
 }
 
 function loadList() {
-  return fetch('https://tokimeki-unfollow.glitch.me/data/load_progress')
+  return fetch('https://tokimeki-unfollow.glitch.me/data/progress')
     .catch(e => console.log('error', e))
     .then(res => res.json());
 }
