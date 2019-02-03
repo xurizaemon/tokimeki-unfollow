@@ -30,10 +30,12 @@ function getLoggedInUserData() {
       store.setItem('user', JSON.stringify(res[0].data));
       store.setItem('friends', JSON.stringify(res[1].data.ids));
       store.setItem('lists', JSON.stringify(res[2].data.lists));
+      store.setItem('current_session_count', JSON.stringify(0)); // Reset current session count
       render({
         user: res[0].data,
         friends: res[1].data.ids,
-        lists: res[2].data.lists
+        lists: res[2].data.lists,
+        current_session_count: 0
       });
     } else {
       throw res;
@@ -52,7 +54,8 @@ if (invalidateStore(store)) {
   render({
     user: JSON.parse(store.getItem('user')),
     friends: JSON.parse(store.getItem('friends')),
-    lists: JSON.parse(store.getItem('lists'))
+    lists: JSON.parse(store.getItem('lists')),
+    current_session_count: JSON.parse(store.getItem('current_session_count'))
   });
 }
 
@@ -80,7 +83,8 @@ function render(res) {
     friend: { name: "Loading...", screen_name: "Loading..." },
     friends: res.friends,
     user: res.user,
-    lists: res.lists
+    lists: res.lists,
+    current_session_count: res.current_session_count
   }
 
   var app = new Vue({
@@ -89,7 +93,7 @@ function render(res) {
       sel: 0,
       user: dataDefaults.user,
       start_count: dataDefaults.user.friends_count,
-      currentSessionCount: dataDefaults.user.friends_count,
+      current_session_count: dataDefaults.current_session_count,
       friends: dataDefaults.friends,
       friendsFiltered: dataDefaults.friends,
       friend: dataDefaults.friend,
@@ -135,6 +139,7 @@ function render(res) {
         if (this.sel == this.friends.length - 1) this.finished = true;
         this.sel = Math.min(this.sel + 1, this.friends.length - 1);
         if (this.prefs.showBio == false) this.showBio = false;
+        this.current_session_count += 1;
         this.saveProgressList();
       },
       prev: function() {
@@ -197,7 +202,7 @@ function render(res) {
         console.log('unkept', this.kept);
       },
       saveProgressList: function() {
-        Progress.saveQuick(this.kept, this.unfollowed, this.start_count, store);
+        Progress.saveQuick(this.kept, this.unfollowed, this.start_count, this.current_session_count, store);
         if (this.prefs.saveProgressAsList == false) return;
         Progress.saveList(this.kept, this.unfollowed, this.start_count, store);
       },
@@ -210,6 +215,7 @@ function render(res) {
         if (load.start_count > this.start_count) {
           this.start_count = load.start_count || this.start_count;
         }
+        this.current_session_count = load.current_session_count;
         if (this.friendsFiltered.length == 0) this.finished = true;
       },
       loadProgressList: function() {
