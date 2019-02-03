@@ -230,16 +230,26 @@ router.get('/data/delete_progress_lists', (req, res) => {
           slug: list.slug
         });
       });
+      if (toDelete.length == 0) {
+        res.send({
+          status: 404,
+          message: 'No lists found to delete',
+          lists_found: result.data.lists.map(list => list.slug)
+        });
+        return
+      }
     
       console.log('deleting', toDelete.length, 'lists:', toDelete);
 
-      Promise.all(toDelete).catch(e => apiCatch(e))
+      Promise.all(toDelete).catch(e => console.log('error deleting', e))
         .then(result => {
-          if (result.resp.toJSON().statusCode == 200 || result.status == 200) {
-            console.log('deleted', result.data.slug, result.data.id_str, result.data.name);
-            apiSend(res, result);
-          } else {
-            console.log('error deleting', result.resp.toJSON().statusCode)
+          console.log(result)
+          if (result.reduce((prev,r) => prev && r.status == 200 )) {
+            res.send({
+              status: 200,
+              message: 'Deleted lists!',
+              lists: result.map(r => r.data.slug)
+            })
           }
         });
   });
