@@ -30,7 +30,7 @@ function getLoggedInUserData() {
       store.setItem('user', JSON.stringify(res[0].data));
       store.setItem('friends', JSON.stringify(res[1].data.ids));
       store.setItem('lists', JSON.stringify(res[2].data.lists));
-      store.setItem('current_session_count', JSON.stringify(0)); // Reset current session count
+      store.setItem('current_session_count', JSON.stringify(0)); // Reset current session unfollow count
       render({
         user: res[0].data,
         friends: res[1].data.ids,

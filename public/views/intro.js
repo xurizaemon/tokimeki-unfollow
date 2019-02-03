@@ -36,31 +36,6 @@ let wdgt = Vue.component('intro', {
         @{{ username }}! Let's konmari those {{followingcount}} accounts you're following ~_~
         <span v-if='loadedprogress'>{{leftcount}} to go!</span>
       </h1>
-      <!--<p v-if='loadedprogress'>
-        <center>
-        <a href='#' @click='showIntroText = true' v-if='loadedprogress && !showIntroText' class='gray'>
-          Read intro again ▼
-        </a>
-        </center>
-      </p>-->
-      <span v-if='showIntroText'>
-        <p>
-          Do you think your feed sucks because you follow too many accounts?
-          You're in the right place!
-        </p>
-        <p>
-          If you're like me, you've followed a bajillion accounts over your years on Twitter dot com.
-          Some of them date back to your first days as an egg — when you were probably an entirely different human being.
-          You have some socially-obliged follow-backs sprinkled among some thought leaders you've outgrown,
-          but you've never found the energy to go through and clean up your follows.
-        </p>
-        <p>
-          Take a deep breath! Let's walk through our follows, one by one, and think about if each one still sparks joy, intrigue, inspiration,
-          or is in any way still important to you. <b>If not, hit that Unfollow button!</b>
-        </p>
-        <hr>
-        <br>
-      </span>
       <p>
         It's hard to do this all in one go, so don't feel bad if you need to take a break.
         I'll save your progress as you go so you can pick it up again another time.
@@ -96,10 +71,10 @@ let wdgt = Vue.component('intro', {
       <button class='button w100 big-screen' v-on:click="start">Start</button>
       <button class='button dib small-screen' v-on:click="start">Start</button>
       <br><br>
-      <span class='gray small-screen-pad-r'>
+      <div class='gray small-screen-pad-r'>
         Made by <a href='https://tarng.com' class='gray'> Julius Tarng</a>.
         Follow <a href='https://twitter.com/tarngerine' class='gray'> @tarngerine</a> for more tools, games, and art!
-      </span>
+      </div>
   </div>
   `
 });
