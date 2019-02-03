@@ -60,7 +60,7 @@ function getLists(userId) {
 }
 
 function getKeptPics(kept_ids) {
-  return post('https://tokimeki-unfollow.glitch.me/data/pics', {
+  return post('/data/pics', {
     user_ids: kept_ids
   });
 }
