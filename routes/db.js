@@ -52,23 +52,33 @@ router.get("/data/keeps/", (req, res) => {
       user_id: req.session.userId
     }
   }).then(results => {
-    res.send(results.map(r => r.kept_id));
+    res.send({
+      status: 200,
+      kept_ids:results.map(r => r.kept_id)
+    });
   })
 });
 
 // Expects kept_ids = [STR, ...]
 router.post("/data/keeps/save_all", (req, res) => {
-  req.body.kept_ids.forEach(id => {
-    Keeps.create({
+  let ids = JSON.parse(req.body.kept_ids);
+  Keeps.bulkCreate(ids.map(id => {
+    return {
       user_id: req.session.userId,
       kept_id: id
+    };
+  })).then(() => {
+    return Keeps.findAll({
+      where: {
+        user_id: req.session.userId
+      }
+    });
+  }).then(results => {
+    res.send({
+      status: 200,
+      kept_ids: results.map(r => r.kept_id)
     });
   });
-  res.send({
-    status: 200,
-    kept_ids: req.body.kept_ids
-  });
-
 });
 
 router.get("/data/starts", (req, res) => {
@@ -77,7 +87,13 @@ router.get("/data/starts", (req, res) => {
       user_id: req.session.userId
     }
   }).then(result => {
-    res.send(result);
+    if (result == null) {
+      return res.send({status: 404})
+    }
+    res.send({
+      status: 200,
+      start_count: result.start_count
+    });
   })
 });
 
@@ -99,7 +115,6 @@ router.post("/data/starts/save", (req, res) =>{
       result: result
     });
   });
-  
 });
 
 module.exports = router;

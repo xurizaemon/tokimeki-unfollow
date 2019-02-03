@@ -19,7 +19,7 @@ function saveList(kept_ids, unfollowed_ids, start_count) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      kept_ids: kept_ids.reverse().slice(0,100), // Endpoint only takes max 100, so save the latest 100
+      kept_ids: kept_ids
     })
   }).catch(e => console.log('error', e))
     .then(res => res.json())
