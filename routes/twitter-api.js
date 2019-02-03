@@ -110,6 +110,9 @@ router.post('/data/lists/members/create', (req, res) => {
 
 /* Saving/Loading Progress as a List */
 router.post('/data/save_progress', (req, res) => {
+  // STOP USING LISTS
+  console.log('saving attempted')
+  return;
   if (!req.body.user_ids) res.send({ status: 500, error: 'No user ids provided.' });
   
   // SUPPORT MATCHING BY NAME? PULL ALL LISTS AND .FILTER FOR THE ONE WE WANT?
@@ -126,6 +129,7 @@ router.post('/data/save_progress', (req, res) => {
       }).catch(e => apiCatch(res, e));
     }
   }).then((result) => {
+    console.log(result)
     if (result.data.slug && result.data.slug == PROGRESS_LIST_SLUG) {
       // console.log(result.data.full_name)
       // // Todo this seems like it is running every time...
@@ -210,6 +214,19 @@ router.get('/data/ratelimit', (req, res) => {
     .then(result => {
     res.send(result);
   })
+});
+
+router.get('/data/delete_progress_lists', (req, res) => {
+  twit.get('lists/ownerships', {
+    owner_id: req.session.userId,
+    count: 1000
+  }).catch(e => apiCatch(res, e))
+    .then(result => {
+    result.data.lists.forEach(list => {
+      let id = list.id_str;
+      if (list.slug.
+    });
+  });
 });
 
 module.exports = router;
