@@ -244,6 +244,9 @@ function render(res) {
         getLoggedInUserData();
         // proper reset should not call render() again
         // should only change this.$data
+      },
+      formatBio(text) {
+        return '&ldquo;'+Vue.autolinker(text)+'&rdquo;';
       }
     },
     created: function() {

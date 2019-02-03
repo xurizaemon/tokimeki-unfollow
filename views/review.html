@@ -17,7 +17,8 @@
         v-on:intro-finished="introFinished = true; updatePrefs($event)"
         v-bind:username="user.screen_name"
         v-bind:loadedprogress="loadedProgress"
-        v-bind:followingcount="start_count - kept.length - unfollowed.length"
+        v-bind:followingcount="friends.length"
+        v-bind:leftcount="friendsFiltered.length"
         v-bind:initialorder="prefs.order"
         v-bind:initialsaveprogressaslist="prefs.saveProgressAsList"
         v-bind:initialshowbio="prefs.showBio">
@@ -99,7 +100,7 @@
                         <a href="#" v-on:click="showBio = true" class="keepblue">Show bio</a>
                       </span>
                       <span v-else id="bio">
-                        <span class="">&ldquo;{{ friend.description }}&rdquo;</span>
+                        <span v-html="formatBio(friend.description)"></span>
                         <a href="#" v-on:click="showBio = false" class="keepblue">Hide bio</a>
                       </span>
                     </p>

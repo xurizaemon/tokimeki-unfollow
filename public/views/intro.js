@@ -10,6 +10,7 @@ let wdgt = Vue.component('intro', {
   props: [
     'username',
     'followingcount',
+    'leftcount',
     'loadedprogress',
     'initialorder',
     'initialsaveprogressaslist',
@@ -33,6 +34,7 @@ let wdgt = Vue.component('intro', {
         <span v-if='loadedprogress'>Hello again,</span>
         <span v-else>Hello,</span>
         @{{ username }}! Let's konmari those {{followingcount}} accounts you're following ~_~
+        <span v-if='loadedprogress'>{{leftcount}} to go!</span>
       </h1>
       <!--<p v-if='loadedprogress'>
         <center>
