@@ -61,7 +61,7 @@ let getKeeps = (user_id) => {
       user_id: user_id
     }
   }).then(results => {
-    return results.map(r => r.kept_id);
+    return results.map(r => JSON.stringify(r).kept_id);
   })
 };
 
@@ -71,7 +71,8 @@ let getUnfollows = (user_id) => {
       user_id: user_id
     }
   }).then(results => {
-    return results.map(r => r.unfollowed_id);
+    console.log(results.map(r => r.get({plain:true}).unfollowed_id))
+    return results.map(r => r.get({plain:true}).unfollowed_id);
   })
 };
 
@@ -81,7 +82,7 @@ let getStartCount = (user_id) => {
       user_id: user_id
     }
   }).then(result => {
-    return result ? result.start_count : null;
+    return result ? JSON.stringify(result).start_count : null;
   })
 };
 
@@ -103,7 +104,7 @@ router.get("/data/progress", (req, res) => {
   Promise.all([
     kept_promise, unfollowed_promise, start_count_promise
   ]).then(result => {
-    console.log(result)
+    // console.log(result)
     if (result[0] == undefined &&
         result[1] == undefined &&
         result[2] == undefined) {
@@ -122,7 +123,7 @@ router.get("/data/progress", (req, res) => {
 });
 
 let saveStartCount = (user_id, start_count) => {
-  Starts.findOrCreate({
+  Starts.findCreateFind({
     where: { user_id: user_id },
     defaults: { start_count: start_count }
   }).spread((result, created) => {
@@ -142,7 +143,7 @@ router.post("/data/progress/save", (req, res) => {
 
   let kept_promises = kept_ids.map(id => {
     return new Promise((resolve, reject) => {
-      Keeps.findOrCreate({
+      Keeps.findCreateFind({
         where: { user_id: user_id },
         defaults: { kept_id: id }
       }).spread((result, created) => {
@@ -154,7 +155,7 @@ router.post("/data/progress/save", (req, res) => {
   
   let unfollowed_promises = unfollowed_ids.map(id => {
     return new Promise((resolve, reject) => {
-      Unfollows.findOrCreate({
+      Unfollows.findCreateFind({
         where: {
           user_id: user_id
         },
@@ -175,9 +176,10 @@ router.post("/data/progress/save", (req, res) => {
   Promise.all(
     kept_promises.concat(unfollowed_promises).concat(start_promise)
   ).then(results => {
-    console.log('saved', results);
+    console.log('saved');
     res.send({
-      status: 200
+      status: 200,
+      results: results
     });
   });
 });
