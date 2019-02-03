@@ -8,7 +8,7 @@ var sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_PA
   host: '0.0.0.0',
   dialect: 'sqlite',
   pool: {
-    max: 100,
+    max: 999999,
     min: 0,
     idle: 10000
   },
@@ -156,7 +156,7 @@ router.post("/data/progress/save", (req, res) => {
     return new Promise((resolve, reject) => {
       Unfollows.findOrCreate({
         where: {
-          user_id: req.session.userId
+          user_id: user_id
         },
         defaults: {
           unfollowed_id: id
@@ -169,7 +169,7 @@ router.post("/data/progress/save", (req, res) => {
   });
   
   let start_promise = new Promise((resolve, reject) => {
-    resolve(saveStartCount(res.session.userId, Number(start_count)));
+    resolve(saveStartCount(user_id, Number(start_count)));
   });
   
   Promise.all(
