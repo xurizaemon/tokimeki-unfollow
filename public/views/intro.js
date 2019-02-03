@@ -57,7 +57,7 @@ let wdgt = Vue.component('intro', {
             If this is off, I'll still save your progress to this browser's local storage.</label>
         </p>
         <p>
-          <b>Select an order to use:</b> (Recommended: Oldest first)
+          <span><b>Select an order to use:</b> (Recommended: Oldest first)</span>
           <br>
           <input type="radio" name="order" id="oldest" value="oldest" v-model="order">
           <label for="oldest">Oldest first, chronological order</label><br>
