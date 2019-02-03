@@ -2,7 +2,7 @@ let express = require('express');
 let router = express.Router();
 
 let Sequelize = require('sequelize');
-var Keeps;
+var Keeps, Starts;
 
 var sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_PASS, {
   host: '0.0.0.0',
@@ -30,19 +30,28 @@ sequelize.authenticate()
         type: Sequelize.STRING
       }
     });
+    Starts = sequelize.define('starts', {
+      user_id: {
+        type: Sequelize.STRING
+      },
+      start_count: {
+        type: Sequelize.INTEGER
+      }
+    });
     
     Keeps.sync()
+    Starts.sync()
   })
   .catch(function (err) {
     console.log('Unable to connect to the database: ', err);
   });
 
-router.get("/data/keeps", (req, res) => {
-  var dbKeeps=[];
-  Keeps.findAll().then((rows) => {
-    res.send(rows.map(r => [r.user_id,r.kept_id]));
-  });
-});
+// router.get("/data/keeps", (req, res) => {
+//   var dbKeeps=[];
+//   Keeps.findAll().then((rows) => {
+//     res.send(rows.map(r => [r.user_id,r.kept_id]));
+//   });
+// });
 
 router.get("/data/keeps/:user_id", (req, res) => {
   Keeps.findAll({
@@ -54,8 +63,22 @@ router.get("/data/keeps/:user_id", (req, res) => {
   })
 });
 
-// creates a new entry in the users table with the submitted values
-router.post("/keeps", function (request, response) {
-  Keeps.create({ user_id: request.query.user_id, kept_id: request.query.kept_id});
+router.post("/data/keeps", (req, res) {
+  Keeps.create({ user_id: req.query.user_id, kept_id: req.query.kept_id});
+  response.sendStatus(200);
+});
+
+router.get("/data/starts/:user_id", (req, res) => {
+  Starts.findAll({
+    where: {
+      user_id: req.params.user_id
+    }
+  }).then(results => {
+    res.send(results.map(r => r.start_count));
+  })
+});
+
+router.post("/data/starts", function (request, response) {
+  Keeps.create({ user_id: request.query.user_id, start_count: request.query.start_count});
   response.sendStatus(200);
 });
