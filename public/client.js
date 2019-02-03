@@ -57,9 +57,9 @@ if (invalidateStore(store)) {
 }
 
 function invalidateStore(store) {
-  console.log('Validating store');
+  console.log('Validating store from',store.getItem('updated'));
   let updated = store.getItem('updated');
-  if (updated === null) { return true }
+  if (updated === null || updated === 'undefined') { return true }
   if (new Date() - new Date(updated) >
       5 * 60 * 1000) {
     console.log('More than 5 minutes since last update');
@@ -89,6 +89,7 @@ function render(res) {
       sel: 0,
       user: dataDefaults.user,
       start_count: dataDefaults.user.friends_count,
+      currentSessionCount: dataDefaults.user.friends_count,
       friends: dataDefaults.friends,
       friendsFiltered: dataDefaults.friends,
       friend: dataDefaults.friend,
