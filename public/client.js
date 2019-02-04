@@ -103,7 +103,8 @@ function render(res) {
         saveProgressOnServer: store.getItem('prefsSaveProgressOnServer') ?
           JSON.parse(store.getItem('prefsSaveProgressOnServer')) : true,
         showBio: store.getItem('prefsShowBio') ?
-          JSON.parse(store.getItem('prefsShowBio')) : false
+          JSON.parse(store.getItem('prefsShowBio')) : false,
+        skipConfirmation: false
       },
       unfollowed: [],
       kept: [],
@@ -175,6 +176,7 @@ function render(res) {
           console.log('unfollowed', userId);
           console.log(this.unfollowed);
           this.current_session_count += 1;
+          if (this.prefs.skipConfirmation) this.next();
         });
       },
       addToList(e) {
@@ -204,6 +206,7 @@ function render(res) {
       keep: function() {
         console.log('keeping');
         this.kept.push(this.selFriendId);
+        if (this.prefs.skipConfirmation) this.next();
       },
       unkeep: function() {
         this.kept.pop(); // this seems risky since we are not verifiying if it's there or not
