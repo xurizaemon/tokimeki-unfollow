@@ -97,7 +97,7 @@ let wdgt = Vue.component('twttr-widget', {
       </div>
       <div v-else>
         <ol id="backup-tweets">
-          <div class="backup-tweets-banner">Private user, using custom rendering</div>
+          <!--<div class="backup-tweets-banner">Private user, using custom rendering</div>-->
           <div v-if="tweets.length == 0">
             <p>Loading tweets by @{{ username }}...</p>
             Not loading? <a href="#" :click="fetchTweets(id)">Try again</a></div>
