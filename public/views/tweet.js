@@ -23,8 +23,7 @@ let tweetComponent = Vue.component('tweet', {
         <span>
           <a :href="'https://twitter.com/' + tweet.user.screen_name"
             target="_blank" rel="noopener noreferrer"
-            class="nodec">
-            <strong class="black">{{ tweet.user.name }}</strong>
+            class="nodec"><strong class="black">{{ tweet.user.name }}</strong>
             <span class="gray">
               @{{ tweet.user.screen_name }}
             </span>

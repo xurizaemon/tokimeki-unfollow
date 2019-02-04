@@ -119,6 +119,7 @@ img {
   right:0;
   overflow-y: scroll;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: .7em;
 }
 .backup-tweets-banner {
   background: gray;
