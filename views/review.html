@@ -61,10 +61,11 @@
                   <strong>{{ friend.name }}</strong>
                   for all the tweets you've enjoyed before.
                 </p>
-                <p>
-                  <a v-if="prefs.skipConfirmation == false" href="#" :click="prefs.skipConfirmation = true" class="gray">
+<!--                 <p>
+                  <a v-if="prefs.skipConfirmation == false" href="#" v-on:click="prefs.skipConfirmation = true" class="gray">
                     Turn off confirmation step.</a>
-                  <span v-else class="gray">Got it. I'll skip this confirmation step.</span></p>
+                  <span v-else class="gray">Got it. I'll skip this confirmation step. <a href="#" :click="prefs.skipConfirmation = false" class="gray">Undo</a></span>
+                </p> -->
                 <div id="btns">
                   <a href="#" v-on:click="follow" class="button dib">Undo</a>
                   <a href="#" v-on:click="next" class="button dib">Next</a>
@@ -77,6 +78,11 @@
                   <strong>{{ friend.name }}</strong>'s
                   tweets are still important to you. 
                 </p>
+<!--                 <p>
+                  <a v-if="prefs.skipConfirmation == false" href="#" v-on:click="prefs.skipConfirmation = true" class="gray">
+                    Turn off confirmation step.</a>
+                  <span v-else class="gray">Got it. I'll skip this confirmation step. <a href="#" :click="prefs.skipConfirmation = false" class="gray">Undo</a></span>
+                </p> -->
                 <div id="btns">
                   <a href="#" v-on:click="unkeep" class="button dib">Undo</a>
                   <a href="#" v-on:click="next" class="button dib">Next</a>
