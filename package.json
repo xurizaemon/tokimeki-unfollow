@@ -1,6 +1,6 @@
 {
   "name": "tokimeki-unfollow",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "KonMari your Twitter follows",
   "main": "server.js",
   "scripts": {
@@ -9,7 +9,6 @@
   "dependencies": {
     "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.4",
-    "fetch": "^1.1.0",
     "login-with-twitter": "^1.2.0",
     "pug": "^2.0.3",
     "sequelize": "^4.42.0",

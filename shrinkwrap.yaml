@@ -1,7 +1,6 @@
 dependencies:
   cookie-session: 2.0.0-beta.3
   express: 4.16.4
-  fetch: 1.1.0
   login-with-twitter: 1.2.0
   pug: 2.0.3
   sequelize: 4.42.0
@@ -164,14 +163,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=
-  /biskviit/1.0.1:
-    dependencies:
-      psl: 1.1.31
-    dev: false
-    engines:
-      node: '>=1.0.0'
-    resolution:
-      integrity: sha1-A3oM1LcbnjMf2QoRIt4X3EnkIKc=
   /bluebird/3.5.3:
     dev: false
     resolution:
@@ -437,12 +428,6 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
-  /encoding/0.1.12:
-    dependencies:
-      iconv-lite: 0.4.24
-    dev: false
-    resolution:
-      integrity: sha1-U4tm8+5izRq1HsMjgp0flIDHS+s=
   /escape-html/1.0.3:
     dev: false
     resolution:
@@ -520,13 +505,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-1RQsDK7msRifh9OnYREGT4bIu/I=
-  /fetch/1.1.0:
-    dependencies:
-      biskviit: 1.0.1
-      encoding: 0.1.12
-    dev: false
-    resolution:
-      integrity: sha1-CoJ58Gvjf58Ou1Z1YKMKSA2lmi4=
   /finalhandler/1.1.1:
     dependencies:
       debug: 2.6.9
@@ -1739,7 +1717,6 @@ shrinkwrapVersion: 3
 specifiers:
   cookie-session: ^2.0.0-beta.3
   express: ^4.16.4
-  fetch: ^1.1.0
   login-with-twitter: ^1.2.0
   pug: ^2.0.3
   sequelize: ^4.42.0
