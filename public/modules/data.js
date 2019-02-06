@@ -1,5 +1,5 @@
 function post(url, obj, callback) {
-  return fetch('https://tokimeki-unfollow.glitch.me' + url, {
+  return fetch(`https://${process.env.GLITCH_APP}.glitch.me${url}`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -54,7 +54,7 @@ function createList(name, isPrivate) {
 }
 
 function getLists(userId) {
-  return fetch('https://tokimeki-unfollow.glitch.me/data/lists/ownerships')
+  return fetch(`https://${process.env.GLITCH_APP}.glitch.me/data/lists/ownerships`)
     .catch(e => showUserError(e))
     .then(res => res.json());
 }

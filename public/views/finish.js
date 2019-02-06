@@ -16,7 +16,7 @@ let finish = Vue.component('finish', {
     tweetLink() {
       let text = "✨I just konmari'd my Twitter!✨\n\n" +
         `Started with ${this.startcount} follows and unfollowed ${this.startcount-this.keptcount}` +
-        " using Tokimeki Unfollow\nhttps://tokimeki-unfollow.glitch.me";
+        ` using Tokimeki Unfollow\nhttps://${process.env.GLITCH_APP}.glitch.me`;
       return 'https://twitter.com/intent/tweet?text=' +
         encodeURI(text);
     }

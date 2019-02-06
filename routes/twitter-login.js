@@ -4,7 +4,13 @@ let router = express.Router();
 const LoginWithTwitter = new (require('login-with-twitter'))({
   consumerKey: process.env.KEY,
   consumerSecret: process.env.SECRET,
-  callbackUrl: 'https://tokimeki-unfollow.glitch.me/auth/twitter/callback' 
+  callbackUrl: `https://${process.env.GLITCH_APP}.glitch.me/auth/twitter/callback`
+});
+
+console.log({
+  consumerKey: process.env.KEY,
+  consumerSecret: process.env.SECRET,
+  callbackUrl: `https://${process.env.GLITCH_APP}.glitch.me/auth/twitter/callback`
 });
 
 // setup login route to link to with login link on website
