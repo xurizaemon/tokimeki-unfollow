@@ -7,6 +7,12 @@ const LoginWithTwitter = new (require('login-with-twitter'))({
   callbackUrl: `https://${process.env.GLITCH_APP}.glitch.me/auth/twitter/callback`
 });
 
+console.log({
+  consumerKey: process.env.KEY,
+  consumerSecret: process.env.SECRET,
+  callbackUrl: `https://${process.env.GLITCH_APP}.glitch.me/auth/twitter/callback`
+});
+
 // setup login route to link to with login link on website
 router.get('/auth/twitter', (req, res, next) => {
   LoginWithTwitter.login((err, tokenSecret, url) => {

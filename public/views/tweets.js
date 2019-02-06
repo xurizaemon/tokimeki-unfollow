@@ -7,7 +7,7 @@ let wdgt = Vue.component('twttr-widget', {
   props: ['username', 'id', 'private'],
   methods: {
     fetchTweets(id) {
-      window.fetch('https://tokimeki-unfollow.glitch.me/data/tweets/' + id)
+      window.fetch(`https://${process.env.GLITCH_APP}.glitch.me/data/tweets/` + id)
         .catch(e => console.log('error getting tweets', e))
         .then(res => res.json())
         .then(res => {

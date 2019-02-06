@@ -17,9 +17,9 @@ Vue.autolinker = function(txt) {
 function getLoggedInUserData() {
   console.log('get logged in user data')
   Promise.all([
-    window.fetch('https://tokimeki-unfollow.glitch.me/data/user'),
-    window.fetch('https://tokimeki-unfollow.glitch.me/data/friends'),
-    window.fetch('https://tokimeki-unfollow.glitch.me/data/lists/ownerships')
+    window.fetch(`https://${process.env.GLITCH_APP}.glitch.me/data/user`),
+    window.fetch(`https://${process.env.GLITCH_APP}.glitch.me/data/friends`),
+    window.fetch(`https://${process.env.GLITCH_APP}.glitch.me/data/lists/ownerships`)
   ]).then(res => Promise.all(res.map(r => r.json())))
     .then(res => {
     if (res[0].status == 200 &&
@@ -157,7 +157,7 @@ function render(res) {
       getData: function(userId) {
         if (userId == null) return;
         console.log('fetching user ', userId);
-        window.fetch('https://tokimeki-unfollow.glitch.me/data/user/' + userId)
+        window.fetch(`https://${process.env.GLITCH_APP}.glitch.me/data/user/` + userId)
           .then(res => res.json())
           .then(res => {
           if (res.status = 200) {

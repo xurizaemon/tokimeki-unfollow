@@ -11,7 +11,7 @@ function saveQuick(kept_ids, unfollowed_ids, start_count, current_session_count,
 }
 
 function saveServer(kept_ids, unfollowed_ids, start_count) {
-  fetch('https://tokimeki-unfollow.glitch.me/data/progress/save', {
+  fetch(`https://${process.env.GLITCH_APP}.glitch.me/data/progress/save`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -48,7 +48,7 @@ function loadQuick(store) {
 }
 
 function loadServer() {
-  return fetch('https://tokimeki-unfollow.glitch.me/data/progress')
+  return fetch(`https://${process.env.GLITCH_APP}.glitch.me/data/progress`)
     .catch(e => console.log('error', e))
     .then(res => res.json());
 }
