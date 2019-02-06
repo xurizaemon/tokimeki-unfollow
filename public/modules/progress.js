@@ -48,7 +48,7 @@ function loadQuick(store) {
 }
 
 function loadServer() {
-  return fetch(`https://${process.env.GLITCH_APP}.glitch.me/data/progress/`)
+  return fetch(`https://${process.env.GLITCH_APP}.glitch.me/data/progress`)
     .catch(e => console.log('error', e))
     .then(res => res.json());
 }

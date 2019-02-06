@@ -157,7 +157,7 @@ function render(res) {
       getData: function(userId) {
         if (userId == null) return;
         console.log('fetching user ', userId);
-        window.fetch('https://${process.env.GLITCH_APP}.glitch.me/data/user/' + userId)
+        window.fetch(`https://${process.env.GLITCH_APP}.glitch.me/data/user/${userId}`)
           .then(res => res.json())
           .then(res => {
           if (res.status = 200) {
